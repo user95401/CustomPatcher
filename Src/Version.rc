@@ -1,6 +1,6 @@
 1 VERSIONINFO
-FILEVERSION 1, 0, 0, 0
-PRODUCTVERSION 1, 0, 0, 0
+FILEVERSION 0, 0, 0, 1
+PRODUCTVERSION 0, 0, 0, 1
 FILEOS 0x40004
 FILETYPE 0x2
 {
@@ -9,7 +9,7 @@ FILETYPE 0x2
 		BLOCK "040904B0"
 		{
 			VALUE "ProductName", "InDeCreaseIcons"
-			VALUE "CompanyName", "RuHax"
+			VALUE "CompanyName", "BETA-RuHax"
 			VALUE "LegalCopyright", "user666's original"
 			VALUE "FileDescription", "Increase icons in gd 2.2!!! asd"
 			VALUE "OriginalFilename", "InDeCreaseIcons.dll"

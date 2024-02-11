@@ -7,7 +7,7 @@ set(LIBRARY_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}")
 cmake_policy(SET CMP0057 NEW)
 
 project ("InDeCreaseIcons")
-set(developer "RuHax")
+set(developer "BETA-RuHax")
 set(description "Increase icons in gd 2.2!!! asd")
 set(lib_output "D:\\Games\\user666\\Geometry Dash 2.204 PC [modloader]\\openhack\\dll") # post build copy
 
@@ -16,7 +16,7 @@ set(GAME_VERSION "2.2")
 include("C:\\Users\\Lenovo\\source\\curly-eureka\\CURLY-EUREKA-INCL.cmake")# "\" must be escaped by \\
 
 #version
-set(FILEVERSION "1, 0, 0, 0")
+set(FILEVERSION "0, 0, 0, 1")
 set(LegalCopyright "user666's original")
 configure_file("Version.rc" "../../../src/Version.rc")
 

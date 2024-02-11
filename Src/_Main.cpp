@@ -7,6 +7,9 @@ using namespace ModUtils;
 
 #include "SimpleIni.h"
 
+//#define fucking37stuff toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37)
+#define fucking37stuff if("asd")
+
 const char* MainSection;
 std::string IniPath;
 void ConfigInit() {
@@ -19,8 +22,8 @@ void ConfigInit() {
     Ini.LoadFile(IniPath.c_str());
     if (!(Ini.KeyExists(MainSection, "Player")))
         Ini.SetLongValue(MainSection, "Player", 484,
-            "; WARN: u cant set less than 36" "\n"
-            "; - RUHAX TEAM" "\n"
+            //"; WARN: u cant set less than 36 for cubes" "\n"
+            "; - RUHAX TEAM, user666's original" "\n"
             "\n"
             "; org count of cubes 484"
         );
@@ -36,8 +39,12 @@ void ConfigInit() {
         Ini.SetLongValue(MainSection, "Swingcopter", 43, "; org count of Swingcopters 43");
     if (!(Ini.KeyExists(MainSection, "JetPack")))
         Ini.SetLongValue(MainSection, "JetPack", 5, "; org count of JetPacks 5");
-    if (!(Ini.KeyExists(MainSection, "Auto calculation")))
-        Ini.SetBoolValue(MainSection, "Auto calculation", true, "; Auto calculation icons count by loaded textures");
+    if (!(Ini.KeyExists(MainSection, "AutoCalc")))
+        Ini.SetBoolValue(MainSection, "AutoCalc", true, "; automatically change values by testing every frame for its existing");
+    if (!(Ini.KeyExists(MainSection, "NewSearchPath")))
+        Ini.SetBoolValue(MainSection, "NewSearchPath", false, "; u can store icon resources at \"GAME_DIR/MOD_NAME/icons\"");
+    if (!(Ini.KeyExists(MainSection, "LoadCustomSpritesheet")))
+        Ini.SetBoolValue(MainSection, "LoadCustomSpritesheet", true, "; load frames via \"icons/_IconsSheet.plist\" and \"_IconsSheet.plist\"");
     Ini.SaveFile(IniPath.c_str());
 }
 
@@ -45,16 +52,15 @@ void CalcIconsCount() {
     return;//shit
     CSimpleIni Ini;
     Ini.LoadFile(IniPath.c_str());
-    if (!Ini.GetBoolValue(MainSection, "Auto calculation", true)) return;
+    if (!Ini.GetBoolValue(MainSection, "AutoCalc", true)) return;
     std::stringstream num;
 
     int Player = 0;
     for (int i = 1; i < 1200; ++i) {
         num << std::setw(2) << std::setfill('0') << i;
-        auto TarFile = ("Resources/icons/player_" + num.str() + ".plist");
-        if (std::filesystem::exists(TarFile)) {
+        auto FrameToTest = ("player_" + num.str() + "_001.png");
+        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
             ++Player;
-        }
         num.str("");
     }
     Ini.SetLongValue(MainSection, "Player", Player);
@@ -62,10 +68,9 @@ void CalcIconsCount() {
     int Ship = 0;
     for (int i = 1; i < 1200; ++i) {
         num << std::setw(2) << std::setfill('0') << i;
-        auto TarFile = ("Resources/icons/ship_" + num.str() + ".plist");
-        if (std::filesystem::exists(TarFile)) {
+        auto FrameToTest = ("ship_" + num.str() + "_001.png");
+        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
             ++Ship;
-        }
         num.str("");
     }
     Ini.SetLongValue(MainSection, "Ship", Ship);
@@ -73,13 +78,52 @@ void CalcIconsCount() {
     int Player_ball = 0;
     for (int i = 1; i < 1200; ++i) {
         num << std::setw(2) << std::setfill('0') << i;
-        auto TarFile = ("Resources/icons/player_ball_" + num.str() + ".plist");
-        if (std::filesystem::exists(TarFile)) {
+        auto FrameToTest = ("player_ball_" + num.str() + "_001.png");
+        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
             ++Player_ball;
-        }
         num.str("");
     }
     Ini.SetLongValue(MainSection, "Player_ball", Player_ball);
+
+    int Bird = 0;
+    for (int i = 1; i < 1200; ++i) {
+        num << std::setw(2) << std::setfill('0') << i;
+        auto FrameToTest = ("bird_" + num.str() + "_001.png");
+        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
+            ++Bird;
+        num.str("");
+    }
+    Ini.SetLongValue(MainSection, "Bird", Bird);
+
+    int Dart = 0;
+    for (int i = 1; i < 1200; ++i) {
+        num << std::setw(2) << std::setfill('0') << i;
+        auto FrameToTest = ("dart_" + num.str() + "_001.png");
+        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
+            ++Dart;
+        num.str("");
+    }
+    Ini.SetLongValue(MainSection, "Dart", Dart);
+
+    int Swingcopter = 0;
+    for (int i = 1; i < 1200; ++i) {
+        num << std::setw(2) << std::setfill('0') << i;
+        auto FrameToTest = ("swing_" + num.str() + "_001.png");
+        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
+            ++Swingcopter;
+        num.str("");
+    }
+    Ini.SetLongValue(MainSection, "Swingcopter", Swingcopter);
+
+    int JetPack = 0;
+    for (int i = 1; i < 1200; ++i) {
+        num << std::setw(2) << std::setfill('0') << i;
+        auto FrameToTest = ("jetpack_" + num.str() + "_001.png");
+        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
+            ++JetPack;
+        num.str("");
+    }
+    Ini.SetLongValue(MainSection, "JetPack", JetPack);
 
     Ini.SaveFile(IniPath.c_str());
 }
@@ -135,6 +179,14 @@ uintptr_t SwingcopterPattern5;
 uintptr_t SwingcopterPattern6;
 uintptr_t SwingcopterPattern7;
 
+uintptr_t JetPackPattern1;
+uintptr_t JetPackPattern2;
+uintptr_t JetPackPattern3;
+uintptr_t JetPackPattern4;
+uintptr_t JetPackPattern5;
+uintptr_t JetPackPattern6;
+uintptr_t JetPackPattern7;
+
 #endif
 
 void UpdateIconsCount() {
@@ -153,7 +205,7 @@ void UpdateIconsCount() {
         * 484(10)=1E4(16)
         */
         std::vector<unsigned char> toRewrite = intToBytes(Player);
-        toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37);
+        fucking37stuff;
         log(std::format("toRewrite:Player:{}", Player));
         if (PlayerPattern1 == 0) PlayerPattern1 = patterns::find_pattern("BB E4 01 00 00 8B 8F 10 02 00 00 85 C9 74 12");
         if (PlayerPattern2 == 0) PlayerPattern2 = patterns::find_pattern("81 C6 E4 01 00 00 EB 2C 81 C6 A9 00 00 00 EB 24");
@@ -176,7 +228,7 @@ void UpdateIconsCount() {
         * A9(16)
         */
         std::vector<unsigned char> toRewrite = intToBytes(Ship);
-        toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37);
+        fucking37stuff;
         log(std::format("toRewrite:Ship:{}", Ship));
         if (ShipPattern1 == 0) ShipPattern1 = patterns::find_pattern("B8 A9 00 00 00 C3 B8 76 00 00 00 C3 B8 95 00 00");
         if (ShipPattern2 == 0) ShipPattern2 = patterns::find_pattern("81 C6 A9 00 00 00 EB 24 83 C6 76 EB 1F 81 C6 95");
@@ -193,7 +245,7 @@ void UpdateIconsCount() {
         * 76(16)
         */
         std::vector<unsigned char> toRewrite = intToBytes(Player_ball);
-        toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37);
+        fucking37stuff;
         log(std::format("toRewrite:Player_ball:{}", Player_ball));
         if (Player_ballPattern1 == 0) Player_ballPattern1 = patterns::find_pattern("B8 76 00 00 00 C3");
         if (Player_ballPattern3 == 0) Player_ballPattern3 = patterns::find_pattern("B8 76 00 00 00 C7 45");//
@@ -210,7 +262,7 @@ void UpdateIconsCount() {
         * 95(16)
         */
         std::vector<unsigned char> toRewrite = intToBytes(Bird);
-        toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37);
+        fucking37stuff;
         log(std::format("toRewrite:Bird:{}", Bird));
         /*patterns log
         
@@ -250,7 +302,7 @@ void UpdateIconsCount() {
         * 29(16)
         */
         std::vector<unsigned char> toRewrite = intToBytes(Dart);
-        toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37);
+        fucking37stuff;
         log(std::format("toRewrite:Dart:{}", Dart));
         if (DartPattern1 == 0) DartPattern1 = patterns::find_patterns("b8 60 0 0 0 c3 b8 44 0 0 0")[0];//0=5ff18
         if (DartPattern2 == 0) DartPattern2 = patterns::find_pattern("b8 60 0 0 0 c7");//
@@ -261,41 +313,59 @@ void UpdateIconsCount() {
         WriteProcMem(DartPattern3, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89 }, "DartPattern3");
         WriteProcMem(DartPattern5, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb }, "DartPattern5");
     };
-    {//todoa
+    {//
         /*
         * Swingcopter:
         * 29(16)
         */
         std::vector<unsigned char> toRewrite = intToBytes(Swingcopter);
-        toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37);
+        fucking37stuff;
         log(std::format("toRewrite:Swingcopter:{}", Swingcopter));
+        if (SwingcopterPattern1 == 0) SwingcopterPattern1 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 7");//base + 0x125498;
+        if (SwingcopterPattern2 == 0) SwingcopterPattern2 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 63");//base + 0x5FF54;
+        if (SwingcopterPattern3 == 0) SwingcopterPattern3 = patterns::find_pattern("b8 2b 0 0 0 c7 45 a4");//base + 0x16625C;
+        if (SwingcopterPattern4 == 0) SwingcopterPattern4 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 1b");//base + 0x1812B6;
+        if (SwingcopterPattern5 == 0) SwingcopterPattern5 = patterns::find_pattern("bb 2b 0 0 0 eb 2a 68");//base + 0x1F0245;
+        if (SwingcopterPattern6 == 0) SwingcopterPattern6 = patterns::find_pattern("ba 2b 0 0 0 89 4d f8");//base + 0x2D1B57;
+        WriteProcMem(SwingcopterPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x07 }, "SwingcopterPattern1");
+        WriteProcMem(SwingcopterPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x63 }, "SwingcopterPattern2");
+        WriteProcMem(SwingcopterPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7, 0x45, 0xa4 }, "SwingcopterPattern3");
+        WriteProcMem(SwingcopterPattern4, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x1b }, "SwingcopterPattern4");
+        WriteProcMem(SwingcopterPattern5, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb, 0x2a, 0x68 }, "SwingcopterPattern5");
+        WriteProcMem(SwingcopterPattern6, { 0xba, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89, 0x4d, 0xf8 }, "SwingcopterPattern6");
+    };
+    {//
         /*
-        /SwingsCopters
+        * JetPack:
+        * 29(16)
+        * //JetPacks
+         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1254AA), "\xB8\x06\x00\x00\x00", 5, NULL);
+         //  GeometryDash.exe+1254AA - B8 06000000    
+         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x16626D), "\xB8\x06\x00\x00\x00", 5, NULL);
+         //  GeometryDash.exe+16626D - B8 06000000          
+         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1EB72E), "\xB8\x06\x00\x00\x00", 5, NULL);
+         //  GeometryDash.exe+1EB72E - B8 06000000          
+         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1F025A), "\xBb\x06\x00\x00\x00", 5, NULL);
+         //  GeometryDash.exe+1F025A - BB 06000000    
+         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x2D15B7), "\xBa\x06\x00\x00\x00", 5, NULL);
+         //  GeometryDash.exe+2D15B7 - BA 06000000          
+         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x125B26), "\x83\xc6\x06", 3, NULL);
+         //  GeometryDash.exe+125B26 - 83 C6 06  
 
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x125498), "\xB8\x2C\x00\x00\x00", 5, NULL);
-        //  GeometryDash.exe+125498 - B8 2C 00 00 00          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x5FF54), "\xB8\x2C\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+5FF54 - B8 2C 00 00 00          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x16625C), "\xB8\x2C\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+16625C - B8 2C 00 00 00          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1812B6), "\xB8\x2C\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+1812B6 - B8 2C 000000          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1F0245), "\xBB\x2C\x00\x00\x00", 5, NULL);
-         // GeometryDash.exe+1F0245 - BB 2C000000          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x2D1B57), "\xBA\x2C\x00\x00\x00", 5, NULL);
-         // GeometryDash.exe+2D1B57 - BA 2C 00 00 00          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x125B21), "\x83\xC6\x2C", 3, NULL);
-         // GeometryDash.exe+125B21 - 83 C6 2C             
         */
-        if (SwingcopterPattern1 == 0) SwingcopterPattern1 = patterns::find_pattern("B82C000000");
-        SwingcopterPattern1 = base + 0x125498;
-        SwingcopterPattern2 = base + 0x5FF54;
-        SwingcopterPattern3 = base + 0x16625C;
-        SwingcopterPattern4 = base + 0x1812B6;
-        SwingcopterPattern5 = base + 0x1F0245;
-        SwingcopterPattern6 = base + 0x2D1B57;
-        SwingcopterPattern7 = base + 0x125B21;
-        WriteProcMem(SwingcopterPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3 }, "SwingcopterPattern1");
+        std::vector<unsigned char> toRewrite = intToBytes(JetPack);
+        fucking37stuff;
+        log(std::format("toRewrite:JetPack:{}", JetPack));
+        if (JetPackPattern1 == 0) JetPackPattern1 = patterns::find_pattern("b8 5 0 0 0 c3 b8 6 0 0 0 c3 33 c0 c3 8d");//base + 0x1254AA;fucku >:T
+        if (JetPackPattern2 == 0) JetPackPattern2 = patterns::find_pattern("b8 5 0 0 0 c7 45 a4");//base + 0x16626D;
+        if (JetPackPattern3 == 0) JetPackPattern3 = patterns::find_pattern("b8 5 0 0 0 39 44 24");//base + 0x1EB72E;
+        if (JetPackPattern4 == 0) JetPackPattern4 = patterns::find_pattern("bb 5 0 0 0 eb 15");//base + 0x1F025A;
+        if (JetPackPattern5 == 0) JetPackPattern5 = patterns::find_pattern("ba 5 0 0 0 89 4d f8");//base + 0x2D15B7;
+        WriteProcMem(JetPackPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x06 }, "JetPackPattern1");
+        WriteProcMem(JetPackPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7, 0x45, 0xa4 }, "JetPackPattern2");
+        WriteProcMem(JetPackPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x39, 0x44, 0x24 }, "JetPackPattern3");
+        WriteProcMem(JetPackPattern4, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb, 0x15, 0x6a }, "JetPackPattern4");
+        WriteProcMem(JetPackPattern5, { 0xba, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89, 0x4d, 0xf8 }, "JetPackPattern5");
     };
 }
 
@@ -304,11 +374,27 @@ void __fastcall loadingFinished(CCLayer* self) {
     twoTimesVoidCallEscapeByParrentNode(self);
     ConfigInit();
     UpdateIconsCount();
-    std::filesystem::create_directories(GetModName() + "/icons");
-    CCFileUtils::sharedFileUtils()->addSearchPath(GetModName().c_str());
     //load new stuff also asd
     CSimpleIni Ini;
     Ini.LoadFile(IniPath.c_str());
+    if (Ini.GetBoolValue(MainSection, "NewSearchPath", false)) {
+        //"NewSearchPath", false, "; u can store icon resources at \"GAME_DIR/MOD_NAME/icons\""
+        std::filesystem::create_directories(GetModName() + "/icons");
+        CCFileUtils::sharedFileUtils()->addSearchPath(GetModName().c_str());
+    };
+    if (Ini.GetBoolValue(MainSection, "LoadCustomSpritesheet", true)) {
+        //"LoadCustomSpritesheet", true, "; load frames via \"icons/_IconsSheet.plist\""
+        {
+            auto TarFile = "icons/_IconsSheet.plist";
+            log(std::format("Adding frames with file \"{}\"", TarFile));
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile);
+        };
+        {
+            auto TarFile = "_IconsSheet.plist";
+            log(std::format("Adding frames with file \"{}\"", TarFile));
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile);
+        };
+    };
     int Player = Ini.GetLongValue(MainSection, "Player", 484);
     int Ship = Ini.GetLongValue(MainSection, "Ship", 169);
     int Player_ball = Ini.GetLongValue(MainSection, "Player_ball", 118);
@@ -318,10 +404,11 @@ void __fastcall loadingFinished(CCLayer* self) {
     int JetPack = Ini.GetLongValue(MainSection, "JetPack", 5);
     {
         std::stringstream num;
-        auto LastOfficial = 484;
-        for (int io = ++LastOfficial; io <= Player; io++) {
+        for (int io = 1; io <= Player; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/player_" + num.str() + ".plist");
+            auto FrameToTest = ("player_" + num.str() + "_001.png");
+            if (!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) break;
             log(std::format("Adding frames with file \"{}\"", TarFile));
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile.c_str());
             num.str("");
@@ -329,10 +416,11 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        auto LastOfficial = 169;
-        for (int io = ++LastOfficial; io <= Ship; io++) {
+        for (int io = 1; io <= Ship; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/ship_" + num.str() + ".plist");
+            auto FrameToTest = ("ship_" + num.str() + "_001.png");
+            if (!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) break;
             log(std::format("Adding frames with file \"{}\"", TarFile));
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile.c_str());
             num.str("");
@@ -340,10 +428,11 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        auto LastOfficial = 118;
-        for (int io = ++LastOfficial; io <= Player_ball; io++) {
+        for (int io = 1; io <= Player_ball; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/player_ball_" + num.str() + ".plist");
+            auto FrameToTest = ("player_ball_" + num.str() + "_001.png");
+            if (!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) break;
             log(std::format("Adding frames with file \"{}\"", TarFile));
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile.c_str());
             num.str("");
@@ -351,10 +440,11 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        auto LastOfficial = 149;
-        for (int io = ++LastOfficial; io <= Bird; io++) {
+        for (int io = 1; io <= Bird; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/bird_" + num.str() + ".plist");
+            auto FrameToTest = ("bird_" + num.str() + "_001.png");
+            if (!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) break;
             log(std::format("Adding frames with file \"{}\"", TarFile));
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile.c_str());
             num.str("");
@@ -362,15 +452,41 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        auto LastOfficial = 96;
-        for (int io = ++LastOfficial; io <= Dart; io++) {
+        for (int io = 1; io <= Dart; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/dart_" + num.str() + ".plist");
+            auto FrameToTest = ("dart_" + num.str() + "_001.png");
+            if (!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) break;
             log(std::format("Adding frames with file \"{}\"", TarFile));
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile.c_str());
             num.str("");
         }
     }
+    {
+        std::stringstream num;
+        for (int io = 1; io <= Swingcopter; io++) {
+            num << std::setw(2) << std::setfill('0') << io;
+            auto TarFile = ("icons/swing_" + num.str() + ".plist");
+            auto FrameToTest = ("swing_" + num.str() + "_001.png");
+            if (!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) break;
+            log(std::format("Adding frames with file \"{}\"", TarFile));
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile.c_str());
+            num.str("");
+        }
+    }
+    {
+        std::stringstream num;
+        for (int io = 1; io <= JetPack; io++) {
+            num << std::setw(2) << std::setfill('0') << io;
+            auto TarFile = ("icons/jetpack_" + num.str() + ".plist");
+            auto FrameToTest = ("jetpack_" + num.str() + "_001.png");
+            if (!CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) break;
+            log(std::format("Adding frames with file \"{}\"", TarFile));
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile.c_str());
+            num.str("");
+        }
+    }
+    CalcIconsCount();
 }
 
 DWORD WINAPI ModThread(void* hModule) {
