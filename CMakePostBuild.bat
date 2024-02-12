@@ -18,9 +18,9 @@
 @if not exist "%1.%2.dll" set "$Message=Can´t found %3/%1.%2.dll to copy dll!"
 if exist "%1.%2.dll" copy "%1.%2.dll" %4
 
-@echo "copy dll to game: %1.%2.dll => D:\Games\user666\Geometry Dash v2.2a"
+@echo "copy dll to game: %1.%2.dll => D:\Games\user666\Geometry Dash v2.2a\openhack\dll"
 @if not exist "%1.%2.dll" set "$Message=Can´t found %3/%1.%2.dll to copy dll!"
-if exist "%1.%2.dll" copy "%1.%2.dll" "D:\Games\user666\Geometry Dash v2.2a"
+if exist "%1.%2.dll" copy "%1.%2.dll" "D:\Games\user666\Geometry Dash v2.2a\openhack\dll"
 
 ::BEEEp if smth wrong
 @if not "%$Message%" == "Done: " rundll32 user32.dll,MessageBeep

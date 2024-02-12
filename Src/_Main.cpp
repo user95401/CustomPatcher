@@ -7,137 +7,100 @@ using namespace ModUtils;
 
 #include "SimpleIni.h"
 
-//#define fucking37stuff toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37)
-#define fucking37stuff if("asd")
-
+/*
+countForType(type 0) rtn 484
+countForType(type 1) rtn 169
+countForType(type 2) rtn 118
+countForType(type 3) rtn 149
+countForType(type 4) rtn 96
+countForType(type 5) rtn 68
+countForType(type 6) rtn 69
+countForType(type 7) rtn 43
+countForType(type 8) rtn 5
+countForType(type 99) rtn 7
+countForType(type 101) rtn 6
+countForType(type 98) rtn 20
+Cube = 0,
+Ship = 1,
+Ball = 2,
+Ufo = 3,
+Wave = 4,
+Robot = 5,
+Spider = 6,
+Swing = 7,
+Jetpack = 8,
+DeathEffect = 98,
+Special = 99,
+ShipFire = 101,
+*/
 const char* MainSection;
+const char* Section2;
 std::string IniPath;
 void ConfigInit() {
 
     CSimpleIni Ini;
 
     MainSection = "InDeCreaseIcons";
+    Section2 = "SuperUselessSettings";
     IniPath = (GetModPath().parent_path() / "IconsCount.ini").string();
 
     Ini.LoadFile(IniPath.c_str());
-    if (!(Ini.KeyExists(MainSection, "Player")))
-        Ini.SetLongValue(MainSection, "Player", 484,
+    //MainSection
+    if (!(Ini.KeyExists(MainSection, "Cube")))
+        Ini.SetLongValue(MainSection, "Cube", 484,
             //"; WARN: u cant set less than 36 for cubes" "\n"
-            "; - RUHAX TEAM, user666's original" "\n"
+            "; - RUHAX TEAM, user666's original, zGuschin - explorer" "\n"
             "\n"
-            "; org count of cubes 484"
+            "; org count of Cubes 484"
         );
     if (!(Ini.KeyExists(MainSection, "Ship")))
-        Ini.SetLongValue(MainSection, "Ship", 169, "; org count of ships 169");
-    if (!(Ini.KeyExists(MainSection, "Player_ball")))
-        Ini.SetLongValue(MainSection, "Player_ball", 118, "; org count of BALLS 118");
-    if (!(Ini.KeyExists(MainSection, "Bird")))
-        Ini.SetLongValue(MainSection, "Bird", 149, "; org count of ufos 149");
-    if (!(Ini.KeyExists(MainSection, "Dart")))
-        Ini.SetLongValue(MainSection, "Dart", 96, "; org count of waves 96");
-    if (!(Ini.KeyExists(MainSection, "Swingcopter")))
-        Ini.SetLongValue(MainSection, "Swingcopter", 43, "; org count of Swingcopters 43");
-    if (!(Ini.KeyExists(MainSection, "JetPack")))
-        Ini.SetLongValue(MainSection, "JetPack", 5, "; org count of JetPacks 5");
-    if (!(Ini.KeyExists(MainSection, "AutoCalc")))
-        Ini.SetBoolValue(MainSection, "AutoCalc", true, "; automatically change values by testing every frame for its existing");
+        Ini.SetLongValue(MainSection, "Ship", 169, "; org count of Ships 169");
+    if (!(Ini.KeyExists(MainSection, "Ball")))
+        Ini.SetLongValue(MainSection, "Ball", 118, "; org count of BALLS 118");
+    if (!(Ini.KeyExists(MainSection, "Ufo")))
+        Ini.SetLongValue(MainSection, "Ufo", 149, "; org count of Ufos 149");
+    if (!(Ini.KeyExists(MainSection, "Wave")))
+        Ini.SetLongValue(MainSection, "Wave", 96, "; org count of Waves 96");
+    if (!(Ini.KeyExists(MainSection, "Robot")))
+        Ini.SetLongValue(MainSection, "Robot", 68, "; CANT_LOAD_NEW_RES, org count of Robots 68");
+    if (!(Ini.KeyExists(MainSection, "Spider")))
+        Ini.SetLongValue(MainSection, "Spider", 69, "; CANT_LOAD_NEW_RES, org count of Spiders 69");
+    if (!(Ini.KeyExists(MainSection, "Swing")))
+        Ini.SetLongValue(MainSection, "Swing", 43, "; org count of Swings 43");
+    if (!(Ini.KeyExists(MainSection, "Jetpack")))
+        Ini.SetLongValue(MainSection, "Jetpack", 5, "; org count of Jetpacks 5");
+    if (!(Ini.KeyExists(MainSection, "DeathEffect")))
+        Ini.SetLongValue(MainSection, "DeathEffect", 20, "; NO_PATCH, org count of DeathEffects 20");
+    if (!(Ini.KeyExists(MainSection, "Special")))
+        Ini.SetLongValue(MainSection, "Special", 7, "; NO_PATCH, org count of Specials 7");
+    if (!(Ini.KeyExists(MainSection, "ShipFire")))
+        Ini.SetLongValue(MainSection, "ShipFire", 9, "; NO_PATCH, org count of ShipFires 6");
     if (!(Ini.KeyExists(MainSection, "NewSearchPath")))
         Ini.SetBoolValue(MainSection, "NewSearchPath", false, "; u can store icon resources at \"GAME_DIR/MOD_NAME/icons\"");
     if (!(Ini.KeyExists(MainSection, "LoadCustomSpritesheet")))
         Ini.SetBoolValue(MainSection, "LoadCustomSpritesheet", true, "; load frames via \"icons/_IconsSheet.plist\" and \"_IconsSheet.plist\"");
+    //supersecretsettings
+    if (!(Ini.KeyExists(Section2, "GameManager::countForType Hook")))
+        Ini.SetBoolValue(Section2, "GameManager::countForType Hook", false, "; hook that function also (can uglify \"special\" stuff.. thatisya)");
+    if (!(Ini.KeyExists(Section2, "GameManager::countForType Hook Logs")))
+        Ini.SetBoolValue(Section2, "GameManager::countForType Hook Logs", false, "; 20:36:36 CE [InDeCreaseIcons]: countForType(type 0) rtn 484");
+    if (!(Ini.KeyExists(Section2, "AllocConsole")))
+        Ini.SetBoolValue(Section2, "AllocConsole", false, "; open console at mod attach");
     Ini.SaveFile(IniPath.c_str());
 }
 
-void CalcIconsCount() {
-    return;//shit
-    CSimpleIni Ini;
-    Ini.LoadFile(IniPath.c_str());
-    if (!Ini.GetBoolValue(MainSection, "AutoCalc", true)) return;
-    std::stringstream num;
-
-    int Player = 0;
-    for (int i = 1; i < 1200; ++i) {
-        num << std::setw(2) << std::setfill('0') << i;
-        auto FrameToTest = ("player_" + num.str() + "_001.png");
-        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
-            ++Player;
-        num.str("");
-    }
-    Ini.SetLongValue(MainSection, "Player", Player);
-
-    int Ship = 0;
-    for (int i = 1; i < 1200; ++i) {
-        num << std::setw(2) << std::setfill('0') << i;
-        auto FrameToTest = ("ship_" + num.str() + "_001.png");
-        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
-            ++Ship;
-        num.str("");
-    }
-    Ini.SetLongValue(MainSection, "Ship", Ship);
-
-    int Player_ball = 0;
-    for (int i = 1; i < 1200; ++i) {
-        num << std::setw(2) << std::setfill('0') << i;
-        auto FrameToTest = ("player_ball_" + num.str() + "_001.png");
-        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
-            ++Player_ball;
-        num.str("");
-    }
-    Ini.SetLongValue(MainSection, "Player_ball", Player_ball);
-
-    int Bird = 0;
-    for (int i = 1; i < 1200; ++i) {
-        num << std::setw(2) << std::setfill('0') << i;
-        auto FrameToTest = ("bird_" + num.str() + "_001.png");
-        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
-            ++Bird;
-        num.str("");
-    }
-    Ini.SetLongValue(MainSection, "Bird", Bird);
-
-    int Dart = 0;
-    for (int i = 1; i < 1200; ++i) {
-        num << std::setw(2) << std::setfill('0') << i;
-        auto FrameToTest = ("dart_" + num.str() + "_001.png");
-        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
-            ++Dart;
-        num.str("");
-    }
-    Ini.SetLongValue(MainSection, "Dart", Dart);
-
-    int Swingcopter = 0;
-    for (int i = 1; i < 1200; ++i) {
-        num << std::setw(2) << std::setfill('0') << i;
-        auto FrameToTest = ("swing_" + num.str() + "_001.png");
-        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
-            ++Swingcopter;
-        num.str("");
-    }
-    Ini.SetLongValue(MainSection, "Swingcopter", Swingcopter);
-
-    int JetPack = 0;
-    for (int i = 1; i < 1200; ++i) {
-        num << std::setw(2) << std::setfill('0') << i;
-        auto FrameToTest = ("jetpack_" + num.str() + "_001.png");
-        if (CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(FrameToTest.c_str())) 
-            ++JetPack;
-        num.str("");
-    }
-    Ini.SetLongValue(MainSection, "JetPack", JetPack);
-
-    Ini.SaveFile(IniPath.c_str());
-}
-
+//#define fucking37stuff toRewrite = toRewrite[0] > 36 ? toRewrite : intToBytes(37)
+#define fucking37stuff if("asd")
 #if 1
 //thats sucks
 
-uintptr_t PlayerPattern1;
-uintptr_t PlayerPattern2;
-uintptr_t PlayerPattern3;
-uintptr_t PlayerPattern4;
-uintptr_t PlayerPattern5;
-uintptr_t PlayerPattern6;
-uintptr_t PlayerPattern7;
+uintptr_t CubePattern1;
+uintptr_t CubePattern2;
+uintptr_t CubePattern3;
+uintptr_t CubePattern4;
+uintptr_t CubePattern5;
+uintptr_t CubePattern6;
+uintptr_t CubePattern7;
 
 uintptr_t ShipPattern1;
 uintptr_t ShipPattern2;
@@ -147,80 +110,100 @@ uintptr_t ShipPattern5;
 uintptr_t ShipPattern6;
 uintptr_t ShipPattern7;
 
-uintptr_t Player_ballPattern1;
-uintptr_t Player_ballPattern2;
-uintptr_t Player_ballPattern3;
-uintptr_t Player_ballPattern4;
-uintptr_t Player_ballPattern5;
-uintptr_t Player_ballPattern6;
-uintptr_t Player_ballPattern7;
+uintptr_t BallPattern1;
+uintptr_t BallPattern2;
+uintptr_t BallPattern3;
+uintptr_t BallPattern4;
+uintptr_t BallPattern5;
+uintptr_t BallPattern6;
+uintptr_t BallPattern7;
 
-uintptr_t BirdPattern1;
-uintptr_t BirdPattern2;
-uintptr_t BirdPattern3;
-uintptr_t BirdPattern4;
-uintptr_t BirdPattern5;
-uintptr_t BirdPattern6;
-uintptr_t BirdPattern7;
+uintptr_t UfoPattern1;
+uintptr_t UfoPattern2;
+uintptr_t UfoPattern3;
+uintptr_t UfoPattern4;
+uintptr_t UfoPattern5;
+uintptr_t UfoPattern6;
+uintptr_t UfoPattern7;
 
-uintptr_t DartPattern1;
-uintptr_t DartPattern2;
-uintptr_t DartPattern3;
-uintptr_t DartPattern4;
-uintptr_t DartPattern5;
-uintptr_t DartPattern6;
-uintptr_t DartPattern7;
+uintptr_t WavePattern1;
+uintptr_t WavePattern2;
+uintptr_t WavePattern3;
+uintptr_t WavePattern4;
+uintptr_t WavePattern5;
+uintptr_t WavePattern6;
+uintptr_t WavePattern7;
 
-uintptr_t SwingcopterPattern1;
-uintptr_t SwingcopterPattern2;
-uintptr_t SwingcopterPattern3;
-uintptr_t SwingcopterPattern4;
-uintptr_t SwingcopterPattern5;
-uintptr_t SwingcopterPattern6;
-uintptr_t SwingcopterPattern7;
+uintptr_t RobotPattern1;
+uintptr_t RobotPattern2;
+uintptr_t RobotPattern3;
+uintptr_t RobotPattern4;
+uintptr_t RobotPattern5;
+uintptr_t RobotPattern6;
+uintptr_t RobotPattern7;
 
-uintptr_t JetPackPattern1;
-uintptr_t JetPackPattern2;
-uintptr_t JetPackPattern3;
-uintptr_t JetPackPattern4;
-uintptr_t JetPackPattern5;
-uintptr_t JetPackPattern6;
-uintptr_t JetPackPattern7;
+uintptr_t SpiderPattern1;
+uintptr_t SpiderPattern2;
+uintptr_t SpiderPattern3;
+uintptr_t SpiderPattern4;
+uintptr_t SpiderPattern5;
+uintptr_t SpiderPattern6;
+uintptr_t SpiderPattern7;
+
+uintptr_t SwingPattern1;
+uintptr_t SwingPattern2;
+uintptr_t SwingPattern3;
+uintptr_t SwingPattern4;
+uintptr_t SwingPattern5;
+uintptr_t SwingPattern6;
+uintptr_t SwingPattern7;
+
+uintptr_t JetpackPattern1;
+uintptr_t JetpackPattern2;
+uintptr_t JetpackPattern3;
+uintptr_t JetpackPattern4;
+uintptr_t JetpackPattern5;
+uintptr_t JetpackPattern6;
+uintptr_t JetpackPattern7;
 
 #endif
-
 void UpdateIconsCount() {
     CSimpleIni Ini;
     Ini.LoadFile(IniPath.c_str());
-    int Player = Ini.GetLongValue(MainSection, "Player", 484);
-    int Ship = Ini.GetLongValue(MainSection, "Ship", 169);
-    int Player_ball = Ini.GetLongValue(MainSection, "Player_ball", 118);
-    int Bird = Ini.GetLongValue(MainSection, "Bird", 149);
-    int Dart = Ini.GetLongValue(MainSection, "Dart", 96);
-    int Swingcopter = Ini.GetLongValue(MainSection, "Swingcopter", 43);
-    int JetPack = Ini.GetLongValue(MainSection, "JetPack", 5);
+    int Cube = Ini.GetLongValue(MainSection, "Cube");
+    int Ship = Ini.GetLongValue(MainSection, "Ship");
+    int Ball = Ini.GetLongValue(MainSection, "Ball");
+    int Ufo = Ini.GetLongValue(MainSection, "Ufo");
+    int Wave = Ini.GetLongValue(MainSection, "Wave");
+    int Robot = Ini.GetLongValue(MainSection, "Robot");
+    int Spider = Ini.GetLongValue(MainSection, "Spider");
+    int Swing = Ini.GetLongValue(MainSection, "Swing");
+    int Jetpack = Ini.GetLongValue(MainSection, "Jetpack");
+    int DeathEffect = Ini.GetLongValue(MainSection, "DeathEffect");
+    int Special = Ini.GetLongValue(MainSection, "Special");
+    int ShipFire = Ini.GetLongValue(MainSection, "ShipFire");
     {
         /*
-        * Player:
+        * Cube:
         * 484(10)=1E4(16)
         */
-        std::vector<unsigned char> toRewrite = intToBytes(Player);
+        std::vector<unsigned char> toRewrite = intToBytes(Cube);
         fucking37stuff;
-        log(std::format("toRewrite:Player:{}", Player));
-        if (PlayerPattern1 == 0) PlayerPattern1 = patterns::find_pattern("BB E4 01 00 00 8B 8F 10 02 00 00 85 C9 74 12");
-        if (PlayerPattern2 == 0) PlayerPattern2 = patterns::find_pattern("81 C6 E4 01 00 00 EB 2C 81 C6 A9 00 00 00 EB 24");
-        if (PlayerPattern3 == 0) PlayerPattern3 = patterns::find_pattern("B9 E4 01 00 00 39 4D 08 89 97 20 02 00 00 0F 4C");
-        if (PlayerPattern4 == 0) PlayerPattern4 = patterns::find_pattern("BA E4 01 00 00 8B 75 0C 3B C2 B9 01 00 00 00 0F");
-        if (PlayerPattern5 == 0) PlayerPattern5 = patterns::find_pattern("B9 E4 01 00 00 FF B3 20 02 00 00 0F 4C 4C 24 1C");
-        if (PlayerPattern6 == 0) PlayerPattern6 = patterns::find_pattern("BB E4 01 00 00 89 4D F8 39 5D 08 56 0F 4C 5D 08");
-        if (PlayerPattern7 == 0) PlayerPattern7 = patterns::find_pattern("B8 E4 01 00 00 C3 B8 A9 00 00 00 C3 B8 76 00 00");
-        WriteProcMem(PlayerPattern1, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "PlayerPattern1");
-        WriteProcMem(PlayerPattern2, { 0x81, 0xC6, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "PlayerPattern2");
-        WriteProcMem(PlayerPattern3, { 0xB9, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "PlayerPattern3");
-        WriteProcMem(PlayerPattern4, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "PlayerPattern4");
-        WriteProcMem(PlayerPattern5, { 0xB9, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "PlayerPattern5");
-        WriteProcMem(PlayerPattern6, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "PlayerPattern6");
-        WriteProcMem(PlayerPattern7, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "PlayerPattern7");
+        log(std::format("toRewrite:Cube:{}", Cube));
+        if (CubePattern1 == 0) CubePattern1 = patterns::find_pattern("BB E4 01 00 00 8B 8F 10 02 00 00 85 C9 74 12");
+        if (CubePattern2 == 0) CubePattern2 = patterns::find_pattern("81 C6 E4 01 00 00 EB 2C 81 C6 A9 00 00 00 EB 24");
+        if (CubePattern3 == 0) CubePattern3 = patterns::find_pattern("B9 E4 01 00 00 39 4D 08 89 97 20 02 00 00 0F 4C");
+        if (CubePattern4 == 0) CubePattern4 = patterns::find_pattern("BA E4 01 00 00 8B 75 0C 3B C2 B9 01 00 00 00 0F");
+        if (CubePattern5 == 0) CubePattern5 = patterns::find_pattern("B9 E4 01 00 00 FF B3 20 02 00 00 0F 4C 4C 24 1C");
+        if (CubePattern6 == 0) CubePattern6 = patterns::find_pattern("BB E4 01 00 00 89 4D F8 39 5D 08 56 0F 4C 5D 08");
+        if (CubePattern7 == 0) CubePattern7 = patterns::find_pattern("B8 E4 01 00 00 C3 B8 A9 00 00 00 C3 B8 76 00 00");
+        WriteProcMem(CubePattern1, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "CubePattern1");
+        WriteProcMem(CubePattern2, { 0x81, 0xC6, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "CubePattern2");
+        WriteProcMem(CubePattern3, { 0xB9, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "CubePattern3");
+        WriteProcMem(CubePattern4, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "CubePattern4");
+        WriteProcMem(CubePattern5, { 0xB9, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "CubePattern5");
+        WriteProcMem(CubePattern6, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "CubePattern6");
+        WriteProcMem(CubePattern7, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "CubePattern7");
     };
     {
         /*
@@ -241,138 +224,210 @@ void UpdateIconsCount() {
     };
     {
         /*
-        * Player_ball:
+        * Ball:
         * 76(16)
         */
-        std::vector<unsigned char> toRewrite = intToBytes(Player_ball);
+        std::vector<unsigned char> toRewrite = intToBytes(Ball);
         fucking37stuff;
-        log(std::format("toRewrite:Player_ball:{}", Player_ball));
-        if (Player_ballPattern1 == 0) Player_ballPattern1 = patterns::find_pattern("B8 76 00 00 00 C3");
-        if (Player_ballPattern3 == 0) Player_ballPattern3 = patterns::find_pattern("B8 76 00 00 00 C7 45");//
-        if (Player_ballPattern4 == 0) Player_ballPattern4 = patterns::find_pattern("BB 76 00 00 00 E9");
-        if (Player_ballPattern5 == 0) Player_ballPattern5 = patterns::find_pattern("BA 76 00 00 00 89");
-        WriteProcMem(Player_ballPattern1, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "Player_ballPattern1");
-        WriteProcMem(Player_ballPattern3, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "Player_ballPattern3");
-        WriteProcMem(Player_ballPattern4, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "Player_ballPattern4");
-        WriteProcMem(Player_ballPattern5, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "Player_ballPattern5");
+        log(std::format("toRewrite:Ball:{}", Ball));
+        if (BallPattern1 == 0) BallPattern1 = patterns::find_pattern("B8 76 00 00 00 C3");
+        if (BallPattern3 == 0) BallPattern3 = patterns::find_pattern("B8 76 00 00 00 C7 45");//
+        if (BallPattern4 == 0) BallPattern4 = patterns::find_pattern("BB 76 00 00 00 E9");
+        if (BallPattern5 == 0) BallPattern5 = patterns::find_pattern("BA 76 00 00 00 89");
+        WriteProcMem(BallPattern1, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BallPattern1");
+        WriteProcMem(BallPattern3, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BallPattern3");
+        WriteProcMem(BallPattern4, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BallPattern4");
+        WriteProcMem(BallPattern5, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BallPattern5");
     };
     {
         /*
-        * Bird:
+        * Ufo:
         * 95(16)
         */
-        std::vector<unsigned char> toRewrite = intToBytes(Bird);
+        std::vector<unsigned char> toRewrite = intToBytes(Ufo);
         fucking37stuff;
-        log(std::format("toRewrite:Bird:{}", Bird));
+        log(std::format("toRewrite:Ufo:{}", Ufo));
         /*patterns log
         
         */
-        if (BirdPattern1 == 0) BirdPattern1 = patterns::find_pattern("b8 95 0 0 0 c3 b8");
-        if (BirdPattern2 == 0) BirdPattern2 = patterns::find_pattern("81 c6 95 0 0 0 eb 17");//
-        if (BirdPattern3 == 0) BirdPattern3 = patterns::find_pattern("b8 95 0 0 0 c7 45");//
-        //if (BirdPattern4 == 0) BirdPattern4 = patterns::find_pattern("68 95 0 0 0 e8 82");
-        if (BirdPattern5 == 0) BirdPattern5 = patterns::find_pattern("bb 95 0 0 0 eb 7e");
-        if (BirdPattern6 == 0) BirdPattern6 = patterns::find_pattern("ba 95 0 0 0 89 4d");
+        if (UfoPattern1 == 0) UfoPattern1 = patterns::find_pattern("b8 95 0 0 0 c3 b8");
+        if (UfoPattern2 == 0) UfoPattern2 = patterns::find_pattern("81 c6 95 0 0 0 eb 17");//
+        if (UfoPattern3 == 0) UfoPattern3 = patterns::find_pattern("b8 95 0 0 0 c7 45");//
+        //if (UfoPattern4 == 0) UfoPattern4 = patterns::find_pattern("68 95 0 0 0 e8 82");
+        if (UfoPattern5 == 0) UfoPattern5 = patterns::find_pattern("bb 95 0 0 0 eb 7e");
+        if (UfoPattern6 == 0) UfoPattern6 = patterns::find_pattern("ba 95 0 0 0 89 4d");
         //2.200
         /*//addreses
-        14:00:48 CE [InDeCreaseIcons]: toRewrite:Bird:150
+        14:00:48 CE [InDeCreaseIcons]: toRewrite:Ufo:150
         14:00:48 CE [InDeCreaseIcons]: WriteProcMem at 345480 (base rva: 125480) with "b8 96 0 0 0", org was "b8 95 0 0 0 c3 b8 60 0 0 0 c3 b8 44 0 0"
         14:00:48 CE [InDeCreaseIcons]: WriteProcMem at 345b0a (base rva: 125b0a) with "81 c6 96 0 0 0", org was "81 c6 95 0 0 0 eb 17 83 c6 60 eb 12 83 c6 44"
         14:00:48 CE [InDeCreaseIcons]: WriteProcMem at 3861b7 (base rva: 1661b7) with "b8 96 0 0 0", org was "b8 95 0 0 0 c7 45 a4 6 0 0 0 89 45 a0 e9"
         14:00:48 CE [InDeCreaseIcons]: WriteProcMem at 2e4d34 (base rva: c4d34) with "68 96 0 0 0", org was "68 95 0 0 0 e8 82 1f 0 0 8b 8d 68 fe ff ff"
         14:00:48 CE [InDeCreaseIcons]: WriteProcMem at 4101f1 (base rva: 1f01f1) with "bb 96 0 0 0", org was "bb 95 0 0 0 eb 7e 68 54 87 61 0 8d 4c 24 2c"
         14:00:48 CE [InDeCreaseIcons]: WriteProcMem at 4f1777 (base rva: 2d1777) with "ba 96 0 0 0", org was "ba 95 0 0 0 89 4d f8 39 55 8 bb 1 0 0 0"
-        BirdPattern1 = base + 0x125480;
-        BirdPattern2 = base + 0x125B0A;
-        BirdPattern3 = base + 0x1661B7;
-        BirdPattern4 = base + 0xC4D34;//whotf is this
-        BirdPattern5 = base + 0x1F01F1;
-        BirdPattern6 = base + 0x2D1777;
+        UfoPattern1 = base + 0x125480;
+        UfoPattern2 = base + 0x125B0A;
+        UfoPattern3 = base + 0x1661B7;
+        UfoPattern4 = base + 0xC4D34;//whotf is this
+        UfoPattern5 = base + 0x1F01F1;
+        UfoPattern6 = base + 0x2D1777;
         */
-        WriteProcMem(BirdPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BirdPattern1");
-        WriteProcMem(BirdPattern2, { 0x81, 0xc6, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BirdPattern2");
-        WriteProcMem(BirdPattern3, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BirdPattern3");
-        //WriteProcMem(BirdPattern4, { 0x68, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BirdPattern4");
-        WriteProcMem(BirdPattern5, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BirdPattern5");
-        WriteProcMem(BirdPattern6, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "BirdPattern6");
+        WriteProcMem(UfoPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "UfoPattern1");
+        WriteProcMem(UfoPattern2, { 0x81, 0xc6, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "UfoPattern2");
+        WriteProcMem(UfoPattern3, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "UfoPattern3");
+        //WriteProcMem(UfoPattern4, { 0x68, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "UfoPattern4");
+        WriteProcMem(UfoPattern5, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "UfoPattern5");
+        WriteProcMem(UfoPattern6, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "UfoPattern6");
     };
     {
         /*
-        * Dart:
+        * Wave:
         * 29(16)
         */
-        std::vector<unsigned char> toRewrite = intToBytes(Dart);
+        std::vector<unsigned char> toRewrite = intToBytes(Wave);
         fucking37stuff;
-        log(std::format("toRewrite:Dart:{}", Dart));
-        if (DartPattern1 == 0) DartPattern1 = patterns::find_patterns("b8 60 0 0 0 c3 b8 44 0 0 0")[0];//0=5ff18
-        if (DartPattern2 == 0) DartPattern2 = patterns::find_pattern("b8 60 0 0 0 c7");//
-        if (DartPattern3 == 0) DartPattern3 = patterns::find_pattern("ba 60 0 0 0 89");//
-        if (DartPattern5 == 0) DartPattern5 = patterns::find_pattern("bb 60 0 0 0 eb");
-        WriteProcMem(DartPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3 }, "DartPattern1");
-        WriteProcMem(DartPattern2, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7 }, "DartPattern2");
-        WriteProcMem(DartPattern3, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89 }, "DartPattern3");
-        WriteProcMem(DartPattern5, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb }, "DartPattern5");
+        log(std::format("toRewrite:Wave:{}", Wave));
+        if (WavePattern1 == 0) WavePattern1 = patterns::find_patterns("b8 60 0 0 0 c3 b8 44 0 0 0")[0];//0=5ff18
+        if (WavePattern2 == 0) WavePattern2 = patterns::find_pattern("b8 60 0 0 0 c7");//
+        if (WavePattern3 == 0) WavePattern3 = patterns::find_pattern("ba 60 0 0 0 89");//
+        if (WavePattern5 == 0) WavePattern5 = patterns::find_pattern("bb 60 0 0 0 eb");
+        WriteProcMem(WavePattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3 }, "WavePattern1");
+        WriteProcMem(WavePattern2, { 0xB8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7 }, "WavePattern2");
+        WriteProcMem(WavePattern3, { 0xBA, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89 }, "WavePattern3");
+        WriteProcMem(WavePattern5, { 0xBB, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb }, "WavePattern5");
     };
     {//
         /*
-        * Swingcopter:
-        * 29(16)
+        * Robot:
+        * 44(16)
+        * 
         */
-        std::vector<unsigned char> toRewrite = intToBytes(Swingcopter);
+        std::vector<unsigned char> toRewrite = intToBytes(Robot);
         fucking37stuff;
-        log(std::format("toRewrite:Swingcopter:{}", Swingcopter));
-        if (SwingcopterPattern1 == 0) SwingcopterPattern1 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 7");//base + 0x125498;
-        if (SwingcopterPattern2 == 0) SwingcopterPattern2 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 63");//base + 0x5FF54;
-        if (SwingcopterPattern3 == 0) SwingcopterPattern3 = patterns::find_pattern("b8 2b 0 0 0 c7 45 a4");//base + 0x16625C;
-        if (SwingcopterPattern4 == 0) SwingcopterPattern4 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 1b");//base + 0x1812B6;
-        if (SwingcopterPattern5 == 0) SwingcopterPattern5 = patterns::find_pattern("bb 2b 0 0 0 eb 2a 68");//base + 0x1F0245;
-        if (SwingcopterPattern6 == 0) SwingcopterPattern6 = patterns::find_pattern("ba 2b 0 0 0 89 4d f8");//base + 0x2D1B57;
-        WriteProcMem(SwingcopterPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x07 }, "SwingcopterPattern1");
-        WriteProcMem(SwingcopterPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x63 }, "SwingcopterPattern2");
-        WriteProcMem(SwingcopterPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7, 0x45, 0xa4 }, "SwingcopterPattern3");
-        WriteProcMem(SwingcopterPattern4, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x1b }, "SwingcopterPattern4");
-        WriteProcMem(SwingcopterPattern5, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb, 0x2a, 0x68 }, "SwingcopterPattern5");
-        WriteProcMem(SwingcopterPattern6, { 0xba, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89, 0x4d, 0xf8 }, "SwingcopterPattern6");
+        log(std::format("toRewrite:Robot:{}", Robot)); //b8 ? ? ? ? ff 15 ? ? ? ? 80 7d
+        if (RobotPattern1 == 0) RobotPattern1 = patterns::find_pattern("b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 33 c0 c3 8d 49");//base + 0x12548C
+        if (RobotPattern2 == 0) RobotPattern2 = patterns::find_pattern("b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 33 c0 c3 b8");//base + 0x5FDE3;
+        if (RobotPattern3 == 0) RobotPattern3 = patterns::find_pattern("B8 44 00 00 00 C7 45");//base + 0x1661DF;
+        if (RobotPattern4 == 0) RobotPattern4 = patterns::find_pattern("BB 44 00 00 00 EB 54");//base + 0x1F021B;
+        if (RobotPattern5 == 0) RobotPattern5 = patterns::find_pattern("B8 44 00 00 00 3B C8");//base + 0x2CF186;
+        WriteProcMem(RobotPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "RobotPattern1");
+        WriteProcMem(RobotPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "RobotPattern2");
+        WriteProcMem(RobotPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "RobotPattern3");
+        WriteProcMem(RobotPattern4, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "RobotPattern4");
+        WriteProcMem(RobotPattern5, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "RobotPattern5");
     };
     {//
         /*
-        * JetPack:
-        * 29(16)
-        * //JetPacks
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1254AA), "\xB8\x06\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+1254AA - B8 06000000    
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x16626D), "\xB8\x06\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+16626D - B8 06000000          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1EB72E), "\xB8\x06\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+1EB72E - B8 06000000          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1F025A), "\xBb\x06\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+1F025A - BB 06000000    
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x2D15B7), "\xBa\x06\x00\x00\x00", 5, NULL);
-         //  GeometryDash.exe+2D15B7 - BA 06000000          
-         WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x125B26), "\x83\xc6\x06", 3, NULL);
-         //  GeometryDash.exe+125B26 - 83 C6 06  
+        * Spider:
+        * 45(16)
+        *
+        WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x125492), "\xB8\x46\x00\x00\x00", 5, NULL);
+        //GeometryDash.exe+125492 - B8 46 00 00 00   
+        WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1661F3), "\xB8\x46\x00\x00\x00", 5, NULL);
+        //GeometryDash.exe+1661F3 - B8 46 00 00 00          
+        WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1EB453), "\xB8\x46\x00\x00\x00", 5, NULL);
+        //GeometryDash.exe+1EB453 - B8 46 00 00 00          
+        WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x2CF494), "\xB8\x46\x00\x00\x00", 5, NULL);
+        //GeometryDash.exe+2CF494 - B8 46 00 00 00          
+        WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<void*>(gd::base + 0x1F0230), "\xBB\x46\x00\x00\x00", 5, NULL);
+        //GeometryDash.exe+1F0230 - BB 46 00 00 00
+        */
+        std::vector<unsigned char> toRewrite = intToBytes(Spider);
+        fucking37stuff;
+        log(std::format("toRewrite:Spider:{}", Spider));
+        if (SpiderPattern1 == 0) SpiderPattern1 = patterns::find_pattern("b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 33 c0 c3 8d 49");//base + 0x125492;
+        if (SpiderPattern2 == 0) SpiderPattern2 = patterns::find_pattern("b8 ? ? ? ? c7 45 ? ? ? ? ? 89 45 ? e9 ? ? ? ? b8 ? ? ? ? c7 45 ? ? ? ? ? 89 45 ? e9 ? ? ? ? b8 ? ? ? ? c7 45 ? ? ? ? ? 89 45 ? eb");//base + 0x1661F3;
+        if (SpiderPattern3 == 0) SpiderPattern3 = patterns::find_pattern("B8 45 00 00 00 39 44 24");//base + 0x1EB453;
+        if (SpiderPattern4 == 0) SpiderPattern4 = patterns::find_pattern("B8 45 00 00 00 3B C8 0F");//base + 0x2CF494;
+        if (SpiderPattern5 == 0) SpiderPattern5 = patterns::find_pattern("bb ? ? ? ? eb ? 68 ? ? ? ? 8d 4c 24 ? e8 ? ? ? ? bb ? ? ? ? eb ? 68 ? ? ? ? 8d 4c 24 ? e8 ? ? ? ? bb ? ? ? ? eb ? 6a");//base + 0x1F0230;
+        WriteProcMem(SpiderPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "SpiderPattern1");
+        WriteProcMem(SpiderPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "SpiderPattern2");
+        WriteProcMem(SpiderPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "SpiderPattern3");
+        WriteProcMem(SpiderPattern4, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "SpiderPattern4");
+        WriteProcMem(SpiderPattern5, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3] }, "SpiderPattern5");
+    };
+    {//
+        /*
+        * Swing:
+        * 2b(16)
+        */
+        std::vector<unsigned char> toRewrite = intToBytes(Swing);
+        fucking37stuff;
+        log(std::format("toRewrite:Swing:{}", Swing));
+        if (SwingPattern1 == 0) SwingPattern1 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 7");//base + 0x125498;
+        if (SwingPattern2 == 0) SwingPattern2 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 63");//base + 0x5FF54;
+        if (SwingPattern3 == 0) SwingPattern3 = patterns::find_pattern("b8 2b 0 0 0 c7 45 a4");//base + 0x16625C;
+        if (SwingPattern4 == 0) SwingPattern4 = patterns::find_pattern("b8 2b 0 0 0 c3 b8 1b");//base + 0x1812B6;
+        if (SwingPattern5 == 0) SwingPattern5 = patterns::find_pattern("bb 2b 0 0 0 eb 2a 68");//base + 0x1F0245;
+        if (SwingPattern6 == 0) SwingPattern6 = patterns::find_pattern("ba 2b 0 0 0 89 4d f8");//base + 0x2D1B57;
+        WriteProcMem(SwingPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x07 }, "SwingPattern1");
+        WriteProcMem(SwingPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x63 }, "SwingPattern2");
+        WriteProcMem(SwingPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7, 0x45, 0xa4 }, "SwingPattern3");
+        WriteProcMem(SwingPattern4, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x1b }, "SwingPattern4");
+        WriteProcMem(SwingPattern5, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb, 0x2a, 0x68 }, "SwingPattern5");
+        WriteProcMem(SwingPattern6, { 0xba, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89, 0x4d, 0xf8 }, "SwingPattern6");
+    };
+    {//
+        /*
+        * Jetpack:
+        * 05(16)
+        */
+        std::vector<unsigned char> toRewrite = intToBytes(Jetpack);
+        fucking37stuff;
+        log(std::format("toRewrite:Jetpack:{}", Jetpack));
+        if (JetpackPattern1 == 0) JetpackPattern1 = patterns::find_pattern("b8 5 0 0 0 c3 b8 6 0 0 0 c3 33 c0 c3 8d");//base + 0x1254AA; fucku >:T
+        if (JetpackPattern2 == 0) JetpackPattern2 = patterns::find_pattern("b8 5 0 0 0 c7 45 a4");//base + 0x16626D;
+        if (JetpackPattern3 == 0) JetpackPattern3 = patterns::find_pattern("b8 5 0 0 0 39 44 24");//base + 0x1EB72E;
+        if (JetpackPattern4 == 0) JetpackPattern4 = patterns::find_pattern("bb 5 0 0 0 eb 15");//base + 0x1F025A;
+        if (JetpackPattern5 == 0) JetpackPattern5 = patterns::find_pattern("ba 5 0 0 0 89 4d f8");//base + 0x2D15B7;
+        WriteProcMem(JetpackPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x06 }, "JetpackPattern1");
+        WriteProcMem(JetpackPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7, 0x45, 0xa4 }, "JetpackPattern2");
+        WriteProcMem(JetpackPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x39, 0x44, 0x24 }, "JetpackPattern3");
+        WriteProcMem(JetpackPattern4, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb, 0x15, 0x6a }, "JetpackPattern4");
+        WriteProcMem(JetpackPattern5, { 0xba, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89, 0x4d, 0xf8 }, "JetpackPattern5");
+    };
+}
 
-        */
-        std::vector<unsigned char> toRewrite = intToBytes(JetPack);
-        fucking37stuff;
-        log(std::format("toRewrite:JetPack:{}", JetPack));
-        if (JetPackPattern1 == 0) JetPackPattern1 = patterns::find_pattern("b8 5 0 0 0 c3 b8 6 0 0 0 c3 33 c0 c3 8d");//base + 0x1254AA;fucku >:T
-        if (JetPackPattern2 == 0) JetPackPattern2 = patterns::find_pattern("b8 5 0 0 0 c7 45 a4");//base + 0x16626D;
-        if (JetPackPattern3 == 0) JetPackPattern3 = patterns::find_pattern("b8 5 0 0 0 39 44 24");//base + 0x1EB72E;
-        if (JetPackPattern4 == 0) JetPackPattern4 = patterns::find_pattern("bb 5 0 0 0 eb 15");//base + 0x1F025A;
-        if (JetPackPattern5 == 0) JetPackPattern5 = patterns::find_pattern("ba 5 0 0 0 89 4d f8");//base + 0x2D15B7;
-        WriteProcMem(JetPackPattern1, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc3, 0xb8, 0x06 }, "JetPackPattern1");
-        WriteProcMem(JetPackPattern2, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xc7, 0x45, 0xa4 }, "JetPackPattern2");
-        WriteProcMem(JetPackPattern3, { 0xb8, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x39, 0x44, 0x24 }, "JetPackPattern3");
-        WriteProcMem(JetPackPattern4, { 0xbb, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0xeb, 0x15, 0x6a }, "JetPackPattern4");
-        WriteProcMem(JetPackPattern5, { 0xba, toRewrite[0], toRewrite[1], toRewrite[2], toRewrite[3], 0x89, 0x4d, 0xf8 }, "JetPackPattern5");
+//int __fastcall GameManager::countForType(int a1, unsigned int a2)
+int __fastcall countForType(IconType type) {
+    CSimpleIni Ini;
+    Ini.LoadFile(IniPath.c_str());
+    int Cube = Ini.GetLongValue(MainSection, "Cube");
+    int Ship = Ini.GetLongValue(MainSection, "Ship");
+    int Ball = Ini.GetLongValue(MainSection, "Ball");
+    int Ufo = Ini.GetLongValue(MainSection, "Ufo");
+    int Wave = Ini.GetLongValue(MainSection, "Wave");
+    int Robot = Ini.GetLongValue(MainSection, "Robot");
+    int Spider = Ini.GetLongValue(MainSection, "Spider");
+    int Swing = Ini.GetLongValue(MainSection, "Swing");
+    int Jetpack = Ini.GetLongValue(MainSection, "Jetpack");
+    int DeathEffect = Ini.GetLongValue(MainSection, "DeathEffect");
+    int Special = Ini.GetLongValue(MainSection, "Special");
+    int ShipFire = Ini.GetLongValue(MainSection, "ShipFire");
+    auto ret = MappedHooks::getOriginal(countForType)(type);
+    //who its that swith
+    if (type == IconType::Cube) ret = Cube;
+    if (type == IconType::Ship) ret = Ship;
+    if (type == IconType::Ball) ret = Ball;
+    if (type == IconType::Ufo) ret = Ufo;
+    if (type == IconType::Wave) ret = Wave;
+    if (type == IconType::Robot) ret = Robot;
+    if (type == IconType::Spider) ret = Spider;
+    if (type == IconType::Swing) ret = Swing;
+    if (type == IconType::Jetpack) ret = Jetpack;
+    if (type == IconType::DeathEffect) ret = DeathEffect;
+    if (type == IconType::Special) ret = Special;
+    if (type == IconType::ShipFire) ret = ShipFire;
+    {
+        if (Ini.GetBoolValue(Section2, "GameManager::countForType Hook Logs"))
+            log(std::format(__FUNCTION__"(type {}) rtn {}", (int)type, ret));
     };
+    return ret;
 }
 
 void __fastcall loadingFinished(CCLayer* self) {
     MappedHooks::getOriginal(loadingFinished)(self);
     twoTimesVoidCallEscapeByParrentNode(self);
-    ConfigInit();
     UpdateIconsCount();
     //load new stuff also asd
     CSimpleIni Ini;
@@ -395,16 +450,26 @@ void __fastcall loadingFinished(CCLayer* self) {
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile);
         };
     };
-    int Player = Ini.GetLongValue(MainSection, "Player", 484);
-    int Ship = Ini.GetLongValue(MainSection, "Ship", 169);
-    int Player_ball = Ini.GetLongValue(MainSection, "Player_ball", 118);
-    int Bird = Ini.GetLongValue(MainSection, "Bird", 149);
-    int Dart = Ini.GetLongValue(MainSection, "Dart", 96);
-    int Swingcopter = Ini.GetLongValue(MainSection, "Swingcopter", 43);
-    int JetPack = Ini.GetLongValue(MainSection, "JetPack", 5);
+    {
+        //GameManager::countForType Hook
+        if (Ini.GetBoolValue(Section2, "GameManager::countForType Hook"))
+            MappedHooks::registerHook(patterns::find_pattern("0f b6 81 ? ? ? ? ff 24 85 ? ? ? ? b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 b8 ? ? ? ? c3 33 c0"), countForType);
+    };
+    int Cube = Ini.GetLongValue(MainSection, "Cube");
+    int Ship = Ini.GetLongValue(MainSection, "Ship");
+    int Ball = Ini.GetLongValue(MainSection, "Ball");
+    int Ufo = Ini.GetLongValue(MainSection, "Ufo");
+    int Wave = Ini.GetLongValue(MainSection, "Wave");
+    int Robot = Ini.GetLongValue(MainSection, "Robot");
+    int Spider = Ini.GetLongValue(MainSection, "Spider");
+    int Swing = Ini.GetLongValue(MainSection, "Swing");
+    int Jetpack = Ini.GetLongValue(MainSection, "Jetpack");
+    int DeathEffect = Ini.GetLongValue(MainSection, "DeathEffect");
+    int Special = Ini.GetLongValue(MainSection, "Special");
+    int ShipFire = Ini.GetLongValue(MainSection, "ShipFire");
     {
         std::stringstream num;
-        for (int io = 1; io <= Player; io++) {
+        for (int io = 1; io <= Cube; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/player_" + num.str() + ".plist");
             auto FrameToTest = ("player_" + num.str() + "_001.png");
@@ -428,7 +493,7 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        for (int io = 1; io <= Player_ball; io++) {
+        for (int io = 1; io <= Ball; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/player_ball_" + num.str() + ".plist");
             auto FrameToTest = ("player_ball_" + num.str() + "_001.png");
@@ -440,7 +505,7 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        for (int io = 1; io <= Bird; io++) {
+        for (int io = 1; io <= Ufo; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/bird_" + num.str() + ".plist");
             auto FrameToTest = ("bird_" + num.str() + "_001.png");
@@ -452,7 +517,7 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        for (int io = 1; io <= Dart; io++) {
+        for (int io = 1; io <= Wave; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/dart_" + num.str() + ".plist");
             auto FrameToTest = ("dart_" + num.str() + "_001.png");
@@ -464,7 +529,7 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        for (int io = 1; io <= Swingcopter; io++) {
+        for (int io = 1; io <= Swing; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/swing_" + num.str() + ".plist");
             auto FrameToTest = ("swing_" + num.str() + "_001.png");
@@ -476,7 +541,7 @@ void __fastcall loadingFinished(CCLayer* self) {
     }
     {
         std::stringstream num;
-        for (int io = 1; io <= JetPack; io++) {
+        for (int io = 1; io <= Jetpack; io++) {
             num << std::setw(2) << std::setfill('0') << io;
             auto TarFile = ("icons/jetpack_" + num.str() + ".plist");
             auto FrameToTest = ("jetpack_" + num.str() + "_001.png");
@@ -486,21 +551,25 @@ void __fastcall loadingFinished(CCLayer* self) {
             num.str("");
         }
     }
-    CalcIconsCount();
+    //CalcIconsCount();
 }
 
 DWORD WINAPI ModThread(void* hModule) {
     MH_Initialize();
     MappedHooks::registerHook(patterns::find_pattern("C2 04 00 CC CC CC ^ ?????? 00 75 3D 56 FF 15 "), loadingFinished);
-    Sleep(1000); 
-    OpenConsole();
     return 0;
 }
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
     if (ul_reason_for_call != DLL_PROCESS_ATTACH) return TRUE;
-    //OpenConsole();
     DisableThreadLibraryCalls(hModule);
     CreateThread(0, 0, ModThread, hModule, 0, 0);
+    ConfigInit();
+    CSimpleIni Ini;
+    Ini.LoadFile(IniPath.c_str());
+    {
+        if (Ini.GetBoolValue(Section2, "AllocConsole"))
+            OpenConsole();
+    };
     return TRUE;
 }
