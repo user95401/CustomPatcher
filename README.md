@@ -1,8 +1,9 @@
-# gd22ModTemplate
- mod made for Geometry Dash 2.2
+# InDeCreaseIcons
+ u can change some stuff:
+ * change values of maximum icons count
+ * load frames via _IconsSheet.plist
+ * idkja
 
- DOWNLOAD MOD LOADER for 2.2 and older By Me - [ONEMR_Loader](https://github.com/user95401/ONEMR_Loader)
+\- RUHAX TEAM, user666's original, zGuschin (explorer)
 
- btw [curly-eureka](https://github.com/user95401/curly-eureka) updated very less cocos headers yet<br>
- basic stuff works but not all<br>
- also no gd.h *yet* 😎
+![image](https://github.com/user95401/InDeCreaseIcons/assets/90561697/20b80fff-84d1-49d9-ab85-2f5bb5629ada)

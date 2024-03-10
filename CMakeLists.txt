@@ -1,32 +1,24 @@
-﻿cmake_minimum_required(VERSION 3.10.0)
+cmake_minimum_required(VERSION 3.21)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} /MANIFEST:NO")
-set(LIBRARY_OUTPUT_PATH "${CMAKE_CURRENT_LIST_DIR}")
-cmake_policy(SET CMP0057 NEW)
+set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
-project ("InDeCreaseIcons")
-set(developer "BETA-RuHax")
-set(description "Increase icons in gd 2.2!!! asd")
-set(lib_output "D:\\Games\\user666\\Geometry Dash 2.204 PC [modloader]\\openhack\\dll") # post build copy
+project(mod VERSION 1.0.0)
 
-#curly-eureka
-set(GAME_VERSION "2.2")
-include("C:\\Users\\Lenovo\\source\\curly-eureka\\CURLY-EUREKA-INCL.cmake")# "\" must be escaped by \\
+if (NOT DEFINED ENV{GEODE_SDK})
+    message(FATAL_ERROR "Unable to find Geode SDK! Please define GEODE_SDK environment variable to point to Geode")
+else()
+    message(STATUS "Found Geode: $ENV{GEODE_SDK}")
+endif()
 
-#version
-set(FILEVERSION "0, 0, 0, 2")
-set(LegalCopyright "user666's original")
-configure_file("Version.rc" "../../../src/Version.rc")
+add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
 #mod
-file(GLOB_RECURSE SRC
-Src/*
-#${CURLY_EUREKA_DIR} to include other stuff
-)
-add_library(${PROJECT_NAME} SHARED ${SRC} ${CURLY_EUREKA_SRC})
 
-#POST_BUILD
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND #POST_BUILD UPDATE USES POWERSHELL!
-"${CMAKE_CURRENT_LIST_DIR}/CMakePostBuild.bat" ${developer} ${PROJECT_NAME} ${LIBRARY_OUTPUT_PATH} ${lib_output})
+file(GLOB_RECURSE SRC ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
+include_directories(headers)
+
+add_library(${PROJECT_NAME} SHARED ${SRC} ${SRC_WIN32})
+message("SRC: ${SRC}")
+
+setup_geode_mod(${PROJECT_NAME})
