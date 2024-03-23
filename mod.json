@@ -1,9 +1,7 @@
 {
 	"geode": "2.0.0",
-	"gd": {
-		"win": "2.204"
-	},
-	"version": "v0.0.3",
+	"gd": {"win": "2.204"},
+	"version": "v0.0.0-beta4",
 	"id": "ruhax.indecreaseicons",
 	"name": "InDeCreaseIcons",
 	"developers": [ "RuHax Team", "user95401", "zGuschin" ],
@@ -16,7 +14,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 484
+			"default": 484,
+			"control": { "slider": false }
 		},
 		"Ship": {
 			"name": "Ship",
@@ -24,7 +23,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 169
+			"default": 169,
+			"control": { "slider": false }
 		},
 		"Ball": {
 			"name": "Ball",
@@ -32,7 +32,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 118
+			"default": 118,
+			"control": { "slider": false }
 		},
 		"Ufo": {
 			"name": "Ufo",
@@ -40,7 +41,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 149
+			"default": 149,
+			"control": { "slider": false }
 		},
 		"Wave": {
 			"name": "Wave",
@@ -48,7 +50,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 96
+			"default": 96,
+			"control": { "slider": false }
 		},
 		"Robot": {
 			"name": "Robot",
@@ -56,7 +59,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 68
+			"default": 68,
+			"control": { "slider": false }
 		},
 		"Spider": {
 			"name": "Spider",
@@ -64,7 +68,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 69
+			"default": 69,
+			"control": { "slider": false }
 		},
 		"Swing": {
 			"name": "Swing",
@@ -72,7 +77,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 43
+			"default": 43,
+			"control": { "slider": false }
 		},
 		"Jetpack": {
 			"name": "Jetpack",
@@ -80,7 +86,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 5
+			"default": 5,
+			"control": { "slider": false }
 		},
 		"DeathEffect": {
 			"name": "DeathEffect",
@@ -88,7 +95,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 20
+			"default": 20,
+			"control": { "slider": false }
 		},
 		"Special": {
 			"name": "Special",
@@ -96,7 +104,8 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 7
+			"default": 7,
+			"control": { "slider": false }
 		},
 		"ShipFire": {
 			"name": "ShipFire",
@@ -104,13 +113,14 @@
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 9
+			"default": 9,
+			"control": { "slider": false }
 		},
 		"LoadCustomSpritesheet": {
 			"name": "LoadCustomSpritesheet",
 			"description": "load frames via \"icons/_IconsSheet.plist\" and \"_IconsSheet.plist\"",
 			"type": "bool",
-			"default": false
+			"default": true
 		}
 	}
 }
