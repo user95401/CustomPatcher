@@ -12,6 +12,7 @@
     //Verify Hack
     write_bytes(gd::base + 0x71D48, { 0xEB });
 */
+#include <Geode/Geode.hpp>
 bool WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes, std::string title) {
     //nothing to rewrite
     if (ReadProcMem(address, bytes.size()) == bytes) return false;
@@ -34,7 +35,8 @@ bool WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& byte
     //was what
     log << ", org was \"" << ReadProcMemAsStr(address, bytes.size() < 16 ? 16 : bytes.size()) << "\"";
     //a
-    bool rtn = WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
+    //bool rtn = WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
+    bool rtn = geode::Mod::get()->patch(reinterpret_cast<void*>(address), bytes).isOk();
     log.clear();
     return rtn;
 }

@@ -309,23 +309,16 @@ void UpdateIconsCount() {
 #include <Geode/loader/SettingEvent.hpp>
 $execute{
         listenForAllSettingChanges([](SettingValue* hi) {
-                if (bool(hi->getModID() == Mod::get()->getID()) and !CCDirector::get()->m_pRunningScene->getChildByTag(9620)) {
-                    auto pNotification = Notification::create(
-                        "", 
-                        CCLabelTTF::create(
-                            "Reload resources to take effect :D \n \n \n \n \n \n \n", 
-                            "Times.ttf", 
-                            16.f
-                        ), 
-                        5.f
+                if (bool(hi->getModID() == Mod::get()->getID()) and !CCDirector::get()->m_pRunningScene->getChildByIDRecursive("RELOAD_POP"_spr)) {
+                    auto asd = geode::createQuickPopup(
+                        "Reload All",
+                        "Reload resources to take effect?",
+                        "Later", "Yes",
+                        [](auto, bool btn2) {
+                            if (btn2) GameManager::get()->reloadAll(false, false, true);
+                        }
                     );
-                    pNotification->setTag(9620);
-                    pNotification->show();
-                    pNotification->runAction(
-                        CCRepeatForever::create(
-                            CCMoveTo::create(0.f, CCPoint(CCDirector::get()->getWinSize().width / 2, -40.f))
-                        )
-                    );
+                    asd->setID("RELOAD_POP"_spr);
                 };
             });
 };
