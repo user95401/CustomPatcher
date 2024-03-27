@@ -440,3 +440,23 @@ class $modify(LoadingLayer) {
         LoadingLayer::loadingFinished();
     };
 };
+
+#include <Geode/modify/GameManager.hpp>
+class $modify(GameManager) {
+    auto asd() { return; }
+    bool isIconUnlocked(int p0, IconType p1) {
+        auto rtn = GameManager::isIconUnlocked(p0, p1);
+        matjson::Value asd = Mod::get()->getMetadata().getRawJSON();
+        if (p1 == IconType::Cube and p0 > asd["settings"]["Cube"]["default"].as_int()) return 1;
+        if (p1 == IconType::Cube and p0 > asd["settings"]["Cube"]["default"].as_int()) return 1;
+        if (p1 == IconType::Ship and p0 > asd["settings"]["Ship"]["default"].as_int()) return 1;
+        if (p1 == IconType::Ball and p0 > asd["settings"]["Ball"]["default"].as_int()) return 1;
+        if (p1 == IconType::Ufo and p0 > asd["settings"]["Ufo"]["default"].as_int()) return 1;
+        if (p1 == IconType::Wave and p0 > asd["settings"]["Wave"]["default"].as_int()) return 1;
+        if (p1 == IconType::Robot and p0 > asd["settings"]["Robot"]["default"].as_int()) return 1;
+        if (p1 == IconType::Spider and p0 > asd["settings"]["Spider"]["default"].as_int()) return 1;
+        if (p1 == IconType::Swing and p0 > asd["settings"]["Swing"]["default"].as_int()) return 1;
+        if (p1 == IconType::Jetpack and p0 > asd["settings"]["Jetpack"]["default"].as_int()) return 1;
+        return rtn;
+    }
+};
