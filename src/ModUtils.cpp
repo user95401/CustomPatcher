@@ -14,6 +14,7 @@
 */
 #include <Geode/Geode.hpp>
 bool WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes, std::string title) {
+    /*
     //nothing to rewrite
     if (ReadProcMem(address, bytes.size()) == bytes) return false;
     //stringstream
@@ -35,10 +36,20 @@ bool WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& byte
     //was what
     log << ", org was \"" << ReadProcMemAsStr(address, bytes.size() < 16 ? 16 : bytes.size()) << "\"";
     //a
-    //bool rtn = WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
-    bool rtn = geode::Mod::get()->patch(reinterpret_cast<void*>(address), bytes).isOk();
+    bool rtn = WriteProcessMemory(GetCurrentProcess(), reinterpret_cast<LPVOID>(address), bytes.data(), bytes.size(), nullptr);
     log.clear();
-    return rtn;
+    */
+    //disable and disown patch to aplly new patch?
+    for (auto catgirl : geode::Mod::get()->getPatches())
+        if (catgirl and catgirl->getAddress() == address) {
+            if(catgirl->isEnabled()) catgirl->disable();
+            geode::Mod::get()->disownPatch(catgirl);
+        }
+    auto patch = geode::Patch::create(reinterpret_cast<void*>(address), bytes);
+    patch->enable();
+    geode::Mod::get()->claimPatch(patch);
+    geode::log::debug("{} \"{}\": {}", __func__, title, patch->getRuntimeInfo().dump());
+    return true;
 }
 bool WriteProcMem(const std::uintptr_t address, std::vector<uint8_t> const& bytes) {
     return WriteProcMem(address, bytes, "");
