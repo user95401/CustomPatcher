@@ -16,11 +16,13 @@ void copy_settings_from_game_dir() {
     if (!std::ifstream(g_game_json.string().c_str()).good()) return log::warn("cant get the {}", g_game_json);
     ghc::filesystem::copy(
         g_game_json, //from game dir
-        g_data_dir, //to game data dir
+        g_data_json, //to game data dir
         ghc::filesystem::copy_options::overwrite_existing);
+    Mod::get()->loadData();
 };
 
 void copy_settings_from_data_dir() {
+    Mod::get()->saveData();
     log::info("{}", __FUNCTION__);
     log::debug("g_game_json: {}", g_game_json);
     log::debug("g_game_dir: {}", g_game_dir);
@@ -28,16 +30,20 @@ void copy_settings_from_data_dir() {
     log::debug("g_data_dir: {}", g_data_dir);
     if (!std::ifstream(g_data_json.string().c_str()).good()) return log::warn("cant get the {}", g_data_json);
     ghc::filesystem::copy(
-        g_data_json, //to game data dir
-        g_game_dir, //from game dir
+        g_data_json, //from game data dir
+        g_game_json, //to game dir
         ghc::filesystem::copy_options::overwrite_existing);
 };
 
 $on_mod(Loaded) {
     copy_settings_from_game_dir();
-    Mod::get()->loadData();
 };
 
-$on_mod(DataSaved) {
-    copy_settings_from_data_dir();
+#include <Geode/loader/SettingEvent.hpp>
+$execute{
+    listenForAllSettingChanges([](SettingValue* hi) {
+        if (bool(hi->getModID() == Mod::get()->getID())) {
+            copy_settings_from_data_dir();
+        };
+    });
 };
