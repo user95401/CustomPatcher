@@ -443,7 +443,6 @@ class $modify(LoadingLayer) {
 
 #include <Geode/modify/GameManager.hpp>
 class $modify(GameManager) {
-#ifndef GEODE_IS_WINDOWS
     static int countForType(IconType p0) {
         auto rtn = GameManager::countForType(p0);
         log::debug("{}({}) org rtn: {}", __func__, (int)p0, rtn);
@@ -473,6 +472,7 @@ class $modify(GameManager) {
         if (p0 == IconType::ShipFire) return ShipFire;//) return 1;
         return rtn;
     }
+#ifndef GEODE_IS_WINDOWS
 #endif
     bool isIconUnlocked(int p0, IconType p1) {
         auto rtn = GameManager::isIconUnlocked(p0, p1);
