@@ -324,7 +324,7 @@ $execute{
 };
 #include <Geode/modify/LoadingLayer.hpp>
 class $modify(LoadingLayer) {
-    TodoReturn loadingFinished() {
+    void loadingFinished() {
         UpdateIconsCount();
         //load new stuff also asd
         int LoadCustomSpritesheet = Mod::get()->getSettingValue<bool>("LoadCustomSpritesheet");
@@ -443,11 +443,40 @@ class $modify(LoadingLayer) {
 
 #include <Geode/modify/GameManager.hpp>
 class $modify(GameManager) {
-    auto asd() { return; }
+#ifndef GEODE_IS_WINDOWS
+    static int countForType(IconType p0) {
+        auto rtn = GameManager::countForType(p0);
+        log::debug("{}({}) org rtn: {}", __func__, (int)p0, rtn);
+        int Cube = Mod::get()->getSettingValue<int64_t>("Cube");
+        int Ship = Mod::get()->getSettingValue<int64_t>("Ship");
+        int Ball = Mod::get()->getSettingValue<int64_t>("Ball");
+        int Ufo = Mod::get()->getSettingValue<int64_t>("Ufo");
+        int Wave = Mod::get()->getSettingValue<int64_t>("Wave");
+        int Robot = Mod::get()->getSettingValue<int64_t>("Robot");
+        int Spider = Mod::get()->getSettingValue<int64_t>("Spider");
+        int Swing = Mod::get()->getSettingValue<int64_t>("Swing");
+        int Jetpack = Mod::get()->getSettingValue<int64_t>("Jetpack");
+        int DeathEffect = Mod::get()->getSettingValue<int64_t>("DeathEffect");
+        int Special = Mod::get()->getSettingValue<int64_t>("Special");
+        int ShipFire = Mod::get()->getSettingValue<int64_t>("ShipFire");
+        if (p0 == IconType::Cube) return Cube;//) return 1;
+        if (p0 == IconType::Ship) return Ship;//) return 1;
+        if (p0 == IconType::Ball) return Ball;//) return 1;
+        if (p0 == IconType::Ufo) return Ufo;//) return 1;
+        if (p0 == IconType::Wave) return Wave;//) return 1;
+        if (p0 == IconType::Robot) return Robot;//) return 1;
+        if (p0 == IconType::Spider) return Spider;//) return 1;
+        if (p0 == IconType::Swing) return Swing;//) return 1;
+        if (p0 == IconType::Jetpack) return Jetpack;//) return 1;
+        if (p0 == IconType::DeathEffect) return DeathEffect;//) return 1;
+        if (p0 == IconType::Special) return Special;//) return 1;
+        if (p0 == IconType::ShipFire) return ShipFire;//) return 1;
+        return rtn;
+    }
+#endif
     bool isIconUnlocked(int p0, IconType p1) {
         auto rtn = GameManager::isIconUnlocked(p0, p1);
         matjson::Value asd = Mod::get()->getMetadata().getRawJSON();
-        if (p1 == IconType::Cube and p0 > asd["settings"]["Cube"]["default"].as_int()) return 1;
         if (p1 == IconType::Cube and p0 > asd["settings"]["Cube"]["default"].as_int()) return 1;
         if (p1 == IconType::Ship and p0 > asd["settings"]["Ship"]["default"].as_int()) return 1;
         if (p1 == IconType::Ball and p0 > asd["settings"]["Ball"]["default"].as_int()) return 1;
