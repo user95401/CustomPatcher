@@ -448,7 +448,7 @@ class $modify(GameManager) {
         auto rtn = GameManager::countForType(p0);
         auto log = fmt::format("{}({}) org rtn: {}", __func__, (int)p0, rtn);
         log::debug("{}", log);
-        geode::createQuickPopup(__func__, log, "asd");
+        geode::createQuickPopup(__func__, log, "asd", nullptr, nullptr);
         int Cube = Mod::get()->getSettingValue<int64_t>("Cube");
         int Ship = Mod::get()->getSettingValue<int64_t>("Ship");
         int Ball = Mod::get()->getSettingValue<int64_t>("Ball");
