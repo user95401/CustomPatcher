@@ -446,7 +446,7 @@ class $modify(GameManager) {
 #ifndef GEODE_IS_WINDOWS
     static int countForType(IconType p0) {
         auto rtn = GameManager::countForType(p0);
-        auto log = fmt:format("{}({}) org rtn: {}", __func__, (int)p0, rtn);
+        auto log = fmt::format("{}({}) org rtn: {}", __func__, (int)p0, rtn);
         log::debug("{}", log);
         geode::createQuickPopup(__func__, log, "asd");
         int Cube = Mod::get()->getSettingValue<int64_t>("Cube");
