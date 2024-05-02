@@ -445,10 +445,10 @@ class $modify(LoadingLayer) {
 class $modify(GameManager) {
 #ifndef GEODE_IS_WINDOWS
     int countForType(IconType p0) {
-        auto rtn = GameManager::countForType(p0);
-        auto log = fmt::format("{}({}) org rtn: {}", __func__, (int)p0, rtn);
+        auto rtn = 4;//GameManager::countForType(p0);
+        auto log = fmt::format("{}({})", __func__, (int)p0);
         log::debug("{}", log);
-        geode::createQuickPopup(__func__, log, "asd", nullptr, nullptr);
+        geode::Notification::create(log)->show();
         int Cube = Mod::get()->getSettingValue<int64_t>("Cube");
         int Ship = Mod::get()->getSettingValue<int64_t>("Ship");
         int Ball = Mod::get()->getSettingValue<int64_t>("Ball");
