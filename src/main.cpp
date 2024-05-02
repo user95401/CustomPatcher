@@ -444,7 +444,7 @@ class $modify(LoadingLayer) {
 #include <Geode/modify/GameManager.hpp>
 class $modify(GameManager) {
 #ifndef GEODE_IS_WINDOWS
-    static int countForType(IconType p0) {
+    int countForType(IconType p0) {
         auto rtn = GameManager::countForType(p0);
         auto log = fmt::format("{}({}) org rtn: {}", __func__, (int)p0, rtn);
         log::debug("{}", log);
