@@ -4,7 +4,7 @@
 	"version": "v0.0.0-beta.7",
 	"id": "ruhax.indecreaseicons",
 	"name": "InDeCreaseIcons",
-	"developers": [ "RuHax Team", "user95401", "zGuschin" ],
+	"developers": [ "RuHax Team", "user95401" ],
 	"description": "Increase icons in gd 2.2!!! asd",
 	"repository": "https://github.com/user95401/InDeCreaseIcons",
 	"settings": {
@@ -115,12 +115,6 @@
 			"max": 9999,
 			"default": 9,
 			"control": { "slider": false }
-		},
-		"LoadCustomSpritesheet": {
-			"name": "LoadCustomSpritesheet",
-			"description": "load frames via \"icons/_IconsSheet.plist\" and \"_IconsSheet.plist\"",
-			"type": "bool",
-			"default": true
 		}
 	}
 }
