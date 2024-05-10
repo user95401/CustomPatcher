@@ -47,22 +47,76 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
     return { lay1_name, lay2_name, lay3_name, glow_name, extr_name };
 }
 
-#include <Geode/loader/SettingEvent.hpp>
-//$execute{
-//        listenForAllSettingChanges([](SettingValue* hi) {
-//                if (bool(hi->getModID() == Mod::get()->getID()) and !CCDirector::get()->m_pRunningScene->getChildByIDRecursive("RELOAD_POP"_spr)) {
-//                    auto asd = geode::createQuickPopup(
-//                        "Reload All",
-//                        "Reload resources to take effect?",
-//                        "Later", "Yes",
-//                        [](auto, bool btn2) {
-//                            if (btn2) GameManager::get()->reloadAll(false, false, true);
-//                        }
-//                    );
-//                    asd->setID("RELOAD_POP"_spr);
-//                };
-//            });
-//};
+#include <Geode/modify/SimplePlayer.hpp>
+class $modify(SimplePlayer) {
+    void updatePlayerFrame(int p0, IconType p1) {
+        auto index = p0;
+        auto type = p1;
+        //not simple ones
+        if (type == IconType::Robot) {
+            SimplePlayer::updatePlayerFrame(index, type);
+            return;
+        }
+        if (type == IconType::Spider) {
+            SimplePlayer::updatePlayerFrame(index, type);
+            return;
+        }
+        //update frames
+        auto names = frameNamesInVec(index, type);
+        setFrames(names[0], names[1], names[2], names[3], names[4]);
+    }
+};
+
+#include <Geode/modify/GameManager.hpp>
+class $modify(GameManager) {
+    static int countForType(IconType p0) {
+        auto rtn = GameManager::countForType(p0);
+        if (p0 == IconType::Cube) return Mod::get()->getSettingValue<int64_t>("Cube");
+        if (p0 == IconType::Ship) return Mod::get()->getSettingValue<int64_t>("Ship");
+        if (p0 == IconType::Ball) return Mod::get()->getSettingValue<int64_t>("Ball");
+        if (p0 == IconType::Ufo) return Mod::get()->getSettingValue<int64_t>("Ufo");
+        if (p0 == IconType::Wave) return Mod::get()->getSettingValue<int64_t>("Wave");
+        if (p0 == IconType::Robot) return Mod::get()->getSettingValue<int64_t>("Robot");
+        if (p0 == IconType::Spider) return Mod::get()->getSettingValue<int64_t>("Spider");
+        if (p0 == IconType::Swing) return Mod::get()->getSettingValue<int64_t>("Swing");
+        if (p0 == IconType::Jetpack) return Mod::get()->getSettingValue<int64_t>("Jetpack");
+        if (p0 == IconType::DeathEffect) return Mod::get()->getSettingValue<int64_t>("DeathEffect");
+        if (p0 == IconType::Special) return Mod::get()->getSettingValue<int64_t>("Special");
+        if (p0 == IconType::ShipFire) return Mod::get()->getSettingValue<int64_t>("ShipFire");
+        return rtn;
+    }
+    bool isIconUnlocked(int p0, IconType p1) {
+        matjson::Value asd = Mod::get()->getMetadata().getRawJSON();
+        if (p1 == IconType::Cube and p0 > asd["settings"]["Cube"]["default"].as_int()) return 1;
+        if (p1 == IconType::Ship and p0 > asd["settings"]["Ship"]["default"].as_int()) return 1;
+        if (p1 == IconType::Ball and p0 > asd["settings"]["Ball"]["default"].as_int()) return 1;
+        if (p1 == IconType::Ufo and p0 > asd["settings"]["Ufo"]["default"].as_int()) return 1;
+        if (p1 == IconType::Wave and p0 > asd["settings"]["Wave"]["default"].as_int()) return 1;
+        if (p1 == IconType::Robot and p0 > asd["settings"]["Robot"]["default"].as_int()) return 1;
+        if (p1 == IconType::Spider and p0 > asd["settings"]["Spider"]["default"].as_int()) return 1;
+        if (p1 == IconType::Swing and p0 > asd["settings"]["Swing"]["default"].as_int()) return 1;
+        if (p1 == IconType::Jetpack and p0 > asd["settings"]["Jetpack"]["default"].as_int()) return 1;
+        return GameManager::isIconUnlocked(p0, p1);
+    }
+};
+
+#include <Geode/modify/GJGarageLayer.hpp>
+class $modify(GJGarageLayer) {
+    void setupIconSelect() {
+        GJGarageLayer::setupIconSelect();
+        log::debug("{}", __func__);
+        if ((int)m_iconType == 0) m_iconType = GameManager::get()->m_playerIconType;
+        if (m_iconID == 0) m_iconID = GameManager::get()->activeIconForType(m_iconType);
+        m_playerObject->updatePlayerFrame(m_iconID, m_iconType);
+        selectTab(m_iconType);
+    };
+    void setupSpecialPage() {
+        //remove dots arrows selectors, all the stuff
+        this->setupPage(0, IconType::DeathEffect);
+        m_iconSelection->removeAllChildrenWithCleanup(false);
+        return;
+    }
+};
 
 #include <Geode/modify/LoadingLayer.hpp>
 class $modify(LoadingLayer) {
@@ -84,67 +138,4 @@ class $modify(LoadingLayer) {
         };
         LoadingLayer::loadingFinished();
     };
-};
-
-#include <Geode/modify/GJGarageLayer.hpp>
-class $modify(GJGarageLayer) {
-    /**
-     * @note[short] Windows: 0x1f2590
-     * @note[short] Android
-     */
-    void setupSpecialPage() {
-        //remove dots arrows selectors, all the stuff
-        this->setupPage(0, IconType::DeathEffect);
-        m_iconSelection->removeAllChildrenWithCleanup(false);
-        return;
-    }
-};
-
-#include <Geode/modify/GameManager.hpp>
-class $modify(GameManager) {
-    int countForType(IconType p0) {
-        auto rtn = 4;//GameManager::countForType(p0);
-        auto log = fmt::format("{}({})", __func__, (int)p0);
-        log::debug("{}", log);
-        geode::Notification::create(log)->show();
-        int Cube = Mod::get()->getSettingValue<int64_t>("Cube");
-        int Ship = Mod::get()->getSettingValue<int64_t>("Ship");
-        int Ball = Mod::get()->getSettingValue<int64_t>("Ball");
-        int Ufo = Mod::get()->getSettingValue<int64_t>("Ufo");
-        int Wave = Mod::get()->getSettingValue<int64_t>("Wave");
-        int Robot = Mod::get()->getSettingValue<int64_t>("Robot");
-        int Spider = Mod::get()->getSettingValue<int64_t>("Spider");
-        int Swing = Mod::get()->getSettingValue<int64_t>("Swing");
-        int Jetpack = Mod::get()->getSettingValue<int64_t>("Jetpack");
-        int DeathEffect = Mod::get()->getSettingValue<int64_t>("DeathEffect");
-        int Special = Mod::get()->getSettingValue<int64_t>("Special");
-        int ShipFire = Mod::get()->getSettingValue<int64_t>("ShipFire");
-        if (p0 == IconType::Cube) return Cube;//) return 1;
-        if (p0 == IconType::Ship) return Ship;//) return 1;
-        if (p0 == IconType::Ball) return Ball;//) return 1;
-        if (p0 == IconType::Ufo) return Ufo;//) return 1;
-        if (p0 == IconType::Wave) return Wave;//) return 1;
-        if (p0 == IconType::Robot) return Robot;//) return 1;
-        if (p0 == IconType::Spider) return Spider;//) return 1;
-        if (p0 == IconType::Swing) return Swing;//) return 1;
-        if (p0 == IconType::Jetpack) return Jetpack;//) return 1;
-        if (p0 == IconType::DeathEffect) return DeathEffect;//) return 1;
-        if (p0 == IconType::Special) return Special;//) return 1;
-        if (p0 == IconType::ShipFire) return ShipFire;//) return 1;
-        return rtn;
-    }
-    bool isIconUnlocked(int p0, IconType p1) {
-        auto rtn = GameManager::isIconUnlocked(p0, p1);
-        matjson::Value asd = Mod::get()->getMetadata().getRawJSON();
-        if (p1 == IconType::Cube and p0 > asd["settings"]["Cube"]["default"].as_int()) return 1;
-        if (p1 == IconType::Ship and p0 > asd["settings"]["Ship"]["default"].as_int()) return 1;
-        if (p1 == IconType::Ball and p0 > asd["settings"]["Ball"]["default"].as_int()) return 1;
-        if (p1 == IconType::Ufo and p0 > asd["settings"]["Ufo"]["default"].as_int()) return 1;
-        if (p1 == IconType::Wave and p0 > asd["settings"]["Wave"]["default"].as_int()) return 1;
-        if (p1 == IconType::Robot and p0 > asd["settings"]["Robot"]["default"].as_int()) return 1;
-        if (p1 == IconType::Spider and p0 > asd["settings"]["Spider"]["default"].as_int()) return 1;
-        if (p1 == IconType::Swing and p0 > asd["settings"]["Swing"]["default"].as_int()) return 1;
-        if (p1 == IconType::Jetpack and p0 > asd["settings"]["Jetpack"]["default"].as_int()) return 1;
-        return rtn;
-    }
 };
