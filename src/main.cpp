@@ -102,9 +102,12 @@ class $modify(GJGarageLayer) {
 
 #include <Geode/modify/GameManager.hpp>
 class $modify(GameManager) {
-    static int countForType(IconType p0) {
-        auto rtn = GameManager::countForType(p0);
-        log::debug("{}({}) org rtn: {}", __func__, (int)p0, rtn);
+#ifndef GEODE_IS_WINDOWS
+    int countForType(IconType p0) {
+        auto rtn = 4;//GameManager::countForType(p0);
+        auto log = fmt::format("{}({})", __func__, (int)p0);
+        log::debug("{}", log);
+        geode::Notification::create(log)->show();
         int Cube = Mod::get()->getSettingValue<int64_t>("Cube");
         int Ship = Mod::get()->getSettingValue<int64_t>("Ship");
         int Ball = Mod::get()->getSettingValue<int64_t>("Ball");
@@ -146,118 +149,3 @@ class $modify(GameManager) {
         return rtn;
     }
 };
-
-#include <Geode/modify/SimplePlayer.hpp>
-/*win2.204
-m_birdDome=516
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_firstLayer=508
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_secondLayer=512
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_birdDome=516
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_outlineSprite=520
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_detailSprite=524
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_robotSprite=528
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_spiderSprite=532
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_unknown=536
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_hasGlowOutline=540
-11:19:43 DEBUG [Main] [InDeCreaseIcons]: m_hasCustomGlowColor=548
-*/
-class $modify(SimplePlayer) {
-    void updatePlayerFrame(int p0, IconType p1) {
-        //auto wha = MEMBERBYOFFSET(const char*, this, 544);
-        log::debug("{}(int {}, IconType {}), wha=", __func__, p0, (int)p1);
-        if (p1 == IconType::Robot) {
-            loadIcon(p0, p1);
-            SimplePlayer::updatePlayerFrame(p0, p1);
-            return;
-        }
-        if (p1 == IconType::Spider) {
-            loadIcon(p0, p1);
-            SimplePlayer::updatePlayerFrame(p0, p1);
-            return;
-        }
-        //firstLayer, secondLayer, birdDome, outlineSprite, detailSprite
-        auto names = frameNamesInVec(p0, p1);
-        this->setFrames(names[0], names[1], names[2], names[3], names[4]);
-    }
-};
-#include <Geode/modify/PlayerObject.hpp>
-class $modify(PlayerObject) {
-    /**
-     * @note[short] Windows: 0x2d6b90
-     * @note[short] Android
-     */
-    void aupdatePlayerFrame(int p0);
-
-    /**
-     * @note[short] Windows: 0x2d8c50
-     * @note[short] Android
-     */
-    void aupdatePlayerGlow();
-
-    /**
-     * @note[short] Windows: 0x2d6f20
-     * @note[short] Android
-     */
-    void aupdatePlayerJetpackFrame(int p0);
-
-    /**
-     * @note[short] Out of line
-     */
-    void aupdatePlayerRobotFrame(int id);
-
-    /**
-     * @note[short] Windows: 0x2d7300
-     * @note[short] Android
-     */
-    void aupdatePlayerRollFrame(int p0);
-
-    /**
-     * @note[short] Windows: 0x2d8bf0
-     * @note[short] Android
-     */
-    void aupdatePlayerScale();
-
-    /**
-     * @note[short] Windows: 0x2d6d60
-     * @note[short] Android
-     */
-    void aupdatePlayerShipFrame(int p0);
-
-    /**
-     * @note[short] Out of line
-     */
-    void aupdatePlayerSpiderFrame(int id);
-
-    /**
-     * @note[short] Windows: 0x2d7840
-     * @note[short] Android
-     */
-    void aupdatePlayerSpriteExtra(gd::string p0);
-
-    /**
-     * @note[short] Windows: 0x2d74c0
-     * @note[short] Android
-     */
-    void aupdatePlayerSwingFrame(int p0);
-};
-
-void myAddSpriteFramesWithFile(CCSpriteFrameCache* pClass, const char* pszPlist) {
-    // Call the original
-    pClass->addSpriteFramesWithFile(pszPlist);
-    log::debug("loading the {}", pszPlist);
-}
-$execute{
-    Mod::get()->hook(
-        reinterpret_cast<void*>(
-            // All of this is to get the address of ccDrawCircle
-            geode::addresser::getNonVirtual(
-                // This is used because this function is overloaded,
-                // otherwise just a regular function pointer would suffice (&foobar)
-                geode::modifier::Resolve<const char*>::func(&cocos2d::CCSpriteFrameCache::addSpriteFramesWithFile)
-            )
-        ),
-        &myAddSpriteFramesWithFile, // Our detour
-        "cocos2d::CCSpriteFrameCache::addSpriteFramesWithFile", // Display name, shows up on the console
-        tulip::hook::TulipConvention::Thiscall // Static free-standing cocos2d functions are cdecl
-    );
-}
