@@ -102,7 +102,6 @@ class $modify(GJGarageLayer) {
 
 #include <Geode/modify/GameManager.hpp>
 class $modify(GameManager) {
-#ifndef GEODE_IS_WINDOWS
     int countForType(IconType p0) {
         auto rtn = 4;//GameManager::countForType(p0);
         auto log = fmt::format("{}({})", __func__, (int)p0);
