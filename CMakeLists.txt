@@ -19,7 +19,7 @@ add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 file(GLOB_RECURSE SRC ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp)
 include_directories(headers)
 
-add_library(${PROJECT_NAME} SHARED ${SRC} ${SRC_WIN32})
+add_library(${PROJECT_NAME} SHARED ${SRC})
 message("SRC: ${SRC}")
 
 setup_geode_mod(${PROJECT_NAME})
