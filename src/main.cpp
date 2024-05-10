@@ -222,6 +222,10 @@ class $modify(GJGarageLayer) {
         //remove dots arrows selectors, all the stuff
         this->setupPage(0, IconType::DeathEffect);
         m_iconSelection->removeAllChildrenWithCleanup(false);
-        return GJGarageLayer::setupSpecialPage();
+        m_iconSelection->addChild(CCLabelTTF::create("todo...", "arial", 20.f), 1, 85629);
+        auto labelnode = m_iconSelection->getChildByTag(85629);
+        labelnode->setPosition(m_iconSelectionMenu->getPosition());
+        labelnode->setPositionY((labelnode->getPositionY() * 3));
+        return;//GJGarageLayer::setupSpecialPage();
     }
 };
