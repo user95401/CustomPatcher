@@ -20,12 +20,24 @@ std::string keyForType(IconType type = IconType::Cube) {
     };
 }
 void loadIcon(int index, IconType type) {
-    auto texture_name = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
-    auto plist_name = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
-    if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
-        CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
-        CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
+    //
+    {
+        auto texture_name = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
+        auto plist_name = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
+        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
+            CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
+        };
     };
+    //_IconsSheet.plist
+    {
+        auto texture_name = "_IconsSheet.png";
+        auto plist_name = "_IconsSheet.plist";
+        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
+            CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
+        };
+    }
 }
 std::vector<const char*> frameNamesInVec(int index, IconType type) {
     //load frames
@@ -47,18 +59,110 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
     return { lay1_name, lay2_name, lay3_name, glow_name, extr_name };
 }
 
+#include <Geode/modify/PlayerObject.hpp>
+class $modify(PlayerObject) {
+    auto frame(const char* name) {
+        return CCSpriteFrameCache::sharedSpriteFrameCache()
+            ->spriteFrameByName(name);
+    }
+    void customFramesUpate(int index, IconType type, bool forVehicle = false) {
+        auto names = frameNamesInVec(index, type);
+        if (not forVehicle) {
+            if (m_iconSprite) m_iconSprite->setDisplayFrame(frame(names[0]));
+            if (m_iconSpriteSecondary) m_iconSpriteSecondary->setDisplayFrame(frame(names[1]));
+            if (m_iconSpriteWhitener) m_iconSpriteWhitener->setDisplayFrame(frame(names[4]));
+            if (m_iconGlow) m_iconGlow->setDisplayFrame(frame(names[3]));
+            //set pos
+            this->m_iconSprite->setPosition({
+                this->m_iconSprite->displayFrame()->getOriginalSize().width / this->m_iconSprite->getContentSize().width,
+                this->m_iconSprite->displayFrame()->getOriginalSize().height / this->m_iconSprite->getContentSize().height,
+                });
+            this->m_iconSpriteSecondary->setPosition(this->m_iconSprite->getContentSize() / 2);// ({ 16.600f, 16.200f });
+            this->m_iconSpriteWhitener->setPosition(this->m_iconSprite->getContentSize() / 2);// ({ 16.800f, 16.200f });
+            this->m_iconGlow->setPosition({
+                this->m_iconGlow->displayFrame()->getOriginalSize().width / this->m_iconGlow->getContentSize().width,
+                this->m_iconGlow->displayFrame()->getOriginalSize().height / this->m_iconGlow->getContentSize().height,
+                });
+        }
+        else {
+            if (m_vehicleSprite) m_vehicleSprite->setDisplayFrame(frame(names[0]));
+            if (m_vehicleSpriteSecondary) m_vehicleSpriteSecondary->setDisplayFrame(frame(names[1]));
+            if (m_vehicleSpriteWhitener) m_vehicleSpriteWhitener->setDisplayFrame(frame(names[4]));
+            if (m_vehicleGlow) m_vehicleGlow->setDisplayFrame(frame(names[3]));
+            if (m_unk604) m_unk604->setDisplayFrame(frame(names[2]));
+            //set pos
+            this->m_vehicleSprite->setPosition({
+                this->m_vehicleSprite->displayFrame()->getOriginalSize().width / this->m_vehicleSprite->getContentSize().width,
+                this->m_vehicleSprite->displayFrame()->getOriginalSize().height / this->m_vehicleSprite->getContentSize().height,
+                });
+            this->m_vehicleSpriteSecondary->setPosition(this->m_vehicleSprite->getContentSize() / 2);// ({ 16.600f, 16.200f });
+            this->m_vehicleSpriteWhitener->setPosition(this->m_vehicleSprite->getContentSize() / 2);// ({ 16.800f, 16.200f });
+            this->m_unk604->setPosition(this->m_vehicleSprite->getContentSize() / 2);// ({ 16.800f, 16.200f });
+            this->m_vehicleGlow->setPosition({
+                this->m_vehicleGlow->displayFrame()->getOriginalSize().width / this->m_vehicleGlow->getContentSize().width,
+                this->m_vehicleGlow->displayFrame()->getOriginalSize().height / this->m_vehicleGlow->getContentSize().height,
+                });
+        };
+    }
+    int init_id() {
+        return getChildByID("init_id")->getTag();
+    }
+    static PlayerObject* create(int p0, int p1, GJBaseGameLayer * p2, cocos2d::CCLayer * p3, bool p4) {
+        auto __this = PlayerObject::create(p0, p1, p2, p3, p4);
+        //cube tag
+        auto init_id = CCNode::create();
+        init_id->setID("init_id");
+        init_id->setTag(p0);
+        __this->addChild(init_id);
+        //preupdate
+        __this->updatePlayerFrame(p0);
+        return __this;
+    }
+    void updatePlayerFrame(int p0) {
+        PlayerObject::updatePlayerFrame(p0);
+        customFramesUpate(p0, IconType::Cube);
+    };
+    void updatePlayerShipFrame(int p0) {
+        PlayerObject::updatePlayerShipFrame(p0);
+        customFramesUpate(p0, IconType::Ship, true);
+        customFramesUpate(init_id(), IconType::Cube);
+    };
+    void updatePlayerRollFrame(int p0) {
+        PlayerObject::updatePlayerRollFrame(p0);
+        customFramesUpate(p0, IconType::Ball);
+    };
+    void updatePlayerBirdFrame(int p0) {
+        PlayerObject::updatePlayerBirdFrame(p0);
+        customFramesUpate(p0, IconType::Ufo, true);
+        customFramesUpate(init_id(), IconType::Cube);
+    };
+    void updatePlayerDartFrame(int p0) {
+        PlayerObject::updatePlayerDartFrame(p0);
+        customFramesUpate(p0, IconType::Wave);
+    };
+    void updatePlayerSwingFrame(int p0) {
+        PlayerObject::updatePlayerSwingFrame(p0);
+        customFramesUpate(p0, IconType::Swing);
+    };
+    void updatePlayerJetpackFrame(int p0) {
+        PlayerObject::updatePlayerJetpackFrame(p0);
+        customFramesUpate(p0, IconType::Jetpack);
+    };
+};
+
 #include <Geode/modify/SimplePlayer.hpp>
 class $modify(SimplePlayer) {
     void updatePlayerFrame(int p0, IconType p1) {
         auto index = p0;
         auto type = p1;
+        SimplePlayer::updatePlayerFrame(index, type);
         //not simple ones
         if (type == IconType::Robot) {
-            SimplePlayer::updatePlayerFrame(index, type);
+            //SimplePlayer::updatePlayerFrame(index, type);
             return;
         }
         if (type == IconType::Spider) {
-            SimplePlayer::updatePlayerFrame(index, type);
+            //SimplePlayer::updatePlayerFrame(index, type);
             return;
         }
         //update frames
@@ -109,7 +213,6 @@ class $modify(GameManager) {
 class $modify(GJGarageLayer) {
     void setupIconSelect() {
         GJGarageLayer::setupIconSelect();
-        log::debug("{}", __func__);
         if ((int)m_iconType == 0) m_iconType = GameManager::get()->m_playerIconType;
         if (m_iconID == 0) m_iconID = GameManager::get()->activeIconForType(m_iconType);
         m_playerObject->updatePlayerFrame(m_iconID, m_iconType);
@@ -119,28 +222,6 @@ class $modify(GJGarageLayer) {
         //remove dots arrows selectors, all the stuff
         this->setupPage(0, IconType::DeathEffect);
         m_iconSelection->removeAllChildrenWithCleanup(false);
-        return;
+        return GJGarageLayer::setupSpecialPage();
     }
-};
-
-#include <Geode/modify/LoadingLayer.hpp>
-class $modify(LoadingLayer) {
-    void loadingFinished() {
-        //load new stuff also asd
-        int LoadCustomSpritesheet = Mod::get()->getSettingValue<bool>("LoadCustomSpritesheet");
-        if (LoadCustomSpritesheet) {
-            //"LoadCustomSpritesheet", true, "; load frames via \"icons/_IconsSheet.plist\""
-            {
-                auto TarFile = "icons/_IconsSheet.plist";
-                log::info("Adding frames with file \"{}\"", TarFile);
-                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile);
-            };
-            {
-                auto TarFile = "_IconsSheet.plist";
-                log::info("Adding frames with file \"{}\"", TarFile);
-                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(TarFile);
-            };
-        };
-        LoadingLayer::loadingFinished();
-    };
 };
