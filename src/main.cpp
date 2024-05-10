@@ -69,8 +69,13 @@ class $modify(SimplePlayer) {
 
 #include <Geode/modify/GameManager.hpp>
 class $modify(GameManager) {
+#if defined(GEODE_IS_WINDOWS)
+    static int countForType(IconType p0) {
+        auto rtn = GameManager::countForType(p0);
+#else
     int countForType(IconType p0) {
         auto rtn = GameManager::countForType(p0);
+#endif
         if (p0 == IconType::Cube) return Mod::get()->getSettingValue<int64_t>("Cube");
         if (p0 == IconType::Ship) return Mod::get()->getSettingValue<int64_t>("Ship");
         if (p0 == IconType::Ball) return Mod::get()->getSettingValue<int64_t>("Ball");
