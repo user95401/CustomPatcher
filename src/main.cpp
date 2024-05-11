@@ -73,6 +73,7 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
 #include <Geode/modify/PlayerObject.hpp>
 class $modify(PlayerObjectExt, PlayerObject) {
     static void loadShipStreak() {
+        return;
         auto shipStreak = GameManager::get()->getPlayerShipFire();
         for (auto index = 1; index <= 60; index++) {
             auto texture_name = CCString::createWithFormat("shipfire%02d_%03d.png", shipStreak, index)->getCString();
@@ -147,8 +148,11 @@ class $modify(PlayerObjectExt, PlayerObject) {
             "streak_%02d_001.png",
             GameManager::get()->getPlayerStreak()
         )->getCString();
-        CCTextureCache::sharedTextureCache()->reloadTexture(texture_name);
         auto texture = CCTextureCache::sharedTextureCache()->textureForKey(texture_name);
+        if (not texture) {
+            CCTextureCache::sharedTextureCache()->reloadTexture(texture_name);
+            texture = CCTextureCache::sharedTextureCache()->textureForKey(texture_name);
+        }
         if (m_regularTrail and texture) m_regularTrail->setTexture(texture);
     }
     void resetPlayerIcon() {
