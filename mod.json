@@ -54,7 +54,7 @@
 			"control": { "slider": false }
 		},
 		"Robot": {
-			"name": "Robot (TODO)",
+			"name": "Robot (UNFINISHED)",
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
 			"min": 0,
@@ -63,7 +63,7 @@
 			"control": { "slider": false }
 		},
 		"Spider": {
-			"name": "Spider (TODO)",
+			"name": "Spider (UNFINISHED)",
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
 			"min": 0,
@@ -90,7 +90,7 @@
 			"control": { "slider": false }
 		},
 		"DeathEffect": {
-			"name": "DeathEffect (TODO)",
+			"name": "DeathEffect (UNFINISHED)",
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
@@ -99,7 +99,7 @@
 			"control": { "slider": false }
 		},
 		"Special": {
-			"name": "Special (TODO)",
+			"name": "Special",
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
@@ -108,12 +108,12 @@
 			"control": { "slider": false }
 		},
 		"ShipFire": {
-			"name": "ShipFire (TODO)",
+			"name": "ShipFire (UNFINISHED)",
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
 			"max": 9999,
-			"default": 9,
+			"default": 6,
 			"control": { "slider": false }
 		}
 	}

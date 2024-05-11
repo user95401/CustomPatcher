@@ -1,6 +1,8 @@
 #include <Geode/Geode.hpp>
 using namespace geode::prelude;
 
+#include <regex>
+
 #define MEMBERBYOFFSET(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset)
 template<typename T, typename U> constexpr size_t OFFSETBYMEMBER(U T::* member) {
     return (char*)&((T*)nullptr->*member) - (char*)nullptr;
@@ -69,12 +71,40 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
 }
 
 #include <Geode/modify/PlayerObject.hpp>
-class $modify(PlayerObject) {
-    auto frame(const char* name) {
+class $modify(PlayerObjectExt, PlayerObject) {
+    static void loadShipStreak() {
+        auto shipStreak = GameManager::get()->getPlayerShipFire();
+        for (auto index = 1; index <= 60; index++) {
+            auto texture_name = CCString::createWithFormat("shipfire%02d_%03d.png", shipStreak, index)->getCString();
+            if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
+                CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
+            };
+        };
+    }
+    static PlayerObject* create(int p0, int p1, GJBaseGameLayer * p2, cocos2d::CCLayer * p3, bool p4) {
+        loadShipStreak();
+        auto __this = PlayerObject::create(p0, p1, p2, p3, p4);
+        //cube tag
+        auto init_id = CCNode::create();
+        init_id->setID("init_id");
+        init_id->setTag(p0);
+        __this->addChild(init_id);
+        //preupdate
+        ((PlayerObjectExt*)__this)->customFramesUpateFor(p0, IconType::Cube);
+        return __this;
+    }
+    int init_id() {
+        return getChildByID("init_id")->getTag();
+    }
+    bool isCube() {
+        return bool(!m_isShip && !m_isBall && !m_isBird && !m_isDart && !m_isRobot && !m_isSpider);
+    }
+    static auto frame(const char* name) {
         return CCSpriteFrameCache::sharedSpriteFrameCache()
             ->spriteFrameByName(name);
     }
-    void customFramesUpate(int index, IconType type, bool forVehicle = false) {
+    void customFramesUpateFor(int index, IconType type, bool forVehicle = false) {
+        if (not (GameManager::get()->m_playLayer or GameManager::get()->m_levelEditorLayer)) return;
         auto names = frameNamesInVec(index, type);
         if (not forVehicle) {
             if (m_iconSprite) m_iconSprite->setDisplayFrame(frame(names[0]));
@@ -112,50 +142,49 @@ class $modify(PlayerObject) {
                 this->m_vehicleGlow->displayFrame()->getOriginalSize().height / this->m_vehicleGlow->getContentSize().height,
                 });
         };
+        //also update trail
+        auto texture_name = CCString::createWithFormat(
+            "streak_%02d_001.png",
+            GameManager::get()->getPlayerStreak()
+        )->getCString();
+        CCTextureCache::sharedTextureCache()->reloadTexture(texture_name);
+        auto texture = CCTextureCache::sharedTextureCache()->textureForKey(texture_name);
+        if (m_regularTrail and texture) m_regularTrail->setTexture(texture);
     }
-    int init_id() {
-        return getChildByID("init_id")->getTag();
-    }
-    static PlayerObject* create(int p0, int p1, GJBaseGameLayer * p2, cocos2d::CCLayer * p3, bool p4) {
-        auto __this = PlayerObject::create(p0, p1, p2, p3, p4);
-        //cube tag
-        auto init_id = CCNode::create();
-        init_id->setID("init_id");
-        init_id->setTag(p0);
-        __this->addChild(init_id);
-        //preupdate
-        __this->updatePlayerFrame(p0);
-        return __this;
-    }
+    void resetPlayerIcon() {
+        PlayerObject::resetPlayerIcon();
+        customFramesUpateFor(init_id(), IconType::Cube);
+    };
     void updatePlayerFrame(int p0) {
         PlayerObject::updatePlayerFrame(p0);
-        customFramesUpate(p0, IconType::Cube);
+        customFramesUpateFor(p0, IconType::Cube);
     };
     void updatePlayerShipFrame(int p0) {
         PlayerObject::updatePlayerShipFrame(p0);
-        customFramesUpate(p0, IconType::Ship, true);
-        customFramesUpate(init_id(), IconType::Cube);
+        customFramesUpateFor(p0, IconType::Ship, true);
+        customFramesUpateFor(init_id(), IconType::Cube);
     };
     void updatePlayerRollFrame(int p0) {
         PlayerObject::updatePlayerRollFrame(p0);
-        customFramesUpate(p0, IconType::Ball);
+        customFramesUpateFor(p0, IconType::Ball);
     };
     void updatePlayerBirdFrame(int p0) {
         PlayerObject::updatePlayerBirdFrame(p0);
-        customFramesUpate(p0, IconType::Ufo, true);
-        customFramesUpate(init_id(), IconType::Cube);
+        customFramesUpateFor(p0, IconType::Ufo, true);
+        customFramesUpateFor(init_id(), IconType::Cube);
     };
     void updatePlayerDartFrame(int p0) {
         PlayerObject::updatePlayerDartFrame(p0);
-        customFramesUpate(p0, IconType::Wave);
+        customFramesUpateFor(p0, IconType::Wave);
     };
     void updatePlayerSwingFrame(int p0) {
         PlayerObject::updatePlayerSwingFrame(p0);
-        customFramesUpate(p0, IconType::Swing);
+        customFramesUpateFor(p0, IconType::Swing);
     };
     void updatePlayerJetpackFrame(int p0) {
         PlayerObject::updatePlayerJetpackFrame(p0);
-        customFramesUpate(p0, IconType::Jetpack);
+        customFramesUpateFor(p0, IconType::Jetpack, true);
+        customFramesUpateFor(init_id(), IconType::Cube);
     };
 };
 
@@ -228,19 +257,34 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
         selectTab(m_iconType);
     };
     void selectFakeOne(CCObject* sender) {
-        this->onSelect(sender);
+        auto item = dynamic_cast<CCMenuItemSpriteExtra*>(sender);
+        auto menu = dynamic_cast<CCMenu*>(item->getParent());
+        if (not item) return;
+        //action
+        if (item->getParent()->getID() == "trails") {
+            //cursor
+            m_cursor1->setVisible(true);
+            m_cursor1->setPosition(menu->convertToWorldSpace(item->getPosition()));
+            //userstats
+            GameManager::get()->setPlayerStreak(item->getTag());
+        }
+        if (item->getParent()->getID() == "ship_fires") {
+            //cursor
+            m_cursor2->setVisible(true);
+            m_cursor2->setPosition(menu->convertToWorldSpace(item->getPosition()));
+            //userstats
+            GameManager::get()->setPlayerShipStreak(item->getTag());
+        }
     }
     void setupSpecialPage() {
         //remove dots arrows selectors, all the stuff
         this->setupPage(0, IconType::DeathEffect);
         m_iconSelection->removeAllChildrenWithCleanup(false);
-        m_iconType = IconType::Special;
-        m_selectedIconType = IconType::Special;
         //placeholdera
-        m_iconSelection->addChild(CCLabelTTF::create("todo...", "arial", 20.f), 1, 85629);
+        m_iconSelection->addChild(CCLabelTTF::create("UNFINISHED...", "arial", 20.f), 1, 85629);
         auto labelnode = m_iconSelection->getChildByTag(85629);
         labelnode->setPosition(m_iconSelectionMenu->getPosition());
-        labelnode->setPositionY((labelnode->getPositionY() * 3));
+        labelnode->setPositionY((labelnode->getPositionY() * 2.5f));
         //get the selector bg
         CCScale9Sprite* selector_bg;
         for (auto i = 0; i < this->getChildrenCount(); i++) {
@@ -254,27 +298,32 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
         {
             m_iconSelection->addChild(menu);
             //make it positioning at bg
-            menu->setContentSize(selector_bg->getContentSize() - 12.f);
+            menu->setContentSize({
+                selector_bg->getContentSize().width - 30.f,
+                selector_bg->getContentSize().height - 12.f
+                });
             menu->setPosition(selector_bg->getPosition());
             //bad eng ya layout here
             menu->setLayout(
                 ColumnLayout::create()
-                ->setGap(0.f)
+                ->setGap(3.f)
                 ->setAxisAlignment(AxisAlignment::Even)
                 ->setCrossAxisAlignment(AxisAlignment::Start)
-                ->setCrossAxisOverflow(false)
+                ->setCrossAxisOverflow(true)
+                ->setAutoScale(false)
                 ->setAxisReverse(true)
             );
         }
         //lists base shhit idk
         auto lists_size = CCSize(menu->getContentWidth(), menu->getContentHeight() / 3);
+        auto lists_items_scale = 0.86f;
         auto lists_lay = RowLayout::create();
-        lists_lay->setGap(4.f);
+        lists_lay->setGap(6.f);
         lists_lay->setCrossAxisOverflow(false);
         lists_lay->setAxisAlignment(AxisAlignment::Start);
         //trails
+        auto trails = CCMenu::create();
         {
-            auto trails = CCMenu::create();
             menu->addChild(trails);
             trails->setID("trails");
             trails->setContentSize(lists_size);
@@ -284,8 +333,9 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
                 auto name = CCString::createWithFormat("player_special_%02d_001.png", i)->getCString();
                 auto placeholder = CCSprite::createWithSpriteFrameName("player_special_01_001.png");
                 auto sprite = CCSprite::createWithSpriteFrameName(name);
+                if (not sprite) sprite = CCSprite::create(name);
                 if (not sprite) sprite = placeholder;
-                sprite->setScale(0.9f);
+                sprite->setScale(lists_items_scale);
                 //item
                 auto item = CCMenuItemSpriteExtra::create(sprite, this, menu_selector(GJGarageLayerExt::selectFakeOne));
                 item->setTag(i);
@@ -294,19 +344,20 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
             }
         }
         //ship_fires
+        auto ship_fires = CCMenu::create();
         {
-            auto ship_fires = CCMenu::create();
             menu->addChild(ship_fires);
             ship_fires->setID("ship_fires");
             ship_fires->setContentSize(lists_size);
             ship_fires->setLayout(lists_lay);
-            for (auto i = 0; i < Mod::get()->getSettingValue<int64_t>("ShipFire"); i++) {
+            for (auto i = 1; i < Mod::get()->getSettingValue<int64_t>("ShipFire"); i++) {
                 //sprite
                 auto name = CCString::createWithFormat("shipfireIcon_%02d_001.png", i)->getCString();
                 auto placeholder = CCSprite::createWithSpriteFrameName("shipfireIcon_01_001.png");
                 auto sprite = CCSprite::createWithSpriteFrameName(name);
+                if (not sprite) sprite = CCSprite::create(name);
                 if (not sprite) sprite = placeholder;
-                sprite->setScale(0.9f);
+                sprite->setScale(lists_items_scale);
                 //item
                 auto item = CCMenuItemSpriteExtra::create(sprite, this, menu_selector(GJGarageLayerExt::selectFakeOne));
                 item->setTag(i);
@@ -331,7 +382,67 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
                 animation_ext->updateLayout();
             }
         }
+        //update
         menu->updateLayout();
+        //move cursor1 to trail
+        dynamic_cast<CCMenuItemSpriteExtra*>(
+            trails->getChildByTag(GameManager::get()->getPlayerStreak())
+            )->activate();
+        //move cursor2 to ship trail
+        dynamic_cast<CCMenuItemSpriteExtra*>(
+            ship_fires->getChildByTag(GameManager::get()->getPlayerShipFire())
+            )->activate();
         return;//GJGarageLayer::setupSpecialPage();
+    }
+};
+
+#include <Geode/modify/ItemInfoPopup.hpp>
+class $modify(ItemInfoPopupExt, ItemInfoPopup) {
+    static ItemInfoPopup* create(int p0, UnlockType p1) {
+        auto __this = ItemInfoPopup::create(p0, p1);
+        //nodes
+        CCLabelBMFont* title = nullptr;
+        CCLabelBMFont* box_title = nullptr;
+        TextArea* box_text = nullptr;
+        for (auto i = 0; i < __this->m_mainLayer->getChildrenCount(); i++) {
+            if (auto node = cocos::getChild(__this->m_mainLayer, i)) {
+                if (auto label = dynamic_cast<CCLabelBMFont*>(node)) {
+                    if (not title) title = label;
+                    else if (not box_title) box_title = label;
+                }
+                if (auto text = dynamic_cast<TextArea*>(node)) {
+                    box_text = text;
+                }
+            }
+        }
+        if (!box_title) {
+            box_title = CCLabelBMFont::create("", title->getFntFile());
+            __this->m_buttonMenu->addChild(box_title);
+            box_title->setScale(0.55f);
+            box_title->setPositionY(98.f);
+            auto filename = (title->getString() + std::string(" Title.txt"));
+            box_title->setString(fmt::format("Can't find \"{}\"!", filename).data());
+            auto path = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.data(), 0);
+            auto in = std::ifstream(path);
+            if (in.is_open()) {
+                auto sstr = std::stringstream() << in.rdbuf();
+                box_title->setString(sstr.str().data());
+            }
+        }
+        if (!box_text) {
+            box_text = TextArea::create("", "bigFont.fnt", 1.0f, 1000, { 0.5f, 0.5f }, 42.f, 0);
+            __this->m_buttonMenu->addChild(box_text);
+            box_text->setScale(0.35f);
+            box_text->setPositionY(65.f);
+            auto filename = (title->getString() + std::string(" Text.txt"));
+            box_text->setString(fmt::format("<cr>And can't find \"</c><co>{}</c><cr>\"...</c>", filename).data());
+            auto path = CCFileUtils::sharedFileUtils()->fullPathForFilename(filename.data(), 0);
+            auto in = std::ifstream(path);
+            if (in.is_open()) {
+                auto sstr = std::stringstream() << in.rdbuf();
+                box_text->setString(sstr.str().data());
+            }
+        }
+        return __this;
     }
 };
