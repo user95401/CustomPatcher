@@ -20,10 +20,19 @@ std::string keyForType(IconType type = IconType::Cube) {
     };
 }
 void loadIcon(int index, IconType type) {
-    //
+    //icons/key_%02index.png
     {
         auto texture_name = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
         auto plist_name = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
+        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
+            CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
+        };
+    };
+    //key_%02index.png
+    {
+        auto texture_name = CCString::createWithFormat("%s_%02d.png", keyForType(type).c_str(), index)->getCString();
+        auto plist_name = CCString::createWithFormat("%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
         if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
             CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
@@ -222,10 +231,96 @@ class $modify(GJGarageLayer) {
         //remove dots arrows selectors, all the stuff
         this->setupPage(0, IconType::DeathEffect);
         m_iconSelection->removeAllChildrenWithCleanup(false);
+        //placeholdera
         m_iconSelection->addChild(CCLabelTTF::create("todo...", "arial", 20.f), 1, 85629);
         auto labelnode = m_iconSelection->getChildByTag(85629);
         labelnode->setPosition(m_iconSelectionMenu->getPosition());
         labelnode->setPositionY((labelnode->getPositionY() * 3));
+        //get the selector bg
+        CCScale9Sprite* selector_bg;
+        for (auto i = 0; i < this->getChildrenCount(); i++) {
+            if (auto node = cocos::getChild(this, i)) {
+                if (selector_bg = typeinfo_cast<CCScale9Sprite*>(node))
+                    break;
+            }
+        }
+        //base menu
+        auto menu = CCMenu::create();
+        {
+            m_iconSelection->addChild(menu);
+            //make it positioning at bg
+            menu->setContentSize(selector_bg->getContentSize() - 12.f);
+            menu->setPosition(selector_bg->getPosition());
+            //bad eng ya layout here
+            menu->setLayout(
+                ColumnLayout::create()
+                ->setGap(0.f)
+                ->setAxisAlignment(AxisAlignment::Even)
+                ->setCrossAxisAlignment(AxisAlignment::Start)
+                ->setCrossAxisOverflow(false)
+                ->setAxisReverse(true)
+            );
+        }
+        //lists base shhit idk
+        auto lists_size = CCSize(menu->getContentWidth(), menu->getContentHeight() / 3);
+        auto lists_lay = RowLayout::create();
+        lists_lay->setGap(4.f);
+        lists_lay->setCrossAxisOverflow(false);
+        lists_lay->setAxisAlignment(AxisAlignment::Start);
+        //trails
+        {
+            auto trails = CCMenu::create();
+            menu->addChild(trails);
+            trails->setID("trails");
+            trails->setContentSize(lists_size);
+            trails->setLayout(lists_lay);
+            for (auto i = 0; i < Mod::get()->getSettingValue<int64_t>("Special"); i++) {
+                auto btn = CircleButtonSprite::create(
+                    CCLabelTTF::create(fmt::to_string(i).data(), "arial", 16.f),
+                    CircleBaseColor::Gray,
+                    CircleBaseSize::Small
+                );
+                auto item = CCMenuItemSpriteExtra::create(btn, this, menu_selector(GJGarageLayer::onSpecial));
+                item->setTag(i);
+                trails->addChild(item);
+                trails->updateLayout();
+            }
+        }
+        //ship_fires
+        {
+            auto ship_fires = CCMenu::create();
+            menu->addChild(ship_fires);
+            ship_fires->setID("ship_fires");
+            ship_fires->setContentSize(lists_size);
+            ship_fires->setLayout(lists_lay);
+            for (auto i = 0; i < Mod::get()->getSettingValue<int64_t>("ShipFire"); i++) {
+                auto entry = CircleButtonSprite::create(
+                    CCLabelTTF::create(fmt::to_string(i).data(), "arial", 16.f),
+                    CircleBaseColor::Gray,
+                    CircleBaseSize::Small
+                );
+                ship_fires->addChild(entry);
+                ship_fires->updateLayout();
+            }
+        }
+        //animation_ext
+        {
+            auto animation_ext = CCMenu::create();
+            menu->addChild(animation_ext);
+            animation_ext->setID("animation_ext");
+            animation_ext->setContentSize(lists_size);
+            animation_ext->setLayout(lists_lay);
+            for (auto i = 0; i < 3; i++) {
+                auto entry = CircleButtonSprite::create(
+                    CCLabelTTF::create(fmt::to_string(i).data(), "arial", 16.f),
+                    CircleBaseColor::Gray,
+                    CircleBaseSize::Small
+                );
+                animation_ext->addChild(entry);
+                animation_ext->updateLayout();
+            }
+        }
+        menu->updateLayout();
         return;//GJGarageLayer::setupSpecialPage();
     }
 };

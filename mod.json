@@ -1,5 +1,5 @@
 {
-	"geode": "2.0.0-beta.25",
+	"geode": "2.0.0-beta.26",
 	"gd": {"win": "2.204", "android": "*"},
 	"version": "v0.0.0-beta.7",
 	"id": "ruhax.indecreaseicons",
@@ -54,7 +54,7 @@
 			"control": { "slider": false }
 		},
 		"Robot": {
-			"name": "Robot",
+			"name": "Robot (TODO)",
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
 			"min": 0,
@@ -63,7 +63,7 @@
 			"control": { "slider": false }
 		},
 		"Spider": {
-			"name": "Spider",
+			"name": "Spider (TODO)",
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
 			"min": 0,
@@ -90,8 +90,8 @@
 			"control": { "slider": false }
 		},
 		"DeathEffect": {
-			"name": "DeathEffect",
-			"description": "<cr>NO_PATCH</c>. max count of",
+			"name": "DeathEffect (TODO)",
+			"description": "max count of",
 			"type": "int",
 			"min": 0,
 			"max": 9999,
@@ -99,8 +99,8 @@
 			"control": { "slider": false }
 		},
 		"Special": {
-			"name": "Special",
-			"description": "<cr>NO_PATCH</c>. max count of",
+			"name": "Special (TODO)",
+			"description": "max count of",
 			"type": "int",
 			"min": 0,
 			"max": 9999,
@@ -108,8 +108,8 @@
 			"control": { "slider": false }
 		},
 		"ShipFire": {
-			"name": "ShipFire",
-			"description": "<cr>NO_PATCH</c>. max count of",
+			"name": "ShipFire (TODO)",
+			"description": "max count of",
 			"type": "int",
 			"min": 0,
 			"max": 9999,
