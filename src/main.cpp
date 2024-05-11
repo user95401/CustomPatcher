@@ -219,7 +219,7 @@ class $modify(GameManager) {
 };
 
 #include <Geode/modify/GJGarageLayer.hpp>
-class $modify(GJGarageLayer) {
+class $modify(GJGarageLayerExt, GJGarageLayer) {
     void setupIconSelect() {
         GJGarageLayer::setupIconSelect();
         if ((int)m_iconType == 0) m_iconType = GameManager::get()->m_playerIconType;
@@ -227,10 +227,15 @@ class $modify(GJGarageLayer) {
         m_playerObject->updatePlayerFrame(m_iconID, m_iconType);
         selectTab(m_iconType);
     };
+    void selectFakeOne(CCObject* sender) {
+        this->onSelect(sender);
+    }
     void setupSpecialPage() {
         //remove dots arrows selectors, all the stuff
         this->setupPage(0, IconType::DeathEffect);
         m_iconSelection->removeAllChildrenWithCleanup(false);
+        m_iconType = IconType::Special;
+        m_selectedIconType = IconType::Special;
         //placeholdera
         m_iconSelection->addChild(CCLabelTTF::create("todo...", "arial", 20.f), 1, 85629);
         auto labelnode = m_iconSelection->getChildByTag(85629);
@@ -274,13 +279,15 @@ class $modify(GJGarageLayer) {
             trails->setID("trails");
             trails->setContentSize(lists_size);
             trails->setLayout(lists_lay);
-            for (auto i = 0; i < Mod::get()->getSettingValue<int64_t>("Special"); i++) {
-                auto btn = CircleButtonSprite::create(
-                    CCLabelTTF::create(fmt::to_string(i).data(), "arial", 16.f),
-                    CircleBaseColor::Gray,
-                    CircleBaseSize::Small
-                );
-                auto item = CCMenuItemSpriteExtra::create(btn, this, menu_selector(GJGarageLayer::onSpecial));
+            for (auto i = 1; i <= Mod::get()->getSettingValue<int64_t>("Special"); i++) {
+                //sprite
+                auto name = CCString::createWithFormat("player_special_%02d_001.png", i)->getCString();
+                auto placeholder = CCSprite::createWithSpriteFrameName("player_special_01_001.png");
+                auto sprite = CCSprite::createWithSpriteFrameName(name);
+                if (not sprite) sprite = placeholder;
+                sprite->setScale(0.9f);
+                //item
+                auto item = CCMenuItemSpriteExtra::create(sprite, this, menu_selector(GJGarageLayerExt::selectFakeOne));
                 item->setTag(i);
                 trails->addChild(item);
                 trails->updateLayout();
@@ -294,12 +301,16 @@ class $modify(GJGarageLayer) {
             ship_fires->setContentSize(lists_size);
             ship_fires->setLayout(lists_lay);
             for (auto i = 0; i < Mod::get()->getSettingValue<int64_t>("ShipFire"); i++) {
-                auto entry = CircleButtonSprite::create(
-                    CCLabelTTF::create(fmt::to_string(i).data(), "arial", 16.f),
-                    CircleBaseColor::Gray,
-                    CircleBaseSize::Small
-                );
-                ship_fires->addChild(entry);
+                //sprite
+                auto name = CCString::createWithFormat("shipfireIcon_%02d_001.png", i)->getCString();
+                auto placeholder = CCSprite::createWithSpriteFrameName("shipfireIcon_01_001.png");
+                auto sprite = CCSprite::createWithSpriteFrameName(name);
+                if (not sprite) sprite = placeholder;
+                sprite->setScale(0.9f);
+                //item
+                auto item = CCMenuItemSpriteExtra::create(sprite, this, menu_selector(GJGarageLayerExt::selectFakeOne));
+                item->setTag(i);
+                ship_fires->addChild(item);
                 ship_fires->updateLayout();
             }
         }
