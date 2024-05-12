@@ -187,6 +187,7 @@ class $modify(PlayerObjectExt, PlayerObject) {
             if (not m_vehicleGlow) return;
         };
         auto names = frameNamesInVec(index, type);
+        return;
         if (not forVehicle) {
             if (m_iconSprite) m_iconSprite->setDisplayFrame(frame(names[0]));
             if (m_iconSpriteSecondary) m_iconSpriteSecondary->setDisplayFrame(frame(names[1]));
