@@ -58,7 +58,7 @@ void loadIcon(int index, IconType type) {
         auto texture_filepath = texture_path.string();
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
-        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
+        if (not CCTextureCache::sharedTextureCache()->m_pTextures->objectForKey(texture_key.data())) {
             if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
                 log::debug(
                     "no texture for \"{}\" key, adding image \"{}\"... result: {}",
@@ -76,7 +76,7 @@ void loadIcon(int index, IconType type) {
         auto texture_filepath = texture_path.string();
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
-        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
+        if (not CCTextureCache::sharedTextureCache()->m_pTextures->objectForKey(texture_key.data())) {
             if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
                 log::debug(
                     "no texture for \"{}\" key, adding image \"{}\"... result: {}",
