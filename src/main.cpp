@@ -89,15 +89,15 @@ void loadIcon(int index, IconType type) {
     }
 }
 std::vector<const char*> frameNamesInVec(int index, IconType type) {
-    //load frames
-    loadIcon(index, type);
-    return;
     //naming
     auto lay1_name = CCString::createWithFormat("%s_%02d_001.png", keyForType(type).c_str(), index)->getCString();
     auto lay2_name = CCString::createWithFormat("%s_%02d_2_001.png", keyForType(type).c_str(), index)->getCString();
     auto lay3_name = CCString::createWithFormat("%s_%02d_3_001.png", keyForType(type).c_str(), index)->getCString();
     auto glow_name = CCString::createWithFormat("%s_%02d_glow_001.png", keyForType(type).c_str(), index)->getCString();
     auto extr_name = CCString::createWithFormat("%s_%02d_extra_001.png", keyForType(type).c_str(), index)->getCString();
+    return { lay1_name, lay2_name, lay3_name, glow_name, extr_name };
+    //load frames
+    loadIcon(index, type);
     //test
     auto placeholder = "emptyGlow.png";
     auto pSpriteFrames = CCSpriteFrameCache::sharedSpriteFrameCache()->m_pSpriteFrames;
