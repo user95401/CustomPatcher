@@ -143,6 +143,7 @@ class $modify(PlayerObjectExt, PlayerObject) {
                 this->m_vehicleGlow->displayFrame()->getOriginalSize().height / this->m_vehicleGlow->getContentSize().height,
                 });
         };
+        return;
         //also update trail
         auto texture_name = CCString::createWithFormat(
             "streak_%02d_001.png",
