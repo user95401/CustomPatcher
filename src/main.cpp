@@ -65,8 +65,8 @@ void loadIcon(int index, IconType type) {
                     texture_key, texture_filepath,
                     CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
                 );
-                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
             };
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     };
     //_IconsSheet.plist
@@ -83,8 +83,8 @@ void loadIcon(int index, IconType type) {
                     texture_key, texture_filepath,
                     CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
                 );
-                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
             };
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     }
 }
@@ -97,6 +97,7 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
     auto extr_name = CCString::createWithFormat("%s_%02d_extra_001.png", keyForType(type).c_str(), index)->getCString();
     //load frames
     loadIcon(index, type);
+    return { lay1_name, lay1_name, lay1_name, lay1_name, lay1_name };
     //test
     auto placeholder = "emptyGlow.png";
     auto pSpriteFrames = CCSpriteFrameCache::sharedSpriteFrameCache()->m_pSpriteFrames;
