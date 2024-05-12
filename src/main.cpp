@@ -97,7 +97,6 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
     auto extr_name = CCString::createWithFormat("%s_%02d_extra_001.png", keyForType(type).c_str(), index)->getCString();
     //load frames
     loadIcon(index, type);
-    return { lay1_name, lay1_name, lay1_name, lay1_name, lay1_name };
     //test
     auto placeholder = "emptyGlow.png";
     auto pSpriteFrames = CCSpriteFrameCache::sharedSpriteFrameCache()->m_pSpriteFrames;
