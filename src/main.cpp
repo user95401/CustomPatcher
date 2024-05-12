@@ -99,11 +99,12 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
     auto extr_name = CCString::createWithFormat("%s_%02d_extra_001.png", keyForType(type).c_str(), index)->getCString();
     //test
     auto placeholder = "emptyGlow.png";
-    if (not CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(lay1_name)) lay1_name = placeholder;
-    if (not CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(lay2_name)) lay2_name = placeholder;
-    if (not CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(lay3_name)) lay3_name = placeholder;
-    if (not CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(glow_name)) glow_name = placeholder;
-    if (not CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(extr_name)) extr_name = placeholder;
+    auto pSpriteFrames = CCSpriteFrameCache::sharedSpriteFrameCache()->m_pSpriteFrames;
+    if (not pSpriteFrames->objectForKey(lay1_name)) lay1_name = placeholder;
+    if (not pSpriteFrames->objectForKey(lay2_name)) lay2_name = placeholder;
+    if (not pSpriteFrames->objectForKey(lay3_name)) lay3_name = placeholder;
+    if (not pSpriteFrames->objectForKey(glow_name)) glow_name = placeholder;
+    if (not pSpriteFrames->objectForKey(extr_name)) extr_name = placeholder;
     //rtn
     return { lay1_name, lay2_name, lay3_name, glow_name, extr_name };
 }
