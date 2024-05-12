@@ -91,6 +91,7 @@ void loadIcon(int index, IconType type) {
 std::vector<const char*> frameNamesInVec(int index, IconType type) {
     //load frames
     loadIcon(index, type);
+    return;
     //naming
     auto lay1_name = CCString::createWithFormat("%s_%02d_001.png", keyForType(type).c_str(), index)->getCString();
     auto lay2_name = CCString::createWithFormat("%s_%02d_2_001.png", keyForType(type).c_str(), index)->getCString();
