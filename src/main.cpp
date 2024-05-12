@@ -95,7 +95,7 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
     auto lay3_name = CCString::createWithFormat("%s_%02d_3_001.png", keyForType(type).c_str(), index)->getCString();
     auto glow_name = CCString::createWithFormat("%s_%02d_glow_001.png", keyForType(type).c_str(), index)->getCString();
     auto extr_name = CCString::createWithFormat("%s_%02d_extra_001.png", keyForType(type).c_str(), index)->getCString();
-    return { lay1_name, lay2_name, lay3_name, glow_name, extr_name };
+    return { lay1_name, lay1_name, lay1_name, lay1_name, lay1_name };
     //load frames
     loadIcon(index, type);
     //test
