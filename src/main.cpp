@@ -105,6 +105,7 @@ class $modify(PlayerObjectExt, PlayerObject) {
             ->spriteFrameByName(name);
     }
     void customFramesUpateFor(int index, IconType type, bool forVehicle = false) {
+        return;
         if (not (GameManager::get()->m_playLayer or GameManager::get()->m_levelEditorLayer)) return;
         auto names = frameNamesInVec(index, type);
         if (not forVehicle) {
