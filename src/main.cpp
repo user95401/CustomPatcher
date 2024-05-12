@@ -7,6 +7,22 @@ using namespace geode::prelude;
 template<typename T, typename U> constexpr size_t OFFSETBYMEMBER(U T::* member) {
     return (char*)&((T*)nullptr->*member) - (char*)nullptr;
 }
+std::vector<std::string> explode(std::string separator, std::string input) {
+    std::vector<std::string> vec;
+    for (int i{ 0 }; i < input.length(); ++i) {
+        int pos = input.find(separator, i);
+        if (pos < 0) { vec.push_back(input.substr(i)); break; }
+        int count = pos - i;
+        vec.push_back(input.substr(i, count));
+        i = pos + separator.length() - 1;
+    }
+    if (vec.size() == 0) vec.push_back(input);/*
+    std::stringstream log;
+    for (auto item : vec)
+        log << std::endl << item << std::endl;
+    log::debug("{}(separator \"{}\", input \"{}\").rtn({})", __FUNCTION__, separator, input, log.str());*/
+    return vec;
+}
 std::string keyForType(IconType type = IconType::Cube) {
     switch ((int)type)
     {
@@ -21,32 +37,50 @@ std::string keyForType(IconType type = IconType::Cube) {
     default: return ("player");
     };
 }
+IconType typeForKey(std::string key) {
+    auto rtn = 0;//player
+    if (key == "ship") rtn = 1;
+    if (key == "player_ball") rtn = 2;
+    if (key == "bird") rtn = 3;
+    if (key == "dart") rtn = 4;
+    if (key == "robot") rtn = 5;
+    if (key == "spider") rtn = 6;
+    if (key == "swing") rtn = 7;
+    if (key == "jetpack") rtn = 8;
+    //log::debug("{}({}) = {}({})", __FUNCTION__, key, rtn, keyForType((IconType)rtn));
+    return (IconType)rtn;
+}
 void loadIcon(int index, IconType type) {
     //icons/key_%02index.png
     {
-        auto texture_name = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
-        auto plist_name = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
-        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
-            CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
-        };
-    };
-    //key_%02index.png
-    {
-        auto texture_name = CCString::createWithFormat("%s_%02d.png", keyForType(type).c_str(), index)->getCString();
-        auto plist_name = CCString::createWithFormat("%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
-        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
-            CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
+        ghc::filesystem::path texture_path = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
+        ghc::filesystem::path plist_path = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
+        auto texture_filepath = texture_path.string();
+        auto texture_key = texture_path.filename().string();
+        auto plist_filepath = plist_path.string();
+        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
+            log::debug(
+                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
+                texture_key, texture_filepath,
+                CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
+            );
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     };
     //_IconsSheet.plist
     {
-        auto texture_name = "_IconsSheet.png";
-        auto plist_name = "_IconsSheet.plist";
-        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_name)) {
-            CCTextureCache::sharedTextureCache()->addImage(texture_name, 0);
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_name);
+        ghc::filesystem::path texture_path = "_IconsSheet.png";
+        ghc::filesystem::path plist_path = "_IconsSheet.plist";
+        auto texture_filepath = texture_path.string();
+        auto texture_key = texture_path.filename().string();
+        auto plist_filepath = plist_path.string();
+        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
+            log::debug(
+                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
+                texture_key, texture_filepath,
+                CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
+            );
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     }
 }
@@ -82,23 +116,52 @@ class $modify(PlayerObjectExt, PlayerObject) {
             };
         };
     }
-    static PlayerObject* create(int p0, int p1, GJBaseGameLayer * p2, cocos2d::CCLayer * p3, bool p4) {
+    static PlayerObject* create(int p0, int p1, GJBaseGameLayer* p2, cocos2d::CCLayer* p3, bool p4) {
         loadShipStreak();
         auto __this = PlayerObject::create(p0, p1, p2, p3, p4);
         //cube tag
         auto init_id = CCNode::create();
-        init_id->setID("init_id");
-        init_id->setTag(p0);
-        __this->addChild(init_id);
-        //preupdate
+        {
+            init_id->setID("init_id");
+            init_id->setTag(p0);
+            __this->addChild(init_id);
+        };
+        //preload frames
+        {
+            loadIcon(p0, IconType::Cube);//
+            loadIcon(p0, IconType::Ship);// = 1,
+            loadIcon(p0, IconType::Ball);// = 2,
+            loadIcon(p0, IconType::Ufo);// = 3,
+            loadIcon(p0, IconType::Wave);// = 4,
+            loadIcon(p0, IconType::Robot);//= 5,
+            loadIcon(p0, IconType::Spider);// = 6,
+            loadIcon(p0, IconType::Swing);// = 7,
+            loadIcon(p0, IconType::Jetpack);// = 8,
+            loadIcon(p0, IconType::DeathEffect);// = 98,
+            loadIcon(p0, IconType::Special);// = 99,
+            loadIcon(p0, IconType::ShipFire);// = 101,
+        };
+        //preupdate cube
         ((PlayerObjectExt*)__this)->customFramesUpateFor(p0, IconType::Cube);
+        //also update trail
+        {
+            auto texture_name = CCString::createWithFormat(
+                "streak_%02d_001.png",
+                GameManager::get()->getPlayerStreak()
+            )->getCString();
+            auto texture = CCTextureCache::sharedTextureCache()->textureForKey(texture_name);
+            if (not texture) {
+                CCTextureCache::sharedTextureCache()->reloadTexture(texture_name);
+                texture = CCTextureCache::sharedTextureCache()->textureForKey(texture_name);
+            }
+            if (__this->m_regularTrail and texture) __this->m_regularTrail->setTexture(texture);
+        };
+        //
         return __this;
     }
     int init_id() {
-        return getChildByID("init_id")->getTag();
-    }
-    bool isCube() {
-        return bool(!m_isShip && !m_isBall && !m_isBird && !m_isDart && !m_isRobot && !m_isSpider);
+        auto init_id = getChildByID("init_id");
+        return init_id ? init_id->getTag() : 0;
     }
     static auto frame(const char* name) {
         return CCSpriteFrameCache::sharedSpriteFrameCache()
@@ -106,8 +169,19 @@ class $modify(PlayerObjectExt, PlayerObject) {
     }
     void customFramesUpateFor(int index, IconType type, bool forVehicle = false) {
         if (not (GameManager::get()->m_playLayer or GameManager::get()->m_levelEditorLayer)) return;
+        {
+            if (not m_iconSprite) return;
+            if (not m_iconSprite) return;
+            if (not m_iconSpriteSecondary) return;
+            if (not m_iconSpriteWhitener) return;
+            if (not m_iconGlow) return;
+            if (not m_vehicleSprite) return;
+            if (not m_vehicleSpriteSecondary) return;
+            if (not m_unk604) return;
+            if (not m_vehicleSpriteWhitener) return;
+            if (not m_vehicleGlow) return;
+        };
         auto names = frameNamesInVec(index, type);
-        return;
         if (not forVehicle) {
             if (m_iconSprite) m_iconSprite->setDisplayFrame(frame(names[0]));
             if (m_iconSpriteSecondary) m_iconSpriteSecondary->setDisplayFrame(frame(names[1]));
@@ -144,48 +218,25 @@ class $modify(PlayerObjectExt, PlayerObject) {
                 this->m_vehicleGlow->displayFrame()->getOriginalSize().height / this->m_vehicleGlow->getContentSize().height,
                 });
         };
-        return;
-        //also update trail
-        auto texture_name = CCString::createWithFormat(
-            "streak_%02d_001.png",
-            GameManager::get()->getPlayerStreak()
-        )->getCString();
-        auto texture = CCTextureCache::sharedTextureCache()->textureForKey(texture_name);
-        if (not texture) {
-            CCTextureCache::sharedTextureCache()->reloadTexture(texture_name);
-            texture = CCTextureCache::sharedTextureCache()->textureForKey(texture_name);
-        }
-        if (m_regularTrail and texture) m_regularTrail->setTexture(texture);
     }
-    void resetPlayerIcon() {
-        PlayerObject::resetPlayerIcon();
-        customFramesUpateFor(init_id(), IconType::Cube);
-    };
-    void updatePlayerFrame(int p0) {
-        PlayerObject::updatePlayerFrame(p0);
-        customFramesUpateFor(p0, IconType::Cube);
-    };
+    void updatePlayerSpriteExtra(gd::string p0) {
+        PlayerObject::updatePlayerSpriteExtra(p0);
+        auto key = std::string("player");
+        auto expl = explode("_", p0);
+        if (expl[1] == "ball") key = key + "_ball";
+        else key = expl[0];
+        auto type = typeForKey(key);
+        customFramesUpateFor(GameManager::get()->activeIconForType(type), type);
+    }
     void updatePlayerShipFrame(int p0) {
         PlayerObject::updatePlayerShipFrame(p0);
         customFramesUpateFor(p0, IconType::Ship, true);
         customFramesUpateFor(init_id(), IconType::Cube);
     };
-    void updatePlayerRollFrame(int p0) {
-        PlayerObject::updatePlayerRollFrame(p0);
-        customFramesUpateFor(p0, IconType::Ball);
-    };
     void updatePlayerBirdFrame(int p0) {
         PlayerObject::updatePlayerBirdFrame(p0);
         customFramesUpateFor(p0, IconType::Ufo, true);
         customFramesUpateFor(init_id(), IconType::Cube);
-    };
-    void updatePlayerDartFrame(int p0) {
-        PlayerObject::updatePlayerDartFrame(p0);
-        customFramesUpateFor(p0, IconType::Wave);
-    };
-    void updatePlayerSwingFrame(int p0) {
-        PlayerObject::updatePlayerSwingFrame(p0);
-        customFramesUpateFor(p0, IconType::Swing);
     };
     void updatePlayerJetpackFrame(int p0) {
         PlayerObject::updatePlayerJetpackFrame(p0);
