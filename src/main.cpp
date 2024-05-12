@@ -59,11 +59,13 @@ void loadIcon(int index, IconType type) {
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
         if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
-            log::debug(
-                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
-                texture_key, texture_filepath,
-                CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
-            );
+            if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
+                log::debug(
+                    "no texture for \"{}\" key, adding image \"{}\"... result: {}",
+                    texture_key, texture_filepath,
+                    CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
+                );
+            };
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     };
@@ -75,11 +77,13 @@ void loadIcon(int index, IconType type) {
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
         if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
-            log::debug(
-                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
-                texture_key, texture_filepath,
-                CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
-            );
+            if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
+                log::debug(
+                    "no texture for \"{}\" key, adding image \"{}\"... result: {}",
+                    texture_key, texture_filepath,
+                    CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
+                );
+            };
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     }
