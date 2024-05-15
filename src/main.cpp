@@ -231,7 +231,9 @@ class $modify(PlayerObjectExt, PlayerObject) {
         if (expl[1] == "ball") key = key + "_ball";
         else key = expl[0];
         auto type = typeForKey(key);
-        customFramesUpateFor(GameManager::get()->activeIconForType(type), type);
+        auto user_icon = GameManager::get()->activeIconForType(type);
+        auto tar_icon = fmt::stoi(expl[expl.size() - 2]);
+        customFramesUpateFor(tar_icon, type);
     }
     void updatePlayerShipFrame(int p0) {
         PlayerObject::updatePlayerShipFrame(p0);
