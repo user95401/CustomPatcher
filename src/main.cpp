@@ -232,7 +232,7 @@ class $modify(PlayerObjectExt, PlayerObject) {
         else key = expl[0];
         auto type = typeForKey(key);
         auto user_icon = GameManager::get()->activeIconForType(type);
-        auto tar_icon = fmt::stoi(expl[expl.size() - 2]);
+        auto tar_icon = std::stoi(expl[expl.size() - 2]);
         customFramesUpateFor(tar_icon, type);
     }
     void updatePlayerShipFrame(int p0) {
