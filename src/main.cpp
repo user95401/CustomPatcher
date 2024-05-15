@@ -37,6 +37,21 @@ std::string keyForType(IconType type = IconType::Cube) {
     default: return ("player");
     };
 }
+int defaultCountForType(IconType type = IconType::Cube) {
+    matjson::Value asd = Mod::get()->getMetadata().getRawJSON();
+    switch ((int)type)
+    {
+    default: return asd["settings"]["Cube"]["default"].as_int();
+    case 1: return asd["settings"]["Ship"]["default"].as_int();
+    case 2: return asd["settings"]["Ball"]["default"].as_int();
+    case 3: return asd["settings"]["Ufo"]["default"].as_int();
+    case 4: return asd["settings"]["Wave"]["default"].as_int();
+    case 5: return asd["settings"]["Robot"]["default"].as_int();
+    case 6: return asd["settings"]["Spider"]["default"].as_int();
+    case 7: return asd["settings"]["Swing"]["default"].as_int();
+    case 8: return asd["settings"]["Jetpack"]["default"].as_int();
+    };
+}
 IconType typeForKey(std::string key) {
     auto rtn = 0;//player
     if (key == "ship") rtn = 1;
@@ -233,6 +248,7 @@ class $modify(PlayerObjectExt, PlayerObject) {
         auto type = typeForKey(key);
         auto user_icon = GameManager::get()->activeIconForType(type);
         auto tar_icon = std::stoi(expl[expl.size() - 3]);
+        if (defaultCountForType(type) == tar_icon) tar_icon = user_icon;
         customFramesUpateFor(tar_icon, type);
     }
     void updatePlayerShipFrame(int p0) {
