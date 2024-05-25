@@ -73,15 +73,15 @@ void loadIcon(int index, IconType type) {
         auto texture_filepath = texture_path.string();
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
-        if (not CCTextureCache::sharedTextureCache()->m_pTextures->objectForKey(texture_key.data())) {
+        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
             if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
-                log::debug(
+                log::error(
                     "no texture for \"{}\" key, adding image \"{}\"... result: {}",
                     texture_key, texture_filepath,
                     CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
                 );
+                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
             };
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     };
     //_IconsSheet.plist
@@ -91,15 +91,15 @@ void loadIcon(int index, IconType type) {
         auto texture_filepath = texture_path.string();
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
-        if (not CCTextureCache::sharedTextureCache()->m_pTextures->objectForKey(texture_key.data())) {
+        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
             if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
-                log::debug(
+                log::error(
                     "no texture for \"{}\" key, adding image \"{}\"... result: {}",
                     texture_key, texture_filepath,
                     CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
                 );
+                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
             };
-            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
     }
 }
