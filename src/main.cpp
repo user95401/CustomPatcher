@@ -89,7 +89,7 @@ void loadIcon(int index, IconType type) {
         ghc::filesystem::path texture_path = "_IconsSheet.png";
         ghc::filesystem::path plist_path = "_IconsSheet.plist";
         auto texture_filepath = texture_path.string();
-        auto texture_key = texture_path.filename().string();
+        auto texture_key = texture_filepath.string();//texture_path.filename().string();
         auto plist_filepath = plist_path.string();
         if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
             if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
