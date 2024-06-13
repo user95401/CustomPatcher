@@ -11,8 +11,9 @@ else()
     message(STATUS "Found Geode: $ENV{GEODE_SDK}")
 endif()
 
-set(SKIP_BUILDING_CODEGEN "OFF")
-set(GEODE_BINDINGS_REPO_PATH ${CMAKE_CURRENT_LIST_DIR}/bindings)
+#set(SKIP_BUILDING_CODEGEN "OFF")
+#set(GEODE_BINDINGS_REPO_PATH ${CMAKE_CURRENT_LIST_DIR}/bindings)
+
 add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
 
 #mod

@@ -1,11 +1,14 @@
 {
-	"geode": "2.0.0-beta.26",
-	"gd": {"win": "2.204", "android": "*"},
-	"version": "v0.0.0-beta.8",
+	"geode": "3.0.0-alpha.2",
+	"notforwin": "2.206",
+	"gd": {
+		"android": "*"
+	},
+	"version": "v0.0.0-beta.9",
 	"id": "ruhax.indecreaseicons",
 	"name": "InDeCreaseIcons",
 	"developers": [ "RuHax Team", "user95401", "zGuschin" ],
-	"description": "Increase icons in gd 2.2!!! asd",
+	"description": "Increase icons in gd 2.206!",
 	"repository": "https://github.com/user95401/InDeCreaseIcons",
 	"settings": {
 		"Cube": {
@@ -13,7 +16,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 484,
 			"control": { "slider": false }
 		},
@@ -22,7 +25,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 169,
 			"control": { "slider": false }
 		},
@@ -31,7 +34,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 118,
 			"control": { "slider": false }
 		},
@@ -40,7 +43,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 149,
 			"control": { "slider": false }
 		},
@@ -49,7 +52,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 96,
 			"control": { "slider": false }
 		},
@@ -58,7 +61,7 @@
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 68,
 			"control": { "slider": false }
 		},
@@ -67,7 +70,7 @@
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 69,
 			"control": { "slider": false }
 		},
@@ -76,7 +79,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 43,
 			"control": { "slider": false }
 		},
@@ -85,7 +88,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 5,
 			"control": { "slider": false }
 		},
@@ -94,7 +97,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 20,
 			"control": { "slider": false }
 		},
@@ -103,7 +106,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 7,
 			"control": { "slider": false }
 		},
@@ -112,7 +115,7 @@
 			"description": "max count of",
 			"type": "int",
 			"min": 0,
-			"max": 9999,
+			"max": 900,
 			"default": 6,
 			"control": { "slider": false }
 		}

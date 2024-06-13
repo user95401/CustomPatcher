@@ -68,8 +68,8 @@ IconType typeForKey(std::string key) {
 void loadIcon(int index, IconType type) {
     //icons/key_%02index.png
     {
-        ghc::filesystem::path texture_path = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
-        ghc::filesystem::path plist_path = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
+        std::filesystem::path texture_path = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
+        std::filesystem::path plist_path = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
         auto texture_filepath = texture_path.string();
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
@@ -86,8 +86,8 @@ void loadIcon(int index, IconType type) {
     };
     //_IconsSheet.plist
     {
-        ghc::filesystem::path texture_path = "_IconsSheet.png";
-        ghc::filesystem::path plist_path = "_IconsSheet.plist";
+        std::filesystem::path texture_path = "_IconsSheet.png";
+        std::filesystem::path plist_path = "_IconsSheet.plist";
         auto texture_filepath = texture_path.string();
         auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
