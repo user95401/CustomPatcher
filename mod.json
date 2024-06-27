@@ -1,7 +1,7 @@
 {
-	"geode": "3.0.0",
-	"notforwin": "2.206",
+	"geode": "3.1.1",
 	"gd": {
+		"win": "2.206",
 		"android": "*"
 	},
 	"version": "v0.0.0-beta.9",
