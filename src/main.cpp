@@ -89,9 +89,9 @@ void loadIcon(int index, IconType type) {
         auto texture_filepath = texture_path.string();
         auto plist_filepath = plist_path.string();
         if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
-            log::error(
-                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
-                texture_key, texture_filepath,
+            log::info(
+                "adding \"{}\" texture and frames also... texture: {}",
+                texture_filepath,
                 CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
             );
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
@@ -106,9 +106,9 @@ $on_mod(Loaded) {
         auto texture_filepath = texture_path.string();
         auto plist_filepath = plist_path.string();
         if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
-            log::error(
-                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
-                texture_key, texture_filepath,
+            log::info(
+                "adding \"{}\" texture and frames also... texture: {}",
+                texture_filepath,
                 CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
             );
             CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
