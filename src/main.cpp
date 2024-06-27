@@ -3,6 +3,22 @@ using namespace geode::prelude;
 
 #include <regex>
 
+class CCSpriteExt : public CCSprite {
+public:
+    static CCSprite* create(const char* pszFileName) {
+        auto rtn = CCSprite::create(pszFileName);
+        auto boolUserObj = dynamic_cast<CCBool*>(rtn->getUserObject("geode.texture-loader/fallback"));
+        if (boolUserObj) return nullptr;
+        else return rtn;
+    };
+    static CCSprite* createWithSpriteFrameName(const char* pszSpriteFrameName) {
+        auto rtn = CCSprite::createWithSpriteFrameName(pszSpriteFrameName);
+        auto boolUserObj = dynamic_cast<CCBool*>(rtn->getUserObject("geode.texture-loader/fallback"));
+        if (boolUserObj) return nullptr;
+        else return rtn;
+    };
+};
+
 #define MEMBERBYOFFSET(type, class, offset) *reinterpret_cast<type*>(reinterpret_cast<uintptr_t>(class) + offset)
 template<typename T, typename U> constexpr size_t OFFSETBYMEMBER(U T::* member) {
     return (char*)&((T*)nullptr->*member) - (char*)nullptr;
@@ -411,9 +427,9 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
             for (auto i = 1; i <= Mod::get()->getSettingValue<int64_t>("Special"); i++) {
                 //sprite
                 auto name = CCString::createWithFormat("player_special_%02d_001.png", i)->getCString();
-                auto placeholder = CCSprite::createWithSpriteFrameName("player_special_01_001.png");
-                auto sprite = CCSprite::createWithSpriteFrameName(name);
-                if (not sprite) sprite = CCSprite::create(name);
+                auto placeholder = CCSpriteExt::createWithSpriteFrameName("player_special_01_001.png");
+                auto sprite = CCSpriteExt::createWithSpriteFrameName(name);
+                if (not sprite) sprite = CCSpriteExt::create(name);
                 if (not sprite) sprite = placeholder;
                 sprite->setScale(lists_items_scale);
                 //item
@@ -433,9 +449,9 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
             for (auto i = 1; i < Mod::get()->getSettingValue<int64_t>("ShipFire"); i++) {
                 //sprite
                 auto name = CCString::createWithFormat("shipfireIcon_%02d_001.png", i)->getCString();
-                auto placeholder = CCSprite::createWithSpriteFrameName("shipfireIcon_01_001.png");
-                auto sprite = CCSprite::createWithSpriteFrameName(name);
-                if (not sprite) sprite = CCSprite::create(name);
+                auto placeholder = CCSpriteExt::createWithSpriteFrameName("shipfireIcon_01_001.png");
+                auto sprite = CCSpriteExt::createWithSpriteFrameName(name);
+                if (not sprite) sprite = CCSpriteExt::create(name);
                 if (not sprite) sprite = placeholder;
                 sprite->setScale(lists_items_scale);
                 //item
