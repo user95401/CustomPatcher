@@ -363,7 +363,7 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
         //placeholdera
         m_iconSelection->addChild(CCLabelTTF::create("UNFINISHED...", "arial", 20.f), 1, 85629);
         auto labelnode = m_iconSelection->getChildByTag(85629);
-        labelnode->setPosition(m_iconSelectionMenu->getPosition());
+        labelnode->setPosition(m_navDotMenu->getPosition());
         labelnode->setPositionY((labelnode->getPositionY() * 2.5f));
         //get the selector bg
         CCScale9Sprite* selector_bg;
