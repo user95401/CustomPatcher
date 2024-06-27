@@ -125,13 +125,13 @@ std::vector<const char*> frameNamesInVec(int index, IconType type) {
     //load frames
     loadIcon(index, type);
     //test
-    auto placeholder = "emptyGlow.png";
+    auto placeholder = "diffIcon_10_btn_001.png";//"emptyGlow.png";
     auto frameCache = CCSpriteFrameCache::sharedSpriteFrameCache();
-    if (not frameCache->spriteFrameByName(lay1_name)) lay1_name = placeholder;
-    if (not frameCache->spriteFrameByName(lay2_name)) lay2_name = placeholder;
-    if (not frameCache->spriteFrameByName(lay3_name)) lay3_name = placeholder;
-    if (not frameCache->spriteFrameByName(glow_name)) glow_name = placeholder;
-    if (not frameCache->spriteFrameByName(extr_name)) extr_name = placeholder;
+    if (nullptr == frameCache->spriteFrameByName(lay1_name)) lay1_name = placeholder;
+    if (nullptr == frameCache->spriteFrameByName(lay2_name)) lay2_name = placeholder;
+    if (nullptr == frameCache->spriteFrameByName(lay3_name)) lay3_name = placeholder;
+    if (nullptr == frameCache->spriteFrameByName(glow_name)) glow_name = placeholder;
+    if (nullptr == frameCache->spriteFrameByName(extr_name)) extr_name = placeholder;
     //rtn
     return { lay1_name, lay2_name, lay3_name, glow_name, extr_name };
 }
