@@ -87,38 +87,34 @@ void loadIcon(int index, IconType type) {
         std::filesystem::path texture_path = CCString::createWithFormat("icons/%s_%02d.png", keyForType(type).c_str(), index)->getCString();
         std::filesystem::path plist_path = CCString::createWithFormat("icons/%s_%02d.plist", keyForType(type).c_str(), index)->getCString();
         auto texture_filepath = texture_path.string();
-        auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
-        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
-            if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
-                log::error(
-                    "no texture for \"{}\" key, adding image \"{}\"... result: {}",
-                    texture_key, texture_filepath,
-                    CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
-                );
-                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
-            };
+        if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
+            log::error(
+                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
+                texture_key, texture_filepath,
+                CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
+            );
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
-    };
+    }
+}
+$on_mod(Loaded) {
     //_IconsSheet.plist
     {
         std::filesystem::path texture_path = "_IconsSheet.png";
         std::filesystem::path plist_path = "_IconsSheet.plist";
         auto texture_filepath = texture_path.string();
-        auto texture_key = texture_path.filename().string();
         auto plist_filepath = plist_path.string();
-        if (not CCTextureCache::sharedTextureCache()->textureForKey(texture_key.data())) {
-            if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
-                log::error(
-                    "no texture for \"{}\" key, adding image \"{}\"... result: {}",
-                    texture_key, texture_filepath,
-                    CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
-                );
-                CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
-            };
+        if (CCFileUtils::sharedFileUtils()->isFileExist(texture_filepath.data())) {
+            log::error(
+                "no texture for \"{}\" key, adding image \"{}\"... result: {}",
+                texture_key, texture_filepath,
+                CCTextureCache::sharedTextureCache()->addImage(texture_filepath.data(), 0)
+            );
+            CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile(plist_filepath.data());
         };
-    }
-}
+    };
+};
 std::vector<const char*> frameNamesInVec(int index, IconType type) {
     //naming
     auto lay1_name = CCString::createWithFormat("%s_%02d_001.png", keyForType(type).c_str(), index)->getCString();
