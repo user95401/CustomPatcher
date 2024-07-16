@@ -1,7 +1,3 @@
-# InDeCreaseIcons
- u can change some stuff:
- * change values of maximum icons count
- * load new ones
- * load frames via _IconsSheet.plist
+more inf later
 
-\- [RUHAX TEAM](https://t.me/ruhaxteam), user95401's original, logo by zGuschin
+\- patches founded by [zGuschin](https://t.me/guschinpublic), [user95401's original](https://github.com/user95401/TexturePatcher)
