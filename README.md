@@ -1,4 +1,4 @@
-# Texture Patcher
+# Custom Patcher
 Allow you change the:
 - count of fonts
 - count of backgrounds
