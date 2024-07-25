@@ -67,13 +67,13 @@ namespace geode::utils::string {
     }
 }
 
-template<typename T>
-inline void patch(T addr, ByteVector const& data) {
+template<typename Addr>
+inline void patch(Addr addr, ByteVector const& data, std::string comment = "") {
     for (auto patch : Mod::get()->getPatches()) {
         if (patch->getAddress() == addr) {
             auto update = patch->updateBytes(data);
-            if (update.has_value()) log::debug("PATCH UPDATED: {}", patch->getRuntimeInfo());
-            else log::error("PATCH UPDATE FAILED: {}", update.error());
+            if (update.isOk()) log::debug("PATCH UPDATED: {}{}", patch->getRuntimeInfo(), comment);
+            else log::error("PATCH UPDATE FAILED: {}{}", update.error(), comment);
             return;
         };
     }
@@ -81,6 +81,6 @@ inline void patch(T addr, ByteVector const& data) {
         (addr),
         data
     );
-    if (newp.has_value()) log::debug("CREATED PATCH: {}", newp.value()->getRuntimeInfo());
-    else log::error("FAILED TO CREATE PATCH: {}", newp.error());
+    if (newp.isOk()) log::debug("CREATED PATCH: {}{}", newp.value()->getRuntimeInfo(), comment);
+    else log::error("FAILED TO CREATE PATCH: {}{}", newp.error(), comment);
 }

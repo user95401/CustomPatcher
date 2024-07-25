@@ -1,55 +1,160 @@
-GeometryDash.exe+1797CA - (?)
-GeometryDash.exe+27C8BC - FONT ARRAY
-GeometryDash.exe+27C7B2 - FONT VISIBILITY 
-
-GeometryDash.exe+17987A IS A FONT. (?)
-GeometryDash.exe+181A22 - FONT2. (?)
-GeometryDash.exe+1FFAE7 - FONT3. (?)
-GeometryDash.exe+2CB650 - FONT4. (?)
-GeometryDash.exe+A4E78 - FONT5. (?)
-GeometryDash.exe+A51CF - FONT6 -TEXT?. (?)
-GeometryDash.exe+19D82C - FONT7 - . (?)
-
-GeometryDash.exe+383E3A - FONT9 - . (?)
-GeometryDash.exe+487140 - FONT10 - . (?)
 
 
+GeometryDash.exe+1797CA    - (?)
+GeometryDash.exe+27C8BC - MACCuB WPuFTOB
+GeometryDash.exe+27C7B2         - BuDuMOCTb WPuFTOB 
 
-GeometryDash.exe+3669A4 - Trail visibility in the playing field (+ editor)
+GeometryDash.exe+17987A   - WPuFT. (?)
+GeometryDash.exe+181A22    - WPuFT2. (?)
+GeometryDash.exe+1FFAE7     - WPuFT3. (?)
+GeometryDash.exe+2CB650     - WPuFT4. (?)
+GeometryDash.exe+A4E78      - WPuFT5. (?)
+GeometryDash.exe+A51CF       - WPuFT6 - TEXT?. (?)
+GeometryDash.exe+19D82C        - WPuFT7 - . (?)
 
-
-====================================== BACKGROUNDS===================================
-GeometryDash.exe+49D190 - BG (?)
-GeometryDash.exe+495F70 - BG2 (?)
-GeometryDash.exe+1FC6A0 - BG3 (JOKE: THE BACKGROUND SELECTION BREAKS)
-GeometryDash.exe+1E949F - BG4 (?)
-
-
-GeometryDash.exe+1FC630 - BG BACKGROUND IN THE GAME
-GeometryDash.exe+310B99 - BG in the main menu
-GeometryDash.exe+30DD22 - BG In the boot scene..
-GeometryDash.exe+301D54 - bg button array
-
-GeometryDash.exe+44644F - bgknop (?)
-GeometryDash.exe+445BCD - bgknop2 (?)
-GeometryDash.exe+2FF5CA - BGKNOP3 (?)
-GeometryDash.exe+2FF5C5 - BGKNOP4 (?)
+GeometryDash.exe+383E3A          - WPuFT9 - . (?)
+GeometryDash.exe+487140           - WPuFT10 - . (?)
 
 
-======================================FLOORS===================================
 
-GeometryDash.exe+179C2A - GENDER in the main menu 
-GeometryDash.exe+26C0FB - GENDER in the game
-GeometryDash.exe+301D7B - array of the FLOOR button
+GeometryDash.exe+3669A4     - BuguMocTb TpeuJlbl B urpoBoM noJle (+ pegakTop)
 
 
-GeometryDash.exe+495E34 floors (?)
+======================================FOHbl===================================
+GeometryDash.exe+49D190 - 6r (?)
+GeometryDash.exe+495F70  - 6r2 (?)
+GeometryDash.exe+1FC6A0   - 6r3 (nPuKOJl: Bbl6OP FOHA JlOMAETC9l)
+GeometryDash.exe+1E949F    - 6r4 (?)
 
-=====================================THE AVERAGE FIELD============================
-GeometryDash.exe+301DB1 - BUTTON ARRAY MIDDLE FIELD
 
-GeometryDash.exe+1799DA - MEAN FIELD (?)
-GeometryDash.exe+179C8C - MEAN FIELD 2 (?)
-GeometryDash.exe+26CF16 - MEAN FIELD 3 (?)
-GeometryDash.exe+495D22 - MEAN FIELD 4 (?)
-GeometryDash.exe+26D136 - MEAN FIELD 5 (?)
+GeometryDash.exe+1FC630 - 6r FOH B urPE
+GeometryDash.exe+310B99   - 6r B rJl MeHl-o
+GeometryDash.exe+30DD22  - 6r B 3arpy3o4Hou cueHe..
+GeometryDash.exe+301D54 - MaccuB kHonku 6r
+
+GeometryDash.exe+44644F - 6rKHonka (?)
+GeometryDash.exe+445BCD  - 6rKHonka2 (?)
+GeometryDash.exe+2FF5CA   - 6rKHonka3 (?)
+GeometryDash.exe+2FF5C5    - 6rKHonka4 (?)
+
+
+======================================nOJlbl===================================
+
+GeometryDash.exe+179C2A - nOJl B rJl MeHl-o 
+GeometryDash.exe+26C0FB  - nOJl B urpe
+GeometryDash.exe+301D7B - MaccuB kHonku nOJl
+
+
+GeometryDash.exe+495E34 noJlbl (?)
+
+=====================================CPEDHEE nOJlE============================
+GeometryDash.exe+301DB1  - MACCuB KHOnKu CPEDHEE nOJlE
+
+GeometryDash.exe+1799DA -  CPEDHEE nOJlE (?)
+GeometryDash.exe+179C8C - CPEDHEE nOJlE2 (?)
+GeometryDash.exe+26CF16 - CPEDHEE nOJlE3 (?)
+GeometryDash.exe+495D22  - CPEDHEE nOJlE4 (?)
+GeometryDash.exe+26D136   - CPEDHEE nOJlE5 (?)
+
+
+===========================uKOHKu==========================================
+
+
+GeometryDash.exe+3649B5 - BuguMocTb ky6a B urpoBoM noJle (+ pegakTop)
+GeometryDash.exe+37BEA3  - BuguMocTb kopa6Jl9l B urpoBoM noJle (+ pegakTop)
+GeometryDash.exe+37C0D3  - BuguMocTb g)l(eTnak B urpoBoM noJle (+ pegakTop)
+GeometryDash.exe+37C309  - BuguMocTb l-ofo B urpoBoM noJle (+ pegakTop)
+GeometryDash.exe+37C5A3   - BuguMocTb wap B urpoBoM noJle (+ pegakTop)
+GeometryDash.exe+37C7D3   - BuguMocTb cBuHrkonTep B urpoBoM noJle (+ pegakTop)
+GeometryDash.exe+37CA03    - BuguMocTb BoJlHbl B urpoBoM noJle (+ pegakTop)
+
+GeometryDash.exe+2680C2  - MaccuB ky6oB (B Bbl6ope ukoHok + Mara3uHbl)
+GeometryDash.exe+267F98 - MaccuB kopa6Jleu (B Bbl6ope ukoHok + Mara3uHbl)
+GeometryDash.exe+267FD0  - MaccuB wapoB (B Bbl6ope ukoHok + Mara3uHbl)
+GeometryDash.exe+267FEF   - MaccuB l-ofowek (B Bbl6ope ukoHok + Mara3uHbl)
+GeometryDash.exe+26800E    - MaccuB BoJlH (B Bbl6ope ukoHok + Mara3uHbl)
+GeometryDash.exe+268038     - MaccuB po6oToB (B Bbl6ope ukoHok + Mara3uHbl) (?)
+GeometryDash.exe+268052     - MaccuB naykoB (B Bbl6ope ukoHok + Mara3uHbl) (?)
+GeometryDash.exe+268079     - MaccuB cBuHrkonTepoB (B Bbl6ope ukoHok + Mara3uHbl)
+GeometryDash.exe+2680AB      - MaccuB g)l(eTnakoB (B Bbl6ope ukoHok + Mara3uHbl)
+
+GeometryDash.exe+178D83 - KOJlu4ECTBO KY6OB (B rapa)l(e)
+GeometryDash.exe+178D89  - KOJlu4ECTBO kopa6Jleu (B rapa)l(e)
+GeometryDash.exe+178D8F   - KOJlu4ECTBO wapoB (B rapa)l(e)
+GeometryDash.exe+178D95    - KOJlu4ECTBO l-ofowek (B rapa)l(e)
+GeometryDash.exe+178D9B     - KOJlu4ECTBO cTpeJlok (B rapa)l(e)
+GeometryDash.exe+178DA1      - KOJlu4ECTBO po6oTon (B rapa)l(e) (?)
+GeometryDash.exe+178DA7       - KOJlu4ECTBO naykoB (B rapa)l(e) (?)
+GeometryDash.exe+178DAD        - KOJlu4ECTBO cBuHrkonTepoB (B rapa)l(e) 
+GeometryDash.exe+178DBF         - KOJlu4ECTBO g)l(eTnakoB (B rapa)l(e) 
+
+
+GeometryDash.exe+178DB3         - KOJlu4ECTBO TpeuJloB (B rapa)l(e) (?)
+GeometryDash.exe+178DB9         - KOJlu4ECTBO effekTbl cMepTu (B rapa)l(e)  (?)
+GeometryDash.exe+178DC5          - KOJlu4ECTBO effekTbl kopa6Jl9l (ship fire) (B rapa)l(e)  (?)
+
+
+ORGS:
+"original":[184,59,0,0,0]//
+"original":[184,59,0,0,0]// - MACCuB WPuFTOB
+"original":[187,59,0,0,0]//         - BuDuMOCTb WPuFTOB
+"original":[184,59,0,0,0]//   - WPuFT. (?)
+"original":[187,59,0,0,0]//    - WPuFT2. (?)
+"original":[187,59,0,0,0]//     - WPuFT3. (?)
+"original":[187,59,0,0,0]//     - WPuFT4. (?)
+"original":[191,59,0,0,0]//      - WPuFT5. (?)
+"original":[131,248,59,15,76]//       - WPuFT6 - TEXT?. (?)
+"original":[187,59,0,0,0]//        - WPuFT7 - . (?)
+"original":[187,59,0,0,0]//          - WPuFT9 - . (?)
+"original":[187,59,0,0,0]//           - WPuFT10 - . (?)
+"original":[186,7,0,0,0]//     - BuguMocTb TpeuJlbl B urpoBoM noJle (+ pegakTop)
+"original":[131,255,59,126,203]// - 6r (?)
+"original":[184,59,0,0,0]//  - 6r2 (?)
+"original":[131,255,59,15,76]//   - 6r3 (nPuKOJl: Bbl6OP FOHA JlOMAETC9l)
+"original":[184,59,0,0,0]//    - 6r4 (?)
+"original":[189,59,0,0,0]// - 6r FOH B urPE
+"original":[185,59,0,0,0]//   - 6r B rJl MeHl-o
+"original":[186,1,0,0,0]//  - 6r B 3arpy3o4Hou cueHe..
+"original":[65,189,59,0,0]// - MaccuB kHonku 6r
+"original":[184,59,0,0,0]// - 6rKHonka (?)
+"original":[184,59,0,0,0]//  - 6rKHonka2 (?)
+"original":[186,59,0,0,0]//   - 6rKHonka3 (?)
+"original":[131,250,59,126,7]//    - 6rKHonka4 (?)
+"original":[184,22,0,0,0]// - nOJl B rJl MeHl-o
+"original":[184,22,0,0,0]//  - nOJl B urpe
+"original":[65,189,22,0,0]// - MaccuB kHonku nOJl
+"original":[184,22,0,0,0]// noJlbl (?)
+"original":[68,141,104,3,235]//  - MACCuB KHOnKu CPEDHEE nOJlE
+"original":[184,3,0,0,0]// -  CPEDHEE nOJlE (?)
+"original":[131,248,3,119,43]// - CPEDHEE nOJlE2 (?)
+"original":[184,3,0,0,0]// - CPEDHEE nOJlE3 (?)
+"original":[184,3,0,0,0]//  - CPEDHEE nOJlE4 (?)
+"original":[65,184,3,0,0]//   - CPEDHEE nOJlE5 (?)
+"original":[184,228,1,0,0]// - BuguMocTb ky6a B urpoBoM noJle (+ pegakTop)
+"original":[184,169,0,0,0]//  - BuguMocTb kopa6Jl9l B urpoBoM noJle (+ pegakTop)
+"original":[184,5,0,0,0]//  - BuguMocTb g)l(eTnak B urpoBoM noJle (+ pegakTop)
+"original":[184,149,0,0,0]//  - BuguMocTb l-ofo B urpoBoM noJle (+ pegakTop)
+"original":[184,118,0,0,0]//   - BuguMocTb wap B urpoBoM noJle (+ pegakTop)
+"original":[184,43,0,0,0]//   - BuguMocTb cBuHrkonTep B urpoBoM noJle (+ pegakTop)
+"original":[184,96,0,0,0]//    - BuguMocTb BoJlHbl B urpoBoM noJle (+ pegakTop)
+"original":[190,228,1,0,0]//  - MaccuB ky6oB (B Bbl6ope ukoHok + Mara3uHbl)
+"original":[190,169,0,0,0]// - MaccuB kopa6Jleu (B Bbl6ope ukoHok + Mara3uHbl)
+"original":[190,118,0,0,0]//  - MaccuB wapoB (B Bbl6ope ukoHok + Mara3uHbl)
+"original":[190,149,0,0,0]//   - MaccuB l-ofowek (B Bbl6ope ukoHok + Mara3uHbl)
+"original":[190,96,0,0,0]//    - MaccuB BoJlH (B Bbl6ope ukoHok + Mara3uHbl)
+"original":[190,68,0,0,0]//     - MaccuB po6oToB (B Bbl6ope ukoHok + Mara3uHbl) (?)
+"original":[190,69,0,0,0]//     - MaccuB naykoB (B Bbl6ope ukoHok + Mara3uHbl) (?)
+"original":[190,43,0,0,0]//     - MaccuB cBuHrkonTepoB (B Bbl6ope ukoHok + Mara3uHbl)
+"original":[190,5,0,0,0]//      - MaccuB g)l(eTnakoB (B Bbl6ope ukoHok + Mara3uHbl)
+"original":[184,228,1,0,0]// - KOJlu4ECTBO KY6OB (B rapa)l(e)
+"original":[184,169,0,0,0]//  - KOJlu4ECTBO kopa6Jleu (B rapa)l(e)
+"original":[184,118,0,0,0]//   - KOJlu4ECTBO wapoB (B rapa)l(e)
+"original":[184,149,0,0,0]//    - KOJlu4ECTBO l-ofowek (B rapa)l(e)
+"original":[184,96,0,0,0]//     - KOJlu4ECTBO cTpeJlok (B rapa)l(e)
+"original":[184,68,0,0,0]//      - KOJlu4ECTBO po6oTon (B rapa)l(e) (?)
+"original":[184,69,0,0,0]//       - KOJlu4ECTBO naykoB (B rapa)l(e) (?)
+"original":[184,43,0,0,0]//        - KOJlu4ECTBO cBuHrkonTepoB (B rapa)l(e)
+"original":[184,5,0,0,0]//         - KOJlu4ECTBO g)l(eTnakoB (B rapa)l(e)
+"original":[184,7,0,0,0]//         - KOJlu4ECTBO TpeuJloB (B rapa)l(e) (?)
+"original":[184,20,0,0,0]//         - KOJlu4ECTBO effekTbl cMepTu (B rapa)l(e)  (?)
+"original":[184,6,0,0,0]//          - KOJlu4ECTBO effekTbl kopa6Jl9l (ship fire) (B rapa)l(e)  (?)

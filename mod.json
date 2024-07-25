@@ -1,18 +1,19 @@
 {
-	"geode": "3.2.0",
+	"geode": "3.3.0",
 	"gd": {
 		"win": "2.206",
 		"android": "*"
 	},
-	"version": "v0.0.0-beta.0",
+	"version": "v0.0.0-beta.1",
 	"id": "user95401.texturepatcher",
 	"name": "Texture Patcher",
 	"developers": [ "user95401", "zGuschin" ],
-	"description": "not now",
+	"description": "",
+	"early-load": true,
 	"repository": "https://github.com/user95401/TexturePatcher",
 	"settings": {
-		"FONT": {
-			"name": "FONT",
+		"Fonts": {
+			"name": "                  Fonts",
 			"description": "max count of",
 			"type": "int",
 			"min": 59,
@@ -20,8 +21,8 @@
 			"default": 59,
 			"control": { "slider": false }
 		},
-		"BGs": {
-			"name": "BGs",
+		"Backgrounds": {
+			"name": "             Backgrounds",
 			"description": "max count of",
 			"type": "int",
 			"min": 59,
@@ -29,122 +30,150 @@
 			"default": 59,
 			"control": { "slider": false }
 		},
-		"BGInthebootscene": {
-			"name": "BG In the boot scene",
+		"Grounds": {
+			"name": "                 Grounds",
 			"description": "max count of",
+			"type": "int",
+			"min": 22,
+			"max": 999,
+			"default": 22,
+			"control": { "slider": false }
+		},
+		"MiddleGrounds": {
+			"name": "          Middle Grounds",
+			"description": "max count of",
+			"type": "int",
+			"min": 3,
+			"max": 999,
+			"default": 3,
+			"control": { "slider": false }
+		},
+		"LoadingLayerBackground": {
+			"name": " LoadingLayer Background",
+			"description": "id of",
 			"type": "int",
 			"min": 1,
 			"max": 999,
 			"default": 1,
 			"control": { "slider": false }
 		},
-		"Cube": {
-			"name": "Cube (UNFINISHED)",
+		"Cubes": {
+			"name": "                   Cubes",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 484,
 			"max": 900,
 			"default": 484,
 			"control": { "slider": false }
 		},
-		"Ship": {
-			"name": "Ship (UNFINISHED)",
+		"Ships": {
+			"name": "                   Ships",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 169,
 			"max": 900,
 			"default": 169,
 			"control": { "slider": false }
 		},
-		"Ball": {
-			"name": "Ball (UNFINISHED)",
+		"Balls": {
+			"name": "                   Balls",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 118,
 			"max": 900,
 			"default": 118,
 			"control": { "slider": false }
 		},
-		"Ufo": {
-			"name": "Ufo (UNFINISHED)",
+		"Ufos": {
+			"name": "                    Ufos",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 149,
 			"max": 900,
 			"default": 149,
 			"control": { "slider": false }
 		},
-		"Wave": {
-			"name": "Wave (UNFINISHED)",
+		"Waves": {
+			"name": "                   Waves",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 96,
 			"max": 900,
 			"default": 96,
 			"control": { "slider": false }
 		},
-		"Robot": {
-			"name": "Robot (UNFINISHED)",
+		"Robots": {
+			"name": "                  Robots",
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
-			"min": 0,
+			"min": 68,
 			"max": 900,
 			"default": 68,
 			"control": { "slider": false }
 		},
-		"Spider": {
-			"name": "Spider (UNFINISHED)",
+		"Spiders": {
+			"name": "                 Spiders",
 			"description": "<cr>CANT_LOAD_NEW_RES</c>. max count of",
 			"type": "int",
-			"min": 0,
+			"min": 69,
 			"max": 900,
 			"default": 69,
 			"control": { "slider": false }
 		},
-		"Swing": {
-			"name": "Swing (UNFINISHED)",
+		"Swings": {
+			"name": "                  Swings",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 43,
 			"max": 900,
 			"default": 43,
 			"control": { "slider": false }
 		},
-		"Jetpack": {
-			"name": "Jetpack (UNFINISHED)",
+		"Jetpacks": {
+			"name": "                Jetpacks",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 5,
 			"max": 900,
 			"default": 5,
 			"control": { "slider": false }
 		},
-		"DeathEffect": {
-			"name": "DeathEffect (UNFINISHED)",
+		"DeathEffects": {
+			"name": "           Death Effects",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 20,
 			"max": 900,
 			"default": 20,
 			"control": { "slider": false }
 		},
-		"Special": {
-			"name": "Special (UNFINISHED)",
+		"Specials": {
+			"name": "                  Trails",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 7,
 			"max": 900,
 			"default": 7,
 			"control": { "slider": false }
 		},
-		"ShipFire": {
-			"name": "ShipFire (UNFINISHED)",
+		"ShipFires": {
+			"name": "              Ship Fires",
 			"description": "max count of",
 			"type": "int",
-			"min": 0,
+			"min": 6,
 			"max": 900,
 			"default": 6,
 			"control": { "slider": false }
+		},
+		"UnlockNewIcons": {
+			"name": "        Unlock New Icons",
+			"type": "bool",
+			"default": true
+		},
+		"UnlockAllIcons": {
+			"name": "        Unlock All Icons",
+			"type": "bool",
+			"default": false
 		}
 	}
 }
