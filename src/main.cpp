@@ -45,20 +45,20 @@ void ruinGame() {
     //======================================WPuFTbl===================================
     //59
 
-    //PB10("GeometryDash.exe+1797CA", fmt("184 {} {} {} {}", v3(Fonts)), "//");
+    PB10("GeometryDash.exe+1797CA", fmt("184 {} {} {} {}", v3(Fonts)), "//");
     PB10("GeometryDash.exe+27C8BC", fmt("184 {} {} {} {}", v3(Fonts)), "// - MACCuB WPuFTOB");
     PB10("GeometryDash.exe+27C7B2", fmt("187 {} {} {} {}", v3(Fonts)), "//         - BuDuMOCTb WPuFTOB ");
 
-    //PB10("GeometryDash.exe+17987A", fmt("184 {} {} {} {}", v3(Fonts)), "//   - WPuFT. (?)");
-    //PB10("GeometryDash.exe+181A22", fmt("187 {} {} {} {}", v3(Fonts)), "//    - WPuFT2. (?)");
-    //PB10("GeometryDash.exe+1FFAE7", fmt("187 {} {} {} {}", v3(Fonts)), "//     - WPuFT3. (?)");
-    //PB10("GeometryDash.exe+2CB650", fmt("187 {} {} {} {}", v3(Fonts)), "//     - WPuFT4. (?)");
-    //PB10("GeometryDash.exe+A4E78", fmt("191 {} {} {} {}", v3(Fonts)), "//      - WPuFT5. (?)");
-    //PB10("GeometryDash.exe+A51CF", fmt("131 248 {} 15 76", Fonts[0]), "//       - WPuFT6 - TEXT?. (?)");
-    //PB10("GeometryDash.exe+19D82C", fmt("187 {} {} {} {}", v3(Fonts)), "//        - WPuFT7 - . (?)");
+    PB10("GeometryDash.exe+17987A", fmt("184 {} {} {} {}", v3(Fonts)), "//   - WPuFT. (?)");
+    PB10("GeometryDash.exe+181A22", fmt("187 {} {} {} {}", v3(Fonts)), "//    - WPuFT2. (?)");
+    PB10("GeometryDash.exe+1FFAE7", fmt("187 {} {} {} {}", v3(Fonts)), "//     - WPuFT3. (?)");
+    PB10("GeometryDash.exe+2CB650", fmt("187 {} {} {} {}", v3(Fonts)), "//     - WPuFT4. (?)");
+    PB10("GeometryDash.exe+A4E78", fmt("191 {} {} {} {}", v3(Fonts)), "//      - WPuFT5. (?)");
+    PB10("GeometryDash.exe+A51CF", fmt("131 248 {} 15 76", Fonts[0]), "//       - WPuFT6 - TEXT?. (?)");
+    PB10("GeometryDash.exe+19D82C", fmt("187 {} {} {} {}", v3(Fonts)), "//        - WPuFT7 - . (?)");
 
-    //PB10("GeometryDash.exe+383E3A", fmt("187 {} {} {} {}", v3(Fonts)), "//          - WPuFT9 - . (?)");
-    //PB10("GeometryDash.exe+487140", fmt("187 {} {} {} {}", v3(Fonts)), "//           - WPuFT10 - . (?)");
+    PB10("GeometryDash.exe+383E3A", fmt("187 {} {} {} {}", v3(Fonts)), "//          - WPuFT9 - . (?)");
+    PB10("GeometryDash.exe+487140", fmt("187 {} {} {} {}", v3(Fonts)), "//           - WPuFT10 - . (?)");
 
 
 
@@ -67,10 +67,10 @@ void ruinGame() {
 
     //======================================FOHbl===================================
     //59
-    //PB10("GeometryDash.exe+49D190", fmt("131 255 {} 126 203", Backgrounds[0]), "// - 6r (?)");
-    //PB10("GeometryDash.exe+495F70", fmt("184 {} {} {} {}", v3(Backgrounds)), "//  - 6r2 (?)");
-    //PB10("GeometryDash.exe+1FC6A0", fmt("131 255 {} 15 76", v3(Cube)), "//   - 6r3 (nPuKOJl: Bbl6OP FOHA JlOMAETC9l)");
-    //PB10("GeometryDash.exe+1E949F", fmt("184 {} {} {} {}", v3(Backgrounds)), "//    - 6r4 (?)");
+    PB10("GeometryDash.exe+49D190", fmt("131 255 {} 126 203", Backgrounds[0]), "// - 6r (?)");
+    PB10("GeometryDash.exe+495F70", fmt("184 {} {} {} {}", v3(Backgrounds)), "//  - 6r2 (?)");
+    //PB10("GeometryDash.exe+1FC6A0", fmt("131 255 {} 15 76", v3(Backgrounds)), "//   - 6r3 (nPuKOJl: Bbl6OP FOHA JlOMAETC9l)");
+    PB10("GeometryDash.exe+1E949F", fmt("184 {} {} {} {}", v3(Backgrounds)), "//    - 6r4 (?)");
 
 
     PB10("GeometryDash.exe+1FC630", fmt("189 {} {} {} {}", v3(Backgrounds)), "// - 6r FOH B urPE");
@@ -78,10 +78,10 @@ void ruinGame() {
     PB10("GeometryDash.exe+30DD22", fmt("186 {} {} {} {}", v3(LoadingLayerBackground)), "//  - 6r B 3arpy3o4Hou cueHe..");
     PB10("GeometryDash.exe+301D54", fmt("65 189 {} {} {} {}", v3(Backgrounds)), "// - MaccuB kHonku 6r");
 
-    //PB10("GeometryDash.exe+44644F", fmt("184 {} {} {} {}", v3(Backgrounds)), "// - 6rKHonka (?)");
-    //PB10("GeometryDash.exe+445BCD", fmt("184 {} {} {} {}", v3(Backgrounds)), "//  - 6rKHonka2 (?)");
-    //PB10("GeometryDash.exe+2FF5CA", fmt("186 {} {} {} {}", v3(Backgrounds)), "//   - 6rKHonka3 (?)");
-    //PB10("GeometryDash.exe+2FF5C5", fmt("131 250 {} 126 7", Backgrounds[0]), "//    - 6rKHonka4 (?)");
+    PB10("GeometryDash.exe+44644F", fmt("184 {} {} {} {}", v3(Backgrounds)), "// - 6rKHonka (?)");
+    PB10("GeometryDash.exe+445BCD", fmt("184 {} {} {} {}", v3(Backgrounds)), "//  - 6rKHonka2 (?)");
+    PB10("GeometryDash.exe+2FF5CA", fmt("186 {} {} {} {}", v3(Backgrounds)), "//   - 6rKHonka3 (?)");
+    PB10("GeometryDash.exe+2FF5C5", fmt("131 250 {} 126 7", Backgrounds[0]), "//    - 6rKHonka4 (?)");
 
 
     //======================================nOJlbl===================================
@@ -91,17 +91,17 @@ void ruinGame() {
     PB10("GeometryDash.exe+301D7B", fmt("65 189 {} {} {} {}", v3(Grounds)), "// - MaccuB kHonku nOJl");
 
 
-    //PB10("GeometryDash.exe+495E34", fmt("184 {} {} {} {}", v3(Grounds)), "// noJlbl (?)");
+    PB10("GeometryDash.exe+495E34", fmt("184 {} {} {} {}", v3(Grounds)), "// noJlbl (?)");
 
     //=====================================CPEDHEE nOJlE============================
     //3
     PB10("GeometryDash.exe+301DB1", fmt("68 141 104 {} 235", v3(MiddleGrounds)), "//  - MACCuB KHOnKu CPEDHEE nOJlE");
 
-    //PB10("GeometryDash.exe+1799DA", fmt("184 {} {} {} {}", v3(MiddleGrounds)), "// -  CPEDHEE nOJlE (?)");
-    //PB10("GeometryDash.exe+179C8C", fmt("131 248 {} 119 43", v3(MiddleGrounds)), "// - CPEDHEE nOJlE2 (?)");
-    //PB10("GeometryDash.exe+26CF16", fmt("184 {} {} {} {}", v3(MiddleGrounds)), "// - CPEDHEE nOJlE3 (?)");
-    //PB10("GeometryDash.exe+495D22", fmt("184 {} {} {} {}", v3(MiddleGrounds)), "//  - CPEDHEE nOJlE4 (?)");
-    //PB10("GeometryDash.exe+26D136", fmt("65 184 {} {} {} {}", v3(MiddleGrounds)), "//   - CPEDHEE nOJlE5 (?)");
+    PB10("GeometryDash.exe+1799DA", fmt("184 {} {} {} {}", v3(MiddleGrounds)), "// -  CPEDHEE nOJlE (?)");
+    PB10("GeometryDash.exe+179C8C", fmt("131 248 {} 119 43", v3(MiddleGrounds)), "// - CPEDHEE nOJlE2 (?)");
+    PB10("GeometryDash.exe+26CF16", fmt("184 {} {} {} {}", v3(MiddleGrounds)), "// - CPEDHEE nOJlE3 (?)");
+    PB10("GeometryDash.exe+495D22", fmt("184 {} {} {} {}", v3(MiddleGrounds)), "//  - CPEDHEE nOJlE4 (?)");
+    PB10("GeometryDash.exe+26D136", fmt("65 184 {} {} {} {}", v3(MiddleGrounds)), "//   - CPEDHEE nOJlE5 (?)");
 
 
     //===========================uKOHKu==========================================
@@ -128,8 +128,8 @@ void ruinGame() {
     PB10("GeometryDash.exe+267FD0", fmt("190 {} {} {} {}", v3(Balls)), "//  - MaccuB wapoB (B Bbl6ope ukoHok + Mara3uHbl)");
     PB10("GeometryDash.exe+267FEF", fmt("190 {} {} {} {}", v3(Ufos)), "//   - MaccuB l-ofowek (B Bbl6ope ukoHok + Mara3uHbl)");
     PB10("GeometryDash.exe+26800E", fmt("190 {} {} {} {}", v3(Waves)), "//    - MaccuB BoJlH (B Bbl6ope ukoHok + Mara3uHbl)");
-    //PB10("GeometryDash.exe+268038", fmt("190 {} {} {} {}", v3(Robots)), "//     - MaccuB po6oToB (B Bbl6ope ukoHok + Mara3uHbl) (?)");
-    //PB10("GeometryDash.exe+268052", fmt("190 {} {} {} {}", v3(Spiders)), "//     - MaccuB naykoB (B Bbl6ope ukoHok + Mara3uHbl) (?)");
+    PB10("GeometryDash.exe+268038", fmt("190 {} {} {} {}", v3(Robots)), "//     - MaccuB po6oToB (B Bbl6ope ukoHok + Mara3uHbl) (?)");
+    PB10("GeometryDash.exe+268052", fmt("190 {} {} {} {}", v3(Spiders)), "//     - MaccuB naykoB (B Bbl6ope ukoHok + Mara3uHbl) (?)");
     PB10("GeometryDash.exe+268079", fmt("190 {} {} {} {}", v3(Swings)), "//     - MaccuB cBuHrkonTepoB (B Bbl6ope ukoHok + Mara3uHbl)");
     PB10("GeometryDash.exe+2680AB", fmt("190 {} {} {} {}", v3(Jetpacks)), "//      - MaccuB g)l(eTnakoB (B Bbl6ope ukoHok + Mara3uHbl)");
 
@@ -138,15 +138,15 @@ void ruinGame() {
     PB10("GeometryDash.exe+178D8F", fmt("184 {} {} {} {}", v3(Balls)), "//   - KOJlu4ECTBO wapoB (B rapa)l(e)");
     PB10("GeometryDash.exe+178D95", fmt("184 {} {} {} {}", v3(Ufos)), "//    - KOJlu4ECTBO l-ofowek (B rapa)l(e)");
     PB10("GeometryDash.exe+178D9B", fmt("184 {} {} {} {}", v3(Waves)), "//     - KOJlu4ECTBO cTpeJlok (B rapa)l(e)");
-    //PB10("GeometryDash.exe+178DA1", fmt("184 {} {} {} {}", v3(Robots)), "//      - KOJlu4ECTBO po6oTon (B rapa)l(e) (?)");
-    //PB10("GeometryDash.exe+178DA7", fmt("184 {} {} {} {}", v3(Spiders)), "//       - KOJlu4ECTBO naykoB (B rapa)l(e) (?)");
+    PB10("GeometryDash.exe+178DA1", fmt("184 {} {} {} {}", v3(Robots)), "//      - KOJlu4ECTBO po6oTon (B rapa)l(e) (?)");
+    PB10("GeometryDash.exe+178DA7", fmt("184 {} {} {} {}", v3(Spiders)), "//       - KOJlu4ECTBO naykoB (B rapa)l(e) (?)");
     PB10("GeometryDash.exe+178DAD", fmt("184 {} {} {} {}", v3(Swings)), "//        - KOJlu4ECTBO cBuHrkonTepoB (B rapa)l(e) ");
     PB10("GeometryDash.exe+178DBF", fmt("184 {} {} {} {}", v3(Jetpacks)), "//         - KOJlu4ECTBO g)l(eTnakoB (B rapa)l(e) ");
 
 
-    //PB10("178DB3", fmt("184 {} {} {} {}", v3(Specials)), "//         - KOJlu4ECTBO TpeuJloB (B rapa)l(e) (?)");
-    //PB10("178DB9", fmt("184 {} {} {} {}", v3(DeathEffects)), "//         - KOJlu4ECTBO effekTbl cMepTu (B rapa)l(e)  (?)");
-   // PB10("178DC5", fmt("184 {} {} {} {}", v3(ShipFires)), "//          - KOJlu4ECTBO effekTbl kopa6Jl9l (ship fire) (B rapa)l(e)  (?)");
+    PB10("178DB3", fmt("184 {} {} {} {}", v3(Specials)), "//         - KOJlu4ECTBO TpeuJloB (B rapa)l(e) (?)");
+    PB10("178DB9", fmt("184 {} {} {} {}", v3(DeathEffects)), "//         - KOJlu4ECTBO effekTbl cMepTu (B rapa)l(e)  (?)");
+    PB10("178DC5", fmt("184 {} {} {} {}", v3(ShipFires)), "//          - KOJlu4ECTBO effekTbl kopa6Jl9l (ship fire) (B rapa)l(e)  (?)");
 
 #undef v3
 #undef fmt
