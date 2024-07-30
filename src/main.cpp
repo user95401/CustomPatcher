@@ -69,7 +69,7 @@ void ruinGame() {
     //59
     PB10("GeometryDash.exe+49D190", fmt("131 255 {} 126 203", Backgrounds[0]), "// - 6r (?)");
     PB10("GeometryDash.exe+495F70", fmt("184 {} {} {} {}", v3(Backgrounds)), "//  - 6r2 (?)");
-    //PB10("GeometryDash.exe+1FC6A0", fmt("131 255 {} 15 76", v3(Backgrounds)), "//   - 6r3 (nPuKOJl: Bbl6OP FOHA JlOMAETC9l)");
+    PB10("GeometryDash.exe+1FC6A0", fmt("131 255 {} 15 76", v3(Backgrounds)), "//   - 6r3 (nPuKOJl: Bbl6OP FOHA JlOMAETC9l)");
     PB10("GeometryDash.exe+1E949F", fmt("184 {} {} {} {}", v3(Backgrounds)), "//    - 6r4 (?)");
 
 
@@ -371,7 +371,7 @@ void settingChanged() {
 #include <Geode/loader/SettingEvent.hpp>
 #include <Geode/modify/LoadingLayer.hpp>
 class $modify(LoadingLayer) {
-    bool init(bool p0) {
+    $override bool init(bool p0) {
         ruinGame();
         listenForAllSettingChanges([](auto) { settingChanged(); });
         return LoadingLayer::init(p0);
@@ -381,7 +381,7 @@ class $modify(LoadingLayer) {
 
 #include <Geode/modify/GameManager.hpp>
 class $modify(GameManager) {
-    bool isIconUnlocked(int p0, IconType p1) {
+    $override bool isIconUnlocked(int p0, IconType p1) {
         auto rtn = GameManager::isIconUnlocked(p0, p1);
         if (SETTING(bool, "UnlockNewIcons")) {
             matjson::Value asd = Mod::get()->getMetadata().getRawJSON();
@@ -400,9 +400,16 @@ class $modify(GameManager) {
     }
 };
 
+#include <Geode/modify/GJGarageLayer.hpp>
+class $modify(GJGarageLayerExt, GJGarageLayer) {
+    $override void setupPage(int p0, IconType p1) {
+        if (GameManager::sharedState()->countForType(p1) <= 36) p0 = 0;
+        GJGarageLayer::setupPage(p0, p1);
+    }
+};
 #include <Geode/modify/ItemInfoPopup.hpp>
 class $modify(ItemInfoPopupExt, ItemInfoPopup) {
-    static ItemInfoPopup* create(int p0, UnlockType p1) {
+    $override static ItemInfoPopup* create(int p0, UnlockType p1) {
         auto __this = ItemInfoPopup::create(p0, p1);
         //nodes
         CCLabelBMFont* title = nullptr;
