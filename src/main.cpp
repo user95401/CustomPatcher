@@ -381,7 +381,6 @@ void settingChanged(SettingValue* val, bool checkNewOnes = false, bool first = f
 #include <Geode/modify/LoadingLayer.hpp>
 class $modify(LoadingLayer) {
     $override void loadAssets() {
-        log::debug("m_loadStep = {}", m_loadStep);
         if (m_loadStep == 14) {
             //preload new
             settingChanged(Mod::get()->getSetting("Cubes"), true);
