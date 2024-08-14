@@ -72,7 +72,7 @@ inline void patch(Addr addr, ByteVector const& data, std::string comment = "") {
     for (auto patch : Mod::get()->getPatches()) {
         if (patch->getAddress() == addr) {
             auto update = patch->updateBytes(data);
-            if (update.isOk()) log::debug("PATCH UPDATED: {}{}", patch->getRuntimeInfo(), comment);
+            if (update.isOk()) void();//log::debug("PATCH UPDATED: {}{}", patch->getRuntimeInfo(), comment);
             else log::error("PATCH UPDATE FAILED: {}{}", update.error(), comment);
             return;
         };
@@ -81,6 +81,6 @@ inline void patch(Addr addr, ByteVector const& data, std::string comment = "") {
         (addr),
         data
     );
-    if (newp.isOk()) log::debug("CREATED PATCH: {}{}", newp.value()->getRuntimeInfo(), comment);
+    if (newp.isOk()) void();//log::debug("CREATED PATCH: {}{}", newp.value()->getRuntimeInfo(), comment);
     else log::error("FAILED TO CREATE PATCH: {}{}", newp.error(), comment);
 }

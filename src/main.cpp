@@ -153,13 +153,24 @@ void ruinGame() {
 
 };
 
-void settingChanged() {
+void settingChanged(SettingValue* val, bool checkNewOnes = false, bool first = false) {
     ruinGame();
     //checks
     auto errors = std::string("");
+    matjson::Value asd = Mod::get()->getMetadata().getRawJSON();
+    matjson::Value settings = asd["settings"];
 
-    auto Fonts = (SETTING(int64_t, "Fonts"));
-    for (int i = Fonts; i != 0; i--) {
+    int min = 0;
+    int count = 0;
+
+#define nails(key) \
+    min = checkNewOnes ? settings[key]["default"].as_int() : 0;\
+    count = (SETTING(int64_t, key)); \
+    min = first ? 1 : min; \
+    count = first ? 1 : count; \
+    if (val->getKey() == key) for (int i = count; i != min; i--)
+
+    nails("Fonts") {
         auto ifnt = CCString::createWithFormat("gjFont%02d.fnt", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ifnt)) errors.append(fmt::format(
             "- <cr>font</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -172,8 +183,7 @@ void settingChanged() {
         ));
     }
 
-    auto Backgrounds = (SETTING(int64_t, "Backgrounds"));
-    for (int i = Backgrounds; i != 0; i--) {
+    nails("Backgrounds") {
         auto ipng = CCString::createWithFormat("game_bg_%02d_001.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>bg texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -181,8 +191,7 @@ void settingChanged() {
         ));
     }
 
-    auto Grounds = (SETTING(int64_t, "Grounds"));
-    for (int i = Grounds; i != 0; i--) {
+    nails("Grounds") {
         auto ipng = CCString::createWithFormat("groundSquare_%02d_001.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>ground texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -190,8 +199,7 @@ void settingChanged() {
         ));
     }
 
-    auto MiddleGrounds = (SETTING(int64_t, "MiddleGrounds"));
-    for (int i = MiddleGrounds; i != 0; i--) {
+    nails("MiddleGrounds") {
         auto ipng = CCString::createWithFormat("fg_%02d_001.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>fg texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -206,8 +214,7 @@ void settingChanged() {
         LoadingLayerBackgroundPng
     ));
 
-    auto Cubes = (SETTING(int64_t, "Cubes"));
-    for (int i = Cubes; i != 0; i--) {
+    nails("Cubes") {
         auto ipng = CCString::createWithFormat("icons/player_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>player plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -218,10 +225,10 @@ void settingChanged() {
             "- <cr>player plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Ships = (SETTING(int64_t, "Ships"));
-    for (int i = Ships; i != 0; i--) {
+    nails("Ships") {
         auto ipng = CCString::createWithFormat("icons/ship_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>ship plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -232,10 +239,10 @@ void settingChanged() {
             "- <cr>ship plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Balls = (SETTING(int64_t, "Balls"));
-    for (int i = Balls; i != 0; i--) {
+    nails("Balls") {
         auto ipng = CCString::createWithFormat("icons/player_ball_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>player ball plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -246,10 +253,10 @@ void settingChanged() {
             "- <cr>player ball plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Ufos = (SETTING(int64_t, "Ufos"));
-    for (int i = Ufos; i != 0; i--) {
+    nails("Ufos") {
         auto ipng = CCString::createWithFormat("icons/bird_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>bird plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -260,10 +267,10 @@ void settingChanged() {
             "- <cr>bird plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Waves = (SETTING(int64_t, "Waves"));
-    for (int i = Waves; i != 0; i--) {
+    nails("Waves") {
         auto ipng = CCString::createWithFormat("icons/dart_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>dart plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -274,10 +281,10 @@ void settingChanged() {
             "- <cr>dart plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Robots = (SETTING(int64_t, "Robots"));
-    for (int i = Robots; i != 0; i--) {
+    nails("Robots") {
         auto ipng = CCString::createWithFormat("icons/robot_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>robot plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -288,10 +295,10 @@ void settingChanged() {
             "- <cr>robot plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Spiders = (SETTING(int64_t, "Spiders"));
-    for (int i = Spiders; i != 0; i--) {
+    nails("Spiders") {
         auto ipng = CCString::createWithFormat("icons/spider_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>spider plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -302,10 +309,10 @@ void settingChanged() {
             "- <cr>spider plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Swings = (SETTING(int64_t, "Swings"));
-    for (int i = Swings; i != 0; i--) {
+    nails("Swings") {
         auto ipng = CCString::createWithFormat("icons/swing_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>swing plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -316,10 +323,10 @@ void settingChanged() {
             "- <cr>swing plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto Jetpacks = (SETTING(int64_t, "Jetpacks"));
-    for (int i = Jetpacks; i != 0; i--) {
+    nails("Jetpacks") {
         auto ipng = CCString::createWithFormat("icons/jetpack_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>jetpack plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -330,10 +337,10 @@ void settingChanged() {
             "- <cr>jetpack plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
-    auto DeathEffects = (SETTING(int64_t, "DeathEffects"));
-    for (int i = DeathEffects - 1; i != 0; i--) {
+    nails("DeathEffects") {
         auto ipng = CCString::createWithFormat("PlayerExplosion_%02d.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>PlayerExplosion plist texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -344,10 +351,11 @@ void settingChanged() {
             "- <cr>PlayerExplosion plist</c> <co>{}</c> <cr>isnt exists</c>\n",
             plistpng
         ));
+        CCSpriteFrameCache::get()->addSpriteFramesWithFile(plistpng);
     }
 
     auto Specials = (SETTING(int64_t, "Specials"));
-    for (int i = Specials; i != 0; i--) {
+    if (val->getKey() == "Specials") for (int i = Specials; i != 0; i--) {
         auto ipng = CCString::createWithFormat("streak_%02d_001.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>streak texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -356,7 +364,7 @@ void settingChanged() {
     }
 
     auto ShipFires = (SETTING(int64_t, "ShipFires"));
-    for (int i = ShipFires; i != 1; i--) {
+    if (val->getKey() == "ShipFires") for (int i = ShipFires; i != 1; i--) {
         auto ipng = CCString::createWithFormat("shipfire%02d_001.png", i)->getCString();
         if (not cocos::fileExistsInSearchPaths(ipng)) errors.append(fmt::format(
             "- <cr>shipfire texture</c> <co>{}</c> <cr>isnt exists</c>\n",
@@ -364,6 +372,7 @@ void settingChanged() {
         ));
     }
 
+#undef nails
 
     if (errors.size() > 1) createWideMDPopup("Checks Warn", errors, "Oh Ok");
 }
@@ -371,9 +380,37 @@ void settingChanged() {
 #include <Geode/loader/SettingEvent.hpp>
 #include <Geode/modify/LoadingLayer.hpp>
 class $modify(LoadingLayer) {
+    $override void loadAssets() {
+        log::debug("m_loadStep = {}", m_loadStep);
+        if (m_loadStep == 14) {
+            //preload new
+            settingChanged(Mod::get()->getSetting("Cubes"), true);
+            settingChanged(Mod::get()->getSetting("Ships"), true);
+            settingChanged(Mod::get()->getSetting("Balls"), true);
+            settingChanged(Mod::get()->getSetting("Ufos"), true);
+            settingChanged(Mod::get()->getSetting("Waves"), true);
+            settingChanged(Mod::get()->getSetting("Robots"), true);
+            settingChanged(Mod::get()->getSetting("Spiders"), true);
+            settingChanged(Mod::get()->getSetting("Swings"), true);
+            settingChanged(Mod::get()->getSetting("Jetpacks"), true);
+            settingChanged(Mod::get()->getSetting("DeathEffects"), true);
+            //preload first
+            settingChanged(Mod::get()->getSetting("Cubes"), true, true);
+            settingChanged(Mod::get()->getSetting("Ships"), true, true);
+            settingChanged(Mod::get()->getSetting("Balls"), true, true);
+            settingChanged(Mod::get()->getSetting("Ufos"), true, true);
+            settingChanged(Mod::get()->getSetting("Waves"), true, true);
+            settingChanged(Mod::get()->getSetting("Robots"), true, true);
+            settingChanged(Mod::get()->getSetting("Spiders"), true, true);
+            settingChanged(Mod::get()->getSetting("Swings"), true, true);
+            settingChanged(Mod::get()->getSetting("Jetpacks"), true, true);
+            settingChanged(Mod::get()->getSetting("DeathEffects"), true, true);
+        };
+        return LoadingLayer::loadAssets();
+    };
     $override bool init(bool p0) {
         ruinGame();
-        listenForAllSettingChanges([](auto) { settingChanged(); });
+        listenForAllSettingChanges([](SettingValue* val) { settingChanged(val); });
         return LoadingLayer::init(p0);
     };
 };
@@ -405,6 +442,12 @@ class $modify(GJGarageLayerExt, GJGarageLayer) {
     $override void setupPage(int p0, IconType p1) {
         if (GameManager::sharedState()->countForType(p1) <= 36) p0 = 0;
         GJGarageLayer::setupPage(p0, p1);
+        m_playerObject->updatePlayerFrame(
+            GameManager::get()->activeIconForType(
+                GameManager::get()->m_playerIconType
+            ),
+            GameManager::get()->m_playerIconType
+        );
     }
 };
 #include <Geode/modify/ItemInfoPopup.hpp>
